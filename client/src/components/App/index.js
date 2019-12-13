@@ -3,23 +3,19 @@ import { Switch, Route } from "react-router-dom";
 // import logo from './logo.svg';
 // import './style.css';
 
+// ----------------- Pages ------------------
+import Landing from "../../pages/Landing";
+import Contact from "../../pages/Contact";
+import _404 from "../../pages/_404";
+
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Switch>
+        <Route exact path="/" component={Landing} />
+        <Route exact path="/contact" component={Contact} />
+        <Route component={_404} />
+      </Switch>
     </div>
   );
 }
