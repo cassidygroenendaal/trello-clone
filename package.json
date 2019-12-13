@@ -1,0 +1,32 @@
+{
+  "name": "identifier",
+  "version": "1.0.0",
+  "description": "An app used to identify various things in nature",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "yarn run install:client && yarn run install:server",
+    "install:client": "cd client && yarn",
+    "install:server": "cd server && yarn",
+    "build": "cd client && yarn build",
+    "start": "node server/server.js",
+    "start:dev": "concurrently -n client,server \"yarn run client:dev\" \"yarn run server:dev\"",
+    "client:dev": "cd client && yarn start",
+    "server:dev": "cd server && yarn start:dev",
+    "heroku-postbuild": "yarn build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cassidygroenendaal/identifier.git"
+  },
+  "author": "Cassidy Groenendaal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cassidygroenendaal/identifier/issues"
+  },
+  "homepage": "https://github.com/cassidygroenendaal/identifier#readme",
+  "dependencies": {
+    "concurrently": "^5.0.1",
+    "nodemon": "^2.0.2"
+  }
+}
