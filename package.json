@@ -1,5 +1,5 @@
 {
-  "name": "identifier",
+  "name": "fs-react-starter",
   "version": "1.0.0",
   "description": "An app used to identify various things in nature",
   "main": "server/server.js",
