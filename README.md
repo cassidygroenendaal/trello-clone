@@ -1,5 +1,5 @@
 # FS React Base
-![Status](https://img.shields.io/badge/STATUS-IN--PROGRESS-red)
+![Status](https://img.shields.io/badge/STATUS-COMPLETE-brightgreen)
 
 ![DB Sequelize](https://img.shields.io/badge/DB-SEQUELIZE-blue)
 ![AUTH NO](https://img.shields.io/badge/USER_AUTH-NO-orange)
