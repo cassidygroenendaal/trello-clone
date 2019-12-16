@@ -1,32 +1,39 @@
 //===========================================
-// Modules
+// Dependencies
 //-------------------------------------------
 
 const router = require("express").Router();
 
 //===========================================
-// Other Libraries
+// Other Dependencies
 //-------------------------------------------
 
-const algorithm = require("../lib/algorithm.js");
+const algorithm = require("../lib/algorithm");
 
 //===========================================
 // Model
 //-------------------------------------------
-const Model1 = require("../models/model1.js");
+
+const Model1 = require("../models/model1");
 
 //===========================================
 // Routes
 //-------------------------------------------
+// GET: All
+//-------------------------------------------
 
-router.get("/model1", (req, res) => {
+router.get("/", (req, res) => {
   Model1.find((err, foundModel1) => {
     if (err) return res.json({ success: false, error: err });
     res.json({ success: true, message: algorithm.string, data: foundModel1 });
   })
 });
 
-router.get("/model1/:id", (req, res) => {
+//-------------------------------------------
+// GET: One
+//-------------------------------------------
+
+router.get("/:id", (req, res) => {
   const { id } = req.params;
 
   Model1.findById(id, (err, foundModel1) => {
@@ -35,7 +42,11 @@ router.get("/model1/:id", (req, res) => {
   })
 });
 
-router.post("/model1", (req, res) => {
+//-------------------------------------------
+// CREATE: One
+//-------------------------------------------
+
+router.post("/", (req, res) => {
   const { newModel1 } = req.body;
 
   Model1.create(newModel1, (err) => {
@@ -44,7 +55,11 @@ router.post("/model1", (req, res) => {
   })
 });
 
-router.put("/model1/:id", (req, res) => {
+//-------------------------------------------
+// UPDATE: One
+//-------------------------------------------
+
+router.put("/:id", (req, res) => {
   const { id } = req.params;
   const { updatedModel1 } = req.body;
 
@@ -54,7 +69,11 @@ router.put("/model1/:id", (req, res) => {
   });
 });
 
-router.delete("/model1/:id", (req, res) => {
+//-------------------------------------------
+// DELETE: One
+//-------------------------------------------
+
+router.delete("/:id", (req, res) => {
   const { id } = req.params;
 
   Model1.findByIdAndRemove(id, (err) => {
