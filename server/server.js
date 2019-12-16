@@ -1,89 +1,52 @@
-const mongoose = require("mongoose"),
-  express = require("express"),
+//===========================================
+// Dependencies
+//-------------------------------------------
+
+const express = require("express"),
   logger = require("morgan");
 
-const Data = require("./data");
+const db = require("./models");
 
-// const cors = require("cors");
-// const bodyParser = require('body-parser');
+//===========================================
+// Configs
+//-------------------------------------------
 
-const PORT = process.env.PORT || 3001,
-  app = express(),
-  router = express.Router();
+const PORT = process.env.PORT || 3001;
 
-// app.use(cors());
+//-------------------------------------------
+// Express
+//-------------------------------------------
 
-// this is our MongoDB database
-const dbConnection = process.env.MONGODB_URI || "mongodb://localhost/identifier_app_db";
+const app = express();
 
-// connects our back end code with the database
-mongoose.connect(dbConnection, { useNewUrlParser: true });
+//-------------------------------------------
+// Sequelize Set Up
+//-------------------------------------------
 
-let db = mongoose.connection;
+const syncOptions = { force: false };
 
-db.once("open", () => console.log("connected to the database"));
+if (process.env.NODE_ENV === "test") {
+  syncOptions.force = true;
+}
 
-// checks if connection with the database is successful
-db.on("error", console.error.bind(console, "MongoDB connection error:"));
+//===========================================
+// Middleware
+//-------------------------------------------
 
-// (optional) only made for logging and
-// bodyParser, parses the request body to be a readable json format
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(logger("dev"));
 
-// this is our get method
-// this method fetches all available data in our database
-router.get("/getData", (req, res) => {
-  Data.find((err, data) => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true, data: data });
-  });
+//===========================================
+// Routes
+//-------------------------------------------
+
+app.use("/api", require("./controllers"));
+
+//===========================================
+// Main
+//-------------------------------------------
+
+db.sequelize.sync(syncOptions).then(function() {
+  app.listen(PORT, () => console.log(`==> LISTENING ON PORT ${PORT}`));
 });
-
-// this is our update method
-// this method overwrites existing data in our database
-router.post("/updateData", (req, res) => {
-  const { id, update } = req.body;
-  Data.findByIdAndUpdate(id, update, (err) => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true });
-  });
-});
-
-// this is our delete method
-// this method removes existing data in our database
-router.delete("/deleteData", (req, res) => {
-  const { id } = req.body;
-  Data.findByIdAndRemove(id, (err) => {
-    if (err) return res.send(err);
-    return res.json({ success: true });
-  });
-});
-
-// this is our create methid
-// this method adds new data in our database
-router.post("/putData", (req, res) => {
-  let data = new Data();
-
-  const { id, message } = req.body;
-
-  if ((!id && id !== 0) || !message) {
-    return res.json({
-      success: false,
-      error: "INVALID INPUTS"
-    });
-  }
-  data.message = message;
-  data.id = id;
-  data.save((err) => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true });
-  });
-});
-
-// append /api for our http requests
-app.use("/api", router);
-
-// launch our backend into a port
-app.listen(PORT, () => console.log(`==> LISTENING ON PORT ${PORT}`));
