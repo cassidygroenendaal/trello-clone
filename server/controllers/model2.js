@@ -23,10 +23,10 @@ const db = require("../models");
 //-------------------------------------------
 
 router.get("/", (req, res) => {
-  db.Model1
+  db.Model2
     .findAll()
-    .then((foundModel1) => {
-      res.json({ success: true, message: algorithm.string, data: foundModel1 });
+    .then((foundModel2) => {
+      res.json({ success: true, message: algorithm.string, data: foundModel2 });
     })
     .catch((err) => {
       res.json({ success: false, error: err });
@@ -40,10 +40,10 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   const { id } = req.params;
 
-  db.Model1
+  db.Model2
     .findOne({ where: { id: id } })
-    .then((foundModel1) => {
-      res.json({ success: true, message: algorithm.string, data: foundModel1 });
+    .then((foundModel2) => {
+      res.json({ success: true, message: algorithm.string, data: foundModel2 });
     })
     .catch((err) => {
       res.json({ success: false, error: err });
@@ -55,12 +55,12 @@ router.get("/:id", (req, res) => {
 //-------------------------------------------
 
 router.post("/", (req, res) => {
-  const { newModel1 } = req.body;
+  const { newModel2 } = req.body;
 
-  db.Model1
-    .create(newModel1)
-    .then((createdModel1) => {
-      res.json({ success: true, message: algorithm.string, data: createdModel1 });
+  db.Model2
+    .create(newModel2)
+    .then((createdModel2) => {
+      res.json({ success: true, message: algorithm.string, data: createdModel2 });
     })
     .catch((err) => {
       res.json({ success: false, error: err });
@@ -73,12 +73,12 @@ router.post("/", (req, res) => {
 
 router.put("/:id", (req, res) => {
   const { id } = req.params;
-  const { updatedModel1 } = req.body;
+  const { updatedModel2 } = req.body;
 
-  db.Model1
-    .update(updatedModel1, { where: { id: id } })
-    .then((updatedModel1) => {
-      res.json({ success: true, message: algorithm.string, data: updatedModel1 });
+  db.Model2
+    .update(updatedModel2, { where: { id: id } })
+    .then((updatedModel2) => {
+      res.json({ success: true, message: algorithm.string, data: updatedModel2 });
     })
     .catch((err) => {
       res.json({ success: false, error: err });
@@ -92,10 +92,10 @@ router.put("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
 
-  db.Model1
+  db.Model2
     .destroy({ where: { id: id } })
-    .then((foundModel1) => {
-      res.json({ success: true, message: algorithm.string, data: foundModel1 });
+    .then((foundModel2) => {
+      res.json({ success: true, message: algorithm.string, data: foundModel2 });
     })
     .catch((err) => {
       res.json({ success: false, error: err });
