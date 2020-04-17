@@ -79,7 +79,7 @@ const App = () => {
 						<PublicOnlyRoute exact path="/login" component={Login} />
 						<Route exact path="/forgot" component={Forgot} />
 						<Route exact path="/reset/:token" component={Reset} />
-						<Route exact path="/user/:id" component={UserProfile} />
+						<Route exact path="/u/:id" component={UserProfile} />
 						<Route exact path="/contact" component={Contact} />
 						<PrivateRoute
 							exact

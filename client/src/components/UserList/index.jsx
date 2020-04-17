@@ -19,15 +19,17 @@ const UserList = props => {
 	useEffect(() => {
 		API.User
 			.getAll()
-			.then(response => setListUsers(response.data.users))
+			.then(response => {
+				setListUsers(response.data.users)
+			})
 			.catch(err => console.log(err));
 	}, []);
 
 	return (
 		<div>
-			{listUsers && listUsers.length > 0 ? (
+			{listUsers.length > 0 ? (
 				listUsers.map(user => (
-					<Link key={user._id} to={`/user/${user._id}`}>
+					<Link key={user.id} to={`/u/${user.id}`}>
 						<h4>{user.username}</h4>
 					</Link>
 				))

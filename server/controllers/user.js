@@ -2,7 +2,12 @@
 // Dependencies
 //-------------------------------------------
 
-const router = require('express').Router();
+require('dotenv').config();
+
+const router = require('express').Router(),
+	// passport = require('passport'),
+	crypto = require('crypto'),
+	nodeMailer = require('nodemailer');
 
 //===========================================
 // Other Dependencies
@@ -25,8 +30,8 @@ const db = require('../models');
 router.get('/', (req, res) => {
 	db.User
 		.findAll()
-		.then(foundUser => {
-			res.json({ success: true, data: foundUser });
+		.then(foundUsers => {
+			res.json({ success: true, users: foundUsers });
 		})
 		.catch(err => {
 			res.json({ success: false, error: err });
@@ -38,15 +43,23 @@ router.get('/', (req, res) => {
 //-------------------------------------------
 
 router.get('/:id', (req, res) => {
-	const { id } = req.params;
+	const response = {},
+		{ id } = req.params;
 
 	db.User
 		.findOne({ where: { id: id } })
 		.then(foundUser => {
-			res.json({ success: true, data: foundUser });
+			response.status = 200;
+			response.user = foundUser;
+			console.log(response);
+			res.json(response);
 		})
 		.catch(err => {
-			res.json({ success: false, error: err });
+			response.status = 500;
+			response.error = err;
+			response.message = 'Server error. Please try again.';
+			console.log(response);
+			return res.json(response);
 		});
 });
 
@@ -54,13 +67,29 @@ router.get('/:id', (req, res) => {
 // CREATE: One
 //-------------------------------------------
 
-router.post('/', (req, res) => {
-	const { newUser } = req.body;
+// router.post('/', (req, res) => {
+// 	const { newUser } = req.body;
 
+// 	db.User
+// 		.create(newUser)
+// 		.then(createdUser => {
+// 			res.json({ success: true, data: createdUser });
+// 		})
+// 		.catch(err => {
+// 			res.json({ success: false, error: err });
+// 		});
+// });
+
+//-------------------------------------------
+// Register || CREATE: One
+//-------------------------------------------
+
+router.post('/register', (req, res) => {
+	const { newUser } = req.body;
 	db.User
 		.create(newUser)
 		.then(createdUser => {
-			res.json({ success: true, data: createdUser });
+			res.json({ success: true, user: createdUser });
 		})
 		.catch(err => {
 			res.json({ success: false, error: err });
@@ -78,7 +107,7 @@ router.put('/:id', (req, res) => {
 	db.User
 		.update(updatedUser, { where: { id: id } })
 		.then(updatedUser => {
-			res.json({ success: true, data: updatedUser });
+			res.json({ success: true, user: updatedUser });
 		})
 		.catch(err => {
 			res.json({ success: false, error: err });
@@ -95,7 +124,7 @@ router.delete('/:id', (req, res) => {
 	db.User
 		.destroy({ where: { id: id } })
 		.then(foundUser => {
-			res.json({ success: true, data: foundUser });
+			res.json({ success: true, user: foundUser });
 		})
 		.catch(err => {
 			res.json({ success: false, error: err });

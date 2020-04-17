@@ -9,11 +9,11 @@ export default {
 			});
 		},
 
-		register      : function(userData) {
+		register      : function(newUser) {
 			return axios({
 				url    : '/api/u/register',
 				method : 'POST',
-				data   : userData
+				data   : { newUser }
 			});
 		},
 
@@ -84,6 +84,7 @@ export default {
 			});
 		}
 	},
+
 	Model1 : {
 		getAll    : function() {
 			return axios({

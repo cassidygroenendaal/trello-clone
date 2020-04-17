@@ -22,6 +22,7 @@ const UserInfo = props => {
 		() => {
 			API.User.getOne(props.match.params.id).then(response => {
 				if (response.data.status === 200) {
+					console.log(response.data.user);
 					setUser(response.data.user);
 				} else {
 					status.setError(response.data.message)();
@@ -29,7 +30,8 @@ const UserInfo = props => {
 				}
 			});
 		},
-		[ props.match.params.id, status ]
+		// eslint-disable-next-line
+		[ props.match.params.id ]
 	);
 
 	return (

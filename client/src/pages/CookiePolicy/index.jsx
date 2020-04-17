@@ -3,34 +3,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// ----------------- Other Dependencies ------------------
-
-import API from '../../lib/API';
-
 // ----------------- Stylesheet ------------------
 
 import './style.css';
 
-// ----------------- Components ------------------
+// ----------------- Contact Page ------------------
 
-import ForgotForm from '../../components/ForgotForm';
-
-// ----------------- Forgot Page ------------------
-
-const Forgot = props => {
+const CookiePolicy = props => {
 	return (
 		<div>
-			<h1>This is the Login page!</h1>
+			<h1>This is the Cookie Policy page!</h1>
 			<Link to="/">Home</Link>
-			<Link to="/login">Login</Link>
 			<Link to="/register">Register</Link>
-			<Link to="/contact">Contact</Link>
+			<Link to="/login">Login</Link>
 			<Link to="/contacts">Contacts?</Link>
-			<button onClick={API.User.logout}>Logout</button>
-
-			<ForgotForm />
+			<div>
+				<h2>How do we use cookies?</h2>
+				<p>
+					We use <strong>session cookies</strong> to keep track of
+					whether you are logged in, that way you stay logged in even
+					after leaving and coming back to the site. We will log you
+					out after 3 weeks for security reasons, but you can log back
+					in if you would like.
+				</p>
+			</div>
 		</div>
 	);
 };
 
-export default Forgot;
+export default CookiePolicy;
