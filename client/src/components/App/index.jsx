@@ -36,7 +36,6 @@ import {
 	MyAccount,
 	_404
 } from '../../pages';
-
 // ----------------- App ------------------
 
 const App = () => {
@@ -45,25 +44,31 @@ const App = () => {
 
 	// const [ isLoading, setIsLoading ] = useState(true);
 
-	useEffect(() => {
-		if (!currentUser.state.authToken) return;
-		API.User
-			.getMe(currentUser.state.authToken)
-			.then(response => {
-				if (response.data.status === 200) {
-					status.setCode(200)();
-					status.setSuccess("You've been successfully logged in.")();
-					currentUser.setUser(response.data.user)();
-				} else {
-					status.setError(response.data.message)();
-					status.setCode(response.data.status)();
-					currentUser.reset()();
-				}
-				// setIsLoading(false);
-			})
-			.catch(err => console.log(err));
+	useEffect(
+		() => {
+			// currentUser.setToken(currentUser.getToken()())();
+			if (!currentUser.state.authToken) return;
+			API.User
+				.getMe(currentUser.state.authToken)
+				.then(response => {
+					if (response.data.status === 200) {
+						status.setCode(200)();
+						status.setSuccess(
+							"You've been successfully logged in."
+						)();
+						currentUser.setUser(response.data.user)();
+					} else {
+						status.setError(response.data.message)();
+						status.setCode(response.data.status)();
+						currentUser.reset()();
+					}
+					// setIsLoading(false);
+				})
+				.catch(err => console.log(err));
+		},
 		// eslint disable next line;
-	}, []);
+		[]
+	);
 
 	return (
 		<div className="App">

@@ -142,14 +142,15 @@ router.post('/login', (req, res) => {
 
 		response.status = 200;
 		response.user = {
-			id       : foundUser.id,
-			username : foundUser.username,
-			email    : foundUser.email
+			id        : foundUser.id,
+			username  : foundUser.username,
+			email     : foundUser.email,
+			isAuth    : true,
+			authToken : jwt.sign(
+				{ sub: foundUser.id },
+				process.env.JWT_SECRET
+			)
 		};
-		response.token = jwt.sign(
-			{ sub: foundUser.id },
-			process.env.JWT_SECRET
-		);
 		console.log(response);
 		res.json(response);
 	});

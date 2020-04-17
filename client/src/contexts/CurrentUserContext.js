@@ -13,7 +13,7 @@ const initialState = {
 const reducer = (state, action) => {
 	switch (action.type) {
 		case 'reset':
-			return initialState;
+			return { ...initialState, authToken: undefined };
 		case 'set-user':
 			return { ...state, ...action.payload };
 		case 'set-email':
@@ -47,7 +47,7 @@ const CurrentUserContextProvider = props => {
 		setToken = token => () =>
 			dispatch({ type: 'set-token', payload: token }),
 		storeToken = token => () => localStorage.setItem('token', token),
-		getToken = () => () => setToken(localStorage.getItem('token'))(),
+		getToken = () => () => localStorage.getItem('token'),
 		clearToken = () => () => localStorage.removeItem('token'),
 		login = (user, token) => () => {
 			setUser(user)();
