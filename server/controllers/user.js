@@ -126,7 +126,7 @@ router.post('/register', (req, res) => {
 			res.json(response);
 		})
 		.catch(err => {
-			if (err.parent.errno === 1062) {
+			if (err.parent && err.parent.errno === 1062) {
 				response.status = 1062;
 				response.error = err;
 				response.message = `A user with the ${err.errors[0]
