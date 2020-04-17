@@ -24,7 +24,10 @@ const Landing = props => {
 	const logout = () =>
 		API.User
 			.logout()
-			.then(response => currentUser.reset()())
+			.then(response => {
+				currentUser.clearToken()();
+				currentUser.reset()();
+			})
 			.catch(err => console.log(err));
 
 	return (

@@ -3,10 +3,11 @@ import React, { createContext, useReducer } from 'react';
 const CurrentUserContext = createContext();
 
 const initialState = {
-	email    : undefined,
-	username : undefined,
-	id       : undefined,
-	isAuth   : false
+	email     : undefined,
+	username  : undefined,
+	id        : undefined,
+	isAuth    : false,
+	authToken : localStorage.getItem('token')
 };
 
 const reducer = (state, action) => {
@@ -23,6 +24,8 @@ const reducer = (state, action) => {
 			return { ...state, id: action.payload };
 		case 'set-auth':
 			return { ...state, isAuth: action.payload };
+		case 'set-token':
+			return { ...state, authToken: action.payload };
 		default:
 			throw new Error();
 	}
@@ -35,12 +38,25 @@ const CurrentUserContextProvider = props => {
 		setUser = user => () =>
 			dispatch({ type: 'set-user', payload: user }),
 		setEmail = email => () =>
-			dispatch({ type: 'set-user', payload: email }),
+			dispatch({ type: 'set-email', payload: email }),
 		setUsername = username => () =>
-			dispatch({ type: 'set-user', payload: username }),
-		setId = id => () => dispatch({ type: 'set-user', payload: id }),
+			dispatch({ type: 'set-username', payload: username }),
+		setId = id => () => dispatch({ type: 'set-id', payload: id }),
 		setAuth = auth => () =>
-			dispatch({ type: 'set-user', payload: auth });
+			dispatch({ type: 'set-auth', payload: auth }),
+		setToken = token => () =>
+			dispatch({ type: 'set-token', payload: token }),
+		storeToken = token => () => localStorage.setItem('token', token),
+		getToken = () => () => setToken(localStorage.getItem('token'))(),
+		clearToken = () => () => localStorage.removeItem('token'),
+		login = (user, token) => () => {
+			setUser(user)();
+			storeToken(token)();
+		},
+		logout = () => () => {
+			clearToken()();
+			reset()();
+		};
 
 	const value = {
 		state,
@@ -49,7 +65,13 @@ const CurrentUserContextProvider = props => {
 		setEmail,
 		setUsername,
 		setId,
-		setAuth
+		setAuth,
+		storeToken,
+		setToken,
+		getToken,
+		clearToken,
+		login,
+		logout
 	};
 
 	return (

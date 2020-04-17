@@ -37,15 +37,21 @@ const LoginForm = props => {
 		e.preventDefault();
 		if (username !== '' && password !== '') {
 			const user = { username, password };
+
 			API.User
 				.login(user)
 				.then(response => {
+					console.log(response.data);
 					if (response.data.status === 200) {
-						status.setCode(200)();
-						status.setSuccess(
-							"You've been successfully logged in."
+						// 			status.setCode(200)();
+						// 			status.setSuccess(
+						// 				"You've been successfully logged in."
+						// 			)();
+						// 			currentUser.setUser(response.data.user)();
+						currentUser.login(
+							response.data.user,
+							response.data.token
 						)();
-						currentUser.setUser(response.data.user)();
 						props.history.push('/');
 					} else {
 						status.setError(response.data.message)();

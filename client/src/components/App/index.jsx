@@ -9,6 +9,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { StatusContext } from '../../contexts/StatusContext';
 
 import API from '../../lib/API';
+// import useTokenStore from '../../lib/TokenStore';
 
 // ----------------- Stylesheet ------------------
 
@@ -42,11 +43,12 @@ const App = () => {
 	const currentUser = useContext(CurrentUserContext);
 	const status = useContext(StatusContext);
 
-	const [ isLoading, setIsLoading ] = useState(true);
+	// const [ isLoading, setIsLoading ] = useState(true);
 
 	useEffect(() => {
+		if (!currentUser.state.authToken) return;
 		API.User
-			.getMe()
+			.getMe(currentUser.state.authToken)
 			.then(response => {
 				if (response.data.status === 200) {
 					status.setCode(200)();
@@ -57,45 +59,45 @@ const App = () => {
 					status.setCode(response.data.status)();
 					currentUser.reset()();
 				}
-				setIsLoading(false);
+				// setIsLoading(false);
 			})
 			.catch(err => console.log(err));
-		// eslint-disable-next-line
+		// eslint disable next line;
 	}, []);
 
 	return (
 		<div className="App">
-			{isLoading ? (
+			{/* {isLoading ? (
 				<div>Loading......</div>
-			) : (
-				<div>
-					<Switch>
-						<Route exact path="/" component={Landing} />
-						<PublicOnlyRoute
-							exact
-							path="/register"
-							component={Register}
-						/>
-						<PublicOnlyRoute exact path="/login" component={Login} />
-						<Route exact path="/forgot" component={Forgot} />
-						<Route exact path="/reset/:token" component={Reset} />
-						<Route exact path="/u/:id" component={UserProfile} />
-						<Route exact path="/contact" component={Contact} />
-						<PrivateRoute
-							exact
-							path="/my-account"
-							component={MyAccount}
-						/>
-						<Route
-							exact
-							path="/cookie-policy"
-							component={CookiePolicy}
-						/>
-						<Route component={_404} />
-					</Switch>
-					<Footer />
-				</div>
-			)}
+			) : ( */}
+			<div>
+				<Switch>
+					<Route exact path="/" component={Landing} />
+					<PublicOnlyRoute
+						exact
+						path="/register"
+						component={Register}
+					/>
+					<PublicOnlyRoute exact path="/login" component={Login} />
+					<Route exact path="/forgot" component={Forgot} />
+					<Route exact path="/reset/:token" component={Reset} />
+					<Route exact path="/u/:id" component={UserProfile} />
+					<Route exact path="/contact" component={Contact} />
+					<PrivateRoute
+						exact
+						path="/my-account"
+						component={MyAccount}
+					/>
+					<Route
+						exact
+						path="/cookie-policy"
+						component={CookiePolicy}
+					/>
+					<Route component={_404} />
+				</Switch>
+				<Footer />
+			</div>
+			{/* )} */}
 		</div>
 	);
 };

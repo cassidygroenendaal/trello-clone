@@ -2,10 +2,13 @@ import axios from 'axios';
 
 export default {
 	User   : {
-		getMe         : function() {
+		getMe         : function(authToken) {
 			return axios({
-				url    : '/api/u/me',
-				method : 'GET'
+				url     : '/api/u/me',
+				method  : 'GET',
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
 			});
 		},
 

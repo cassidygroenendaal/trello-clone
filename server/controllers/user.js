@@ -5,7 +5,7 @@
 require('dotenv').config();
 
 const router = require('express').Router(),
-	// passport = require('passport'),
+	jwt = require('jsonwebtoken'),
 	crypto = require('crypto'),
 	nodeMailer = require('nodemailer');
 
@@ -13,10 +13,10 @@ const router = require('express').Router(),
 // Other Dependencies
 //-------------------------------------------
 
-// const algorithm = require("../lib/algorithm");
+const { JWTVerifier } = require('../lib/passport');
 
 //===========================================
-// Model
+// Models
 //-------------------------------------------
 
 const db = require('../models');
@@ -39,6 +39,27 @@ router.get('/', (req, res) => {
 });
 
 //-------------------------------------------
+// GET: Me
+//-------------------------------------------
+
+router.get('/me', JWTVerifier, (req, res) => {
+	console.log('user', req.user);
+
+	const response = {
+		status : 200,
+		user   : {
+			id       : req.user.id,
+			username : req.user.username,
+			email    : req.user.email,
+			isAuth   : true
+		}
+	};
+	console.log('req.user:', req.user);
+	console.log('response:', response);
+	res.json(response);
+});
+
+//-------------------------------------------
 // GET: One
 //-------------------------------------------
 
@@ -47,7 +68,7 @@ router.get('/:id', (req, res) => {
 		{ id } = req.params;
 
 	db.User
-		.findOne({ where: { id: id } })
+		.findByPk(id)
 		.then(foundUser => {
 			response.status = 200;
 			response.user = foundUser;
@@ -94,6 +115,44 @@ router.post('/register', (req, res) => {
 		.catch(err => {
 			res.json({ success: false, error: err });
 		});
+});
+
+//-------------------------------------------
+// Login
+//-------------------------------------------
+
+router.post('/login', (req, res) => {
+	const response = {},
+		{ username, password } = req.body;
+
+	db.User.findOne({ where: { username } }).then(foundUser => {
+		if (!foundUser) {
+			response.status = 404;
+			response.error = 'Not found';
+			response.message = "We couldn't find a user with that username";
+			return res.json(response);
+		}
+
+		if (!foundUser.comparePassword(password)) {
+			response.status = 401;
+			response.error = 'Unauthorized';
+			response.message = "The username and password don't match";
+			return res.json(response);
+		}
+
+		response.status = 200;
+		response.user = {
+			id       : foundUser.id,
+			username : foundUser.username,
+			email    : foundUser.email
+		};
+		response.token = jwt.sign(
+			{ sub: foundUser.id },
+			process.env.JWT_SECRET
+		);
+		console.log(response);
+		res.json(response);
+	});
 });
 
 //-------------------------------------------

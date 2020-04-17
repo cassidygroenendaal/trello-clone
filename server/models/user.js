@@ -3,8 +3,14 @@ module.exports = (sequelize, DataTypes) => {
 	const User = sequelize.define(
 		'User',
 		{
-			username             : DataTypes.STRING,
-			email                : DataTypes.STRING,
+			username             : {
+				type   : DataTypes.STRING,
+				unique : true
+			},
+			email                : {
+				type   : DataTypes.STRING,
+				unique : true
+			},
 			password             : DataTypes.STRING,
 			resetPasswordToken   : DataTypes.STRING,
 			resetPasswordExpires : DataTypes.DATE
@@ -14,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
 
 	User.associate = function(models) {
 		// associations can be defined here
+	};
+
+	User.prototype.comparePassword = function(challenge) {
+		return this.password === challenge;
 	};
 
 	return User;
