@@ -49,12 +49,16 @@ const RegisterForm = props => {
 			API.User
 				.register(user)
 				.then(response => {
+					console.log(response.data);
 					if (response.data.status === 200) {
 						status.setCode(200)();
 						status.setSuccess(
 							"You've been successfully logged in."
 						)();
-						currentUser.setUser(response.data.user)();
+						currentUser.login(
+							response.data.user,
+							response.data.user.authToken
+						)();
 						props.history.push('/');
 					} else {
 						status.setError(response.data.message)();

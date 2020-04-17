@@ -63,7 +63,11 @@ const App = () => {
 						}
 						setIsLoading(false);
 					})
-					.catch(err => console.log(err));
+					.catch(err => {
+						console.log(err);
+						currentUser.logout()();
+						setIsLoading(false);
+					});
 			} else {
 				setIsLoading(false);
 			}

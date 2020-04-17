@@ -106,14 +106,31 @@ router.get('/:id', (req, res) => {
 //-------------------------------------------
 
 router.post('/register', (req, res) => {
-	const { newUser } = req.body;
+	const response = {},
+		{ newUser } = req.body;
 	db.User
 		.create(newUser)
 		.then(createdUser => {
-			res.json({ success: true, user: createdUser });
+			response.status = 200;
+			response.user = {
+				id        : createdUser.id,
+				username  : createdUser.username,
+				email     : createdUser.email,
+				isAuth    : true,
+				authToken : jwt.sign(
+					{ sub: createdUser.id },
+					process.env.JWT_SECRET
+				)
+			};
+			console.log(response);
+			res.json(response);
 		})
 		.catch(err => {
-			res.json({ success: false, error: err });
+			response.status = 500;
+			response.error = err;
+			response.message = 'Server error';
+			console.log(response);
+			res.json(response);
 		});
 });
 
