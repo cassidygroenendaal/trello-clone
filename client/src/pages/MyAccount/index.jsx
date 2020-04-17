@@ -49,7 +49,7 @@ const MyAccount = props => {
 			<h1>This is the My Account page!</h1>
 
 			<Link to="/">Home</Link>
-			<Link to={`/user/${currentUser.state.id}`}>
+			<Link to={`/u/${currentUser.state.id}`}>
 				View as a normal user
 			</Link>
 			{!isEditing && (

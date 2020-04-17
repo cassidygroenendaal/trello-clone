@@ -28,13 +28,6 @@ export default {
 			});
 		},
 
-		logout        : function() {
-			return axios({
-				url    : '/api/u/logout',
-				method : 'GET'
-			});
-		},
-
 		forgot        : function(email) {
 			return axios({
 				url    : '/api/u/forgot',

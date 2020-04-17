@@ -21,14 +21,7 @@ import UserList from '../../components/UserList';
 const Landing = props => {
 	const currentUser = useContext(CurrentUserContext);
 
-	const logout = () =>
-		API.User
-			.logout()
-			.then(response => {
-				currentUser.clearToken()();
-				currentUser.reset()();
-			})
-			.catch(err => console.log(err));
+	const logout = () => currentUser.logout()();
 
 	return (
 		<div>
@@ -41,9 +34,11 @@ const Landing = props => {
 				<Link to="/login">Login</Link>
 				<Link to="/contact">Contact</Link>
 				<Link to="/contacts">Contacts?</Link>
-				<button onClick={logout}>Logout</button>
 				{currentUser.state.isAuth && (
-					<Link to="/my-account">My Profile</Link>
+					<div>
+						<button onClick={logout}>Logout</button>
+						<Link to="/my-account">My Profile</Link>
+					</div>
 				)}
 			</div>
 			<UserList />

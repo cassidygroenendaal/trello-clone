@@ -25,8 +25,6 @@ const Login = props => {
 			<Link to="/register">Register</Link>
 			<Link to="/contact">Contact</Link>
 			<Link to="/contacts">Contacts?</Link>
-			<button onClick={API.User.logout}>Logout</button>
-
 			<LoginForm {...props} />
 			<Link to="/forgot">Forgot my password</Link>
 		</div>
