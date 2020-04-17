@@ -126,9 +126,16 @@ router.post('/register', (req, res) => {
 			res.json(response);
 		})
 		.catch(err => {
-			response.status = 500;
-			response.error = err;
-			response.message = 'Server error';
+			if (err.parent.errno === 1062) {
+				response.status = 1062;
+				response.error = err;
+				response.message = `A user with the ${err.errors[0]
+					.path} '${err.errors[0].value}' already exists`;
+			} else {
+				response.status = 500;
+				response.error = err;
+				response.message = 'Server error';
+			}
 			console.log(response);
 			res.json(response);
 		});

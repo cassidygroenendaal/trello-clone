@@ -72,7 +72,8 @@ const RegisterForm = props => {
 
 	return (
 		<div>
-			{status.state.code === 500 && <p>{status.state.error}</p>}
+			{status.state.code !== 200 &&
+			status.state.code !== 400 && <p>{status.state.error}</p>}
 
 			{status.state.code === 400 && (
 				<p>
