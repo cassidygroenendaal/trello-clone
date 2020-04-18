@@ -20,7 +20,7 @@ import ForgotForm from '../../components/ForgotForm';
 const Forgot = props => {
 	return (
 		<div>
-			<h1>This is the Login page!</h1>
+			<h1>This is the Forgot Password page!</h1>
 			<Link to="/">Home</Link>
 			<Link to="/login">Login</Link>
 			<Link to="/register">Register</Link>

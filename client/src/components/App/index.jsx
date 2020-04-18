@@ -51,10 +51,10 @@ const App = () => {
 					.getMe(currentUser.state.authToken)
 					.then(response => {
 						if (response.data.status === 200) {
-							status.setCode(200)();
-							status.setSuccess(
-								"You've been successfully logged in."
-							)();
+							// status.setCode(200)();
+							// status.setSuccess(
+							// 	"You've been successfully logged in."
+							// )();
 							currentUser.setUser(response.data.user)();
 						} else {
 							status.setError(response.data.message)();

@@ -31,14 +31,15 @@ const ResetForm = props => {
 		() => {
 			API.User
 				.findResetUser(props.match.params.token)
-				.then(response => {
-					if (response.data.status === 200) {
-						setId(response.data.userId);
-						status.setCode(200)();
-						status.setSuccess('User found.')();
+				.then(res => {
+					console.log(res.data);
+					if (res.data.status === 200) {
+						setId(res.data.userId);
+						status.reset()();
+						status.setCode(res.data.status)();
 					} else {
-						status.setError(response.status.message)();
-						status.setCode(response.data.status)();
+						status.setCode(res.data.status)();
+						status.setError(res.data.message)();
 					}
 				})
 				.catch(err => console.log(err.data));
@@ -53,18 +54,17 @@ const ResetForm = props => {
 			const user = { id, password };
 			API.User
 				.resetPassword(user)
-				.then(response => {
-					console.log(response.data);
-					if (response.data.status === 200) {
+				.then(res => {
+					if (res.data.status === 200) {
 						status.setCode(200)();
 						status.setSuccess(
 							'Your password has been successfully reset.'
 						)();
-						currentUser.setUser(response.data.user)();
+						currentUser.setUser(res.data.user)();
 						props.history.push('/');
 					} else {
-						status.setError(response.data.message)();
-						status.setCode(response.data.status)();
+						status.setError(res.data.message)();
+						status.setCode(res.data.status)();
 						currentUser.reset()();
 					}
 				})
@@ -74,13 +74,13 @@ const ResetForm = props => {
 
 	return (
 		<div>
-			{status.state.code !== 200 && (
+			{status.state.code !== undefined &&
+			status.state.code !== 200 && (
 				<div>
 					<h4>{status.state.error}</h4>
 					<Link to="/forgot">Send a new link</Link>
 				</div>
 			)}
-
 			<form>
 				<InputGroupPassword
 					name="password"

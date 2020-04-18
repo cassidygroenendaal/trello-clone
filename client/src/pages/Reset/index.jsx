@@ -20,7 +20,7 @@ import ResetForm from '../../components/ResetForm';
 const Reset = props => {
 	return (
 		<div>
-			<h1>This is the Login page!</h1>
+			<h1>This is the Reset page!</h1>
 			<Link to="/">Home</Link>
 			<Link to="/login">Login</Link>
 			<Link to="/register">Register</Link>

@@ -5,6 +5,7 @@
 require('dotenv').config();
 
 const router = require('express').Router(),
+	{ Op } = require('sequelize'),
 	crypto = require('crypto'),
 	nodeMailer = require('nodemailer');
 
@@ -81,23 +82,6 @@ router.get('/:id', (req, res) => {
 });
 
 //-------------------------------------------
-// CREATE: One
-//-------------------------------------------
-
-// router.post('/', (req, res) => {
-// 	const { newUser } = req.body;
-
-// 	db.User
-// 		.create(newUser)
-// 		.then(createdUser => {
-// 			res.json({ success: true, data: createdUser });
-// 		})
-// 		.catch(err => {
-// 			res.json({ success: false, error: err });
-// 		});
-// });
-
-//-------------------------------------------
 // Register || CREATE: One
 //-------------------------------------------
 
@@ -164,16 +148,186 @@ router.post('/login', (req, res) => {
 			email     : foundUser.email,
 			isAuth    : true,
 			authToken : jwtSignature(foundUser.id)
-			// authToken : jwt.sign(
-			// 	{ sub: foundUser.id },
-			// 	process.env.JWT_SECRET
-			// )
 		};
 		console.log(response);
 		res.json(response);
 	});
 });
 
+//-------------------------------------------
+// Forgot Password
+//-------------------------------------------
+
+router.post('/forgot', (req, res) => {
+	const response = {},
+		{ email } = req.body;
+	console.log(email);
+
+	// Return an error if email is empty
+	if (!email) {
+		response.status = 400;
+		response.error = 'Bad request';
+		response.message = 'An email address is required.';
+		console.log(response);
+		return res.json(response);
+	}
+
+	// Look up the user with the email
+	db.User
+		.findOne({ where: { email } })
+		.then(foundUser => {
+			// Return an error if there is no user with that email
+			if (!foundUser || foundUser === null) {
+				response.status = 404;
+				response.error = 'Not found';
+				response.message = "That email isn't in our records.";
+				console.log(response);
+				return res.json(response);
+			}
+
+			// If no errors, make a reset token
+			const token = crypto.randomBytes(20).toString('hex');
+
+			// Set the token on the foundUser
+			foundUser.resetPasswordToken = token;
+			foundUser.resetPasswordExpires = Date.now() + 360000;
+			return foundUser.save();
+		})
+		.then(updatedUser => {
+			const token = updatedUser.dataValues.resetPasswordToken;
+			// Initialize nodeMailer Transporter
+			const transporter = nodeMailer.createTransport({
+				service : 'gmail',
+				auth    : {
+					user : process.env.EMAIL_ADDRESS,
+					pass : process.env.EMAIL_PASSWORD
+				}
+			});
+
+			// Body of Reset Request Email
+			const mailOptions = {
+				from    : 'no-response@starter.dev',
+				to      : email,
+				subject : 'Starter.com Password Reset',
+				text    : `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n
+Please click on the following link, or paste this into your browser to complete the process:\n\n
+http://localhost:3000/reset/${token} \n\n
+If you did not request this, please ignore this email and your password will remain unchanged.\n`
+			};
+
+			transporter.sendMail(mailOptions, (err, mailResponse) => {
+				// Return an error if there is one
+				if (err) {
+					response.status = 500;
+					response.error = err;
+					response.message = 'Server error. Please try again.';
+					console.error(response);
+					return res.json(response);
+				}
+
+				// Mail sent ok
+				response.status = 200;
+				console.log(response);
+				res.json(response);
+			});
+		})
+		.catch(err => {
+			response.status = 500;
+			response.error = err;
+			console.error(response);
+			return res.json(response);
+		});
+});
+
+//-------------------------------------------
+// GET: One to Reset Password
+//-------------------------------------------
+
+router.get('/reset/:token', (req, res) => {
+	const response = {},
+		{ token } = req.params;
+
+	// Find a user with a valid, matching token
+	db.User
+		.findOne({
+			where : {
+				resetPasswordToken   : token,
+				resetPasswordExpires : { [Op.gt]: Date.now() }
+			}
+		})
+		.then(foundUser => {
+			// If no user was found
+			if (!foundUser || foundUser === null) {
+				response.status = 403;
+				response.error = 'Forbidden';
+				response.message =
+					'That token is either invalid or has expired.';
+				console.log(response);
+				return res.json(response);
+			}
+
+			// Send back the id of the foundUser
+			response.status = 200;
+			response.userId = foundUser.id;
+			console.log(response);
+			res.json(response);
+		})
+		.catch(err => {
+			response.status = 500;
+			response.error = err;
+			console.error(response);
+			return res.json(response);
+		});
+});
+
+//-------------------------------------------
+// UPDATE: One to Reset Password
+//-------------------------------------------
+
+router.put('/reset', (req, res) => {
+	const response = {},
+		{ id, password } = req.body;
+
+	db.User
+		.findByPk(id)
+		// db.User
+		// 	.update(
+		// 		{
+		// 			password,
+		// 			resetPasswordToken   : null,
+		// 			resetPasswordExpires : null
+		// 		},
+		// 		{ where: { id } }
+		// 	)
+		.then(foundUser => {
+			foundUser.password = password;
+			foundUser.resetPasswordToken = null;
+			foundUser.resetPasswordExpires = null;
+			return foundUser.save();
+		})
+		.then(updatedUser => {
+			console.log(updatedUser);
+			
+			// Send back a user object that we create, removing vulnerable information
+			response.status = 200;
+			response.user = {
+				id        : updatedUser._id,
+				username  : updatedUser.username,
+				email     : updatedUser.email,
+				isAuth    : true,
+				authToken : jwtSignature(updatedUser.id)
+			};
+
+			console.log(response);
+			res.json(response);
+		})
+		.catch(err => {
+			response.status = 500;
+			response.error = err;
+			console.error(response);
+			return res.json(response);
+		});
+});
 //-------------------------------------------
 // UPDATE: One
 //-------------------------------------------

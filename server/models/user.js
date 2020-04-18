@@ -49,6 +49,7 @@ module.exports = (sequelize, DataTypes) => {
 	};
 
 	const setSaltAndPassword = user => {
+		console.log(user)
 		if (user.changed('password')) {
 			user.salt = User.generateSalt();
 			user.password = User.encryptPassword(
