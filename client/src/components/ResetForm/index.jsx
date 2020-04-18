@@ -60,8 +60,13 @@ const ResetForm = props => {
 						status.setSuccess(
 							'Your password has been successfully reset.'
 						)();
-						currentUser.setUser(res.data.user)();
-						props.history.push('/');
+						setTimeout(() => {
+							currentUser.login(
+								res.data.user,
+								res.data.user.authToken
+								)();
+								props.history.push('/');
+							}, 3000)
 					} else {
 						status.setError(res.data.message)();
 						status.setCode(res.data.status)();
@@ -95,6 +100,7 @@ const ResetForm = props => {
 
 				<Button value="Reset Password" onClick={submitForm} />
 			</form>
+			{status.state.success && <p>{status.state.success}</p>}
 		</div>
 	);
 };
