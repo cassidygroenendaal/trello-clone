@@ -290,15 +290,6 @@ router.put('/reset', (req, res) => {
 
 	db.User
 		.findByPk(id)
-		// db.User
-		// 	.update(
-		// 		{
-		// 			password,
-		// 			resetPasswordToken   : null,
-		// 			resetPasswordExpires : null
-		// 		},
-		// 		{ where: { id } }
-		// 	)
 		.then(foundUser => {
 			foundUser.password = password;
 			foundUser.resetPasswordToken = null;
@@ -306,8 +297,36 @@ router.put('/reset', (req, res) => {
 			return foundUser.save();
 		})
 		.then(updatedUser => {
-			console.log(updatedUser);
-			
+			// Initialize nodeMailer Transporter
+			const transporter = nodeMailer.createTransport({
+				service : 'gmail',
+				auth    : {
+					user : process.env.EMAIL_ADDRESS,
+					pass : process.env.EMAIL_PASSWORD
+				}
+			});
+
+			// Body of Reset Success Email
+			const mailOptions = {
+				from    : 'no-response@starter.dev',
+				to      : updatedUser.email,
+				subject : 'Starter.com Password Reset Success',
+				text    : `Hello ${updatedUser.username},\n
+This is a confirmation that the password associated with your ${updatedUser.email} account has just been changed.\n`
+			};
+
+			transporter.sendMail(mailOptions, (err, mailResponse) => {
+				// Return an error if there is one
+				if (err) {
+					response.status = 500;
+					response.error = err;
+					response.message = 'Server error. Please try again.';
+
+					console.error(response);
+					return res.json(response);
+				}
+			});
+
 			// Send back a user object that we create, removing vulnerable information
 			response.status = 200;
 			response.user = {
