@@ -5,7 +5,6 @@
 require('dotenv').config();
 
 const router = require('express').Router(),
-	jwt = require('jsonwebtoken'),
 	crypto = require('crypto'),
 	nodeMailer = require('nodemailer');
 
@@ -13,7 +12,7 @@ const router = require('express').Router(),
 // Other Dependencies
 //-------------------------------------------
 
-const { JWTVerifier } = require('../lib/passport');
+const { jwtVerifier, jwtSignature } = require('../lib/passport');
 
 //===========================================
 // Models
@@ -42,9 +41,7 @@ router.get('/', (req, res) => {
 // GET: Me
 //-------------------------------------------
 
-router.get('/me', JWTVerifier, (req, res) => {
-	console.log('user', req.user);
-
+router.get('/me', jwtVerifier, (req, res) => {
 	const response = {
 		status : 200,
 		user   : {
@@ -54,7 +51,6 @@ router.get('/me', JWTVerifier, (req, res) => {
 			isAuth   : true
 		}
 	};
-	console.log('req.user:', req.user);
 	console.log('response:', response);
 	res.json(response);
 });
@@ -117,10 +113,7 @@ router.post('/register', (req, res) => {
 				username  : createdUser.username,
 				email     : createdUser.email,
 				isAuth    : true,
-				authToken : jwt.sign(
-					{ sub: createdUser.id },
-					process.env.JWT_SECRET
-				)
+				authToken : jwtSignature(createdUser.id)
 			};
 			console.log(response);
 			res.json(response);
@@ -170,10 +163,11 @@ router.post('/login', (req, res) => {
 			username  : foundUser.username,
 			email     : foundUser.email,
 			isAuth    : true,
-			authToken : jwt.sign(
-				{ sub: foundUser.id },
-				process.env.JWT_SECRET
-			)
+			authToken : jwtSignature(foundUser.id)
+			// authToken : jwt.sign(
+			// 	{ sub: foundUser.id },
+			// 	process.env.JWT_SECRET
+			// )
 		};
 		console.log(response);
 		res.json(response);
