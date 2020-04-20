@@ -363,11 +363,6 @@ router.put('/:id', (req, res) => {
 		.then(foundUser => {
 			for (let key in updatedInfo) {
 				if (foundUser[key] !== updatedInfo[key]) {
-					// if (listUniqueFields.includes(key)) {
-					// 	db.User.findOne({ where: { [key]: updatedInfo.key } }).then(foundUser => {
-
-					// 	})
-					// }
 					foundUser[key] = updatedInfo[key];
 				}
 			}
@@ -375,7 +370,6 @@ router.put('/:id', (req, res) => {
 			return foundUser.save();
 		})
 		.then(updatedUser => {
-			// if (updatedUser) {}
 			// Send back a user object that we create, removing vulnerable information
 			response.status = 200;
 			response.user = {
@@ -411,41 +405,37 @@ router.put('/:id/password', (req, res) => {
 	const { id } = req.params;
 	const { oldPassword, newPassword } = req.body;
 
-	db.User
-		.findByPk(id)
-		.then(foundUser => {
-			console.log('old:', oldPassword, 'new:', newPassword);
-			// if (oldPassword && newPassword) {
-			// 	if (!foundUser.comparePassword(oldPassword)) {
-			// 		response.status = 401;
-			// 		response.error = 'Unauthorized';
-			// 		response.message = 'The password you entered is incorrect';
-			// 		return res.json(response);
-			// 	}
-			// 	if (foundUser.comparePassword(newPassword)) {
-			// 		response.status = 401;
-			// 		response.error = 'Unauthorized';
-			// 		response.message =
-			// 			'Your new password cannot be the same as your previous password.';
-			// 		return res.json(response);
-			// 	}
-			// }
-			// 	foundUser.password = newPassword;
+	if (oldPassword && newPassword) {
+		db.User
+			.findByPk(id)
+			.then(foundUser => {
+				if (!foundUser.comparePassword(oldPassword)) {
+					response.status = 401;
+					response.error = 'Unauthorized';
+					response.message = 'The password you entered is incorrect';
+					return res.json(response);
+				}
+				if (foundUser.comparePassword(newPassword)) {
+					response.status = 401;
+					response.error = 'Unauthorized';
+					response.message =
+						'Your new password cannot be the same as your previous password.';
+					return res.json(response);
+				}
 
-			return foundUser.save();
-		})
-		.then(updatedUser => {
-			// if (updatedUser) {}
-			// Send back a user object that we create, removing vulnerable information
-			response.status = 200;
-			res.json(response);
-		})
-		.catch(err => {
-			response.status = 500;
-			response.error = err;
-			console.error(response);
-			return res.json(response);
-		});
+				foundUser.password = newPassword;
+				foundUser.save().then(updatedUser => {
+					response.status = 200;
+					res.json(response);
+				});
+			})
+			.catch(err => {
+				response.status = 500;
+				response.error = err;
+				console.error(response);
+				return res.json(response);
+			});
+	}
 });
 
 //-------------------------------------------

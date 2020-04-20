@@ -1,11 +1,11 @@
 // ----------------- Dependencies ------------------
 
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 
 // ----------------- Other Dependencies ------------------
 
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { StatusContext } from '../../contexts/StatusContext';
+// import { StatusContext } from '../../contexts/StatusContext';
 import API from '../../lib/API';
 
 // ----------------- Stylesheet ------------------
@@ -15,14 +15,18 @@ import API from '../../lib/API';
 // ----------------- Components ------------------
 
 import InputGroup from '../../components/InputGroup';
-import InputGroupPassword from '../../components/InputGroupPassword';
+// import InputGroupPassword from '../../components/InputGroupPassword';
 import Button from '../../components/Button';
 
 // ----------------- EditUserForm ------------------
 
 const EditUserForm = props => {
-	const currentUser = useContext(CurrentUserContext),
-		status = useContext(StatusContext);
+	const currentUser = useContext(CurrentUserContext);
+	const [ status, setStatus ] = useState({
+		code    : null,
+		error   : null,
+		success : null
+	});
 
 	const setUsername = username =>
 			props.setUser({ ...props.user, username }),
@@ -72,15 +76,20 @@ const EditUserForm = props => {
 				.updateOne(currentUser.state.id, updatedUser)
 				.then(response => {
 					if (response.data.status === 200) {
-						status.setCode(200)();
-						status.setSuccess(
-							'Your information has been successfully updated!'
-						)();
+						setStatus({
+							code    : 200,
+							error   : null,
+							success :
+								'Your information has been successfully updated!'
+						});
 						currentUser.setUser(response.data.user)();
 						props.onClick();
 					} else {
-						status.setError(response.data.message)();
-						status.setCode(response.data.status)();
+						setStatus({
+							code    : response.data.status,
+							error   : response.data.message,
+							success : null
+						});
 					}
 				})
 				.catch(err => console.log(err));
@@ -89,9 +98,9 @@ const EditUserForm = props => {
 
 	return (
 		<div>
-			{status.state.code !== 200 && (
+			{status.code !== 200 && (
 				<div>
-					<p>{status.state.error}</p>
+					<p>{status.error}</p>
 				</div>
 			)}
 
