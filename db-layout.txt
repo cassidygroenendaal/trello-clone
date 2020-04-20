@@ -1,0 +1,60 @@
+thru-table: UserTeams - UserId | TeamId
+thru-table: BoardLists - BoardId | ListId
+thru-table: ListCards - ListId | CardId
+thru-table: CardLabels - CardId | LabelId
+thru-table: BoardUsers - BoardId | UserId
+
+user
+- username: unique string, used for mentions, cassidy87
+- email: unique string, used to login
+- fullname: string, Cassidy Groenendaal
+- initials: string, CG
+- avatar: string initials (no avatar), or upload a picture/image url
+- bio: text
+- language: english (US), etc (ID? String?)
+
+team
+- name: string
+- type: business, engineering-IT, education, sales, project management, marketing, other
+- description: text, optional
+- visibility: private or public
+
+board
+- title: string
+- visibility: private or public, or team if on a team
+- background: string, preset image url or hex code
+- starred: bool, false by default
+- UserId: ID of the creator of the board
+- TeamId: ID of a team the board belongs to
+
+list
+- title: string
+- position: INT, where in the board this list sits
+- BoardId: What board this list belongs to
+
+card
+- title: string
+- description: text, optional
+- dueDate: date, optional
+- status: bool, false by default, optional (only if dueDate exists)
+- coverImage: string, optional, select or upload an image url
+- position: INT, where in the list this card sits
+- BoardId: What board this card belongs to
+
+checklist
+- title: string
+- CardId: What card this checklist belongs to
+- position: INT, where in the card this checklist sits
+
+item
+- title: string
+- ChecklistId: What checklist this item belongs to
+- position: INT, where in the checklist this item sits
+- dueDate: date, optional
+- status: bool, false by default
+
+label
+- name: string
+- color: string, hex or null for no color
+- sybmol: string, css classname for color blind friendly mode
+- BoardId: What board this label belongs to

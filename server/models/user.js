@@ -7,13 +7,25 @@ module.exports = (sequelize, DataTypes) => {
 		'User',
 		{
 			username             : {
-				type   : DataTypes.STRING,
-				unique : true
+				allowNull : false,
+				type      : DataTypes.STRING,
+				unique    : true
 			},
 			email                : {
-				type   : DataTypes.STRING,
-				unique : true
+				allowNull : false,
+				type      : DataTypes.STRING,
+				unique    : true
 			},
+			fullname             : {
+				allowNull : false,
+				type      : DataTypes.STRING
+			},
+			initials             : {
+				allowNull : false,
+				type      : DataTypes.STRING
+			},
+			bio                  : DataTypes.TEXT,
+			avatar               : DataTypes.STRING,
 			password             : {
 				type : DataTypes.STRING,
 				get() {
@@ -32,9 +44,17 @@ module.exports = (sequelize, DataTypes) => {
 		{}
 	);
 
+	//===========================================
+	// Associations
+	//-------------------------------------------
+
 	User.associate = function(models) {
-		// associations can be defined here
+		User.hasMany(models.Board, { onDelete: 'cascade' });
 	};
+
+	//===========================================
+	// Other Functions
+	//-------------------------------------------
 
 	User.generateSalt = function() {
 		return crypto.randomBytes(16).toString('base64');
@@ -49,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
 	};
 
 	const setSaltAndPassword = user => {
-		console.log(user)
+		console.log(user);
 		if (user.changed('password')) {
 			user.salt = User.generateSalt();
 			user.password = User.encryptPassword(
@@ -64,6 +84,10 @@ module.exports = (sequelize, DataTypes) => {
 			this.password() === User.encryptPassword(challenge, this.salt())
 		);
 	};
+
+	//===========================================
+	// Hooks
+	//-------------------------------------------
 
 	User.beforeCreate(setSaltAndPassword);
 	User.beforeUpdate(setSaltAndPassword);

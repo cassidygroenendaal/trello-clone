@@ -18,20 +18,26 @@ module.exports = {
 				type      : Sequelize.STRING,
 				unique    : true
 			},
+			fullname             : {
+				allowNull : false,
+				type      : Sequelize.STRING
+			},
+			initials             : {
+				allowNull : false,
+				type      : Sequelize.STRING
+			},
+			bio                  : Sequelize.TEXT,
+			avatar               : Sequelize.STRING,
 			password             : {
 				allowNull : false,
 				type      : Sequelize.STRING
 			},
-			salt             : {
+			salt                 : {
 				allowNull : false,
 				type      : Sequelize.STRING
 			},
-			resetPasswordToken   : {
-				type : Sequelize.STRING
-			},
-			resetPasswordExpires : {
-				type : Sequelize.DATE
-			},
+			resetPasswordToken   : Sequelize.STRING,
+			resetPasswordExpires : Sequelize.DATE,
 			createdAt            : {
 				allowNull    : false,
 				type         : Sequelize.DATE,
