@@ -1,8 +1,8 @@
 # FS React Base
-![Status](https://img.shields.io/badge/STATUS-IN--PROGRESS-red)
+![Status](https://img.shields.io/badge/STATUS-COMPLETE-green)
 
 ![DB Sequelize](https://img.shields.io/badge/DB-SEQUELIZE-blue)
-![AUTH Passport](https://img.shields.io/badge/USER_AUTH-PASSPORT-green)
+![AUTH Passport](https://img.shields.io/badge/USER_AUTH-PASSPORT_JWT-green)
 ![PWA NO](https://img.shields.io/badge/PWA-NO-orange)
 
 This Branch contains the starter files for a Full-Stack React Web App that uses Sequelize for database management and Passport for user authentication.
@@ -19,8 +19,8 @@ Clone this repo to your machine. Then, go into the following files and make the 
 `server/lib/algorithm.js`
 > Add any functions or code in here that you need to use on your backend that aren't model/controller related
 
-`server/db/schema.sql`
-> Update the name of the database you are using in here, then run it to create that database on your machine
+`server/config/config.js`
+> Update the name of the database you are using in here, then run `npx sequelize-cli db:create` in the server folder to create the database
 
 `server/controllers`
 > Update your controllers to reflect your models
