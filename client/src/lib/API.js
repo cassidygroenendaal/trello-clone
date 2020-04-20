@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default {
-	User   : {
+	User  : {
 		getMe             : function(authToken) {
 			return axios({
 				url     : '/api/u/me',
@@ -89,40 +89,40 @@ export default {
 		}
 	},
 
-	Model1 : {
+	Board : {
 		getAll    : function() {
 			return axios({
-				url    : '/api/model1',
+				url    : '/api/b',
 				method : 'GET'
 			});
 		},
 
 		getOne    : function(id) {
 			return axios({
-				url    : `/api/model1/${id}`,
+				url    : `/api/b/${id}`,
 				method : 'GET'
 			});
 		},
 
-		createOne : function(newModel1) {
+		createOne : function(newBoard) {
 			return axios({
-				url    : '/api/model1',
+				url    : '/api/b',
 				method : 'POST',
-				data   : { newModel1 }
+				data   : { newBoard }
 			});
 		},
 
-		updateOne : function(id, updatedModel1) {
+		updateOne : function(id, updatedBoard) {
 			return axios({
-				url    : `/api/model1/${id}`,
+				url    : `/api/b/${id}`,
 				method : 'PUT',
-				data   : { updatedModel1 }
+				data   : { updatedBoard }
 			});
 		},
 
 		deleteOne : function(id) {
 			return axios({
-				url    : `/api/model1/${id}`,
+				url    : `/api/b/${id}`,
 				method : 'DELETE'
 			});
 		}
