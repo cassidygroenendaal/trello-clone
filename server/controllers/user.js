@@ -21,6 +21,8 @@ const { jwtVerifier, jwtSignature } = require('../lib/passport');
 
 const db = require('../models');
 
+const listUniqueFields = [ 'username', 'email' ];
+
 //===========================================
 // Routes
 //-------------------------------------------
@@ -352,16 +354,97 @@ This is a confirmation that the password associated with your ${updatedUser.emai
 //-------------------------------------------
 
 router.put('/:id', (req, res) => {
+	const response = {};
 	const { id } = req.params;
-	const { updatedUser } = req.body;
+	const { updatedInfo } = req.body;
 
 	db.User
-		.update(updatedUser, { where: { id: id } })
+		.findByPk(id)
+		.then(foundUser => {
+			for (let key in updatedInfo) {
+				if (foundUser[key] !== updatedInfo[key]) {
+					// if (listUniqueFields.includes(key)) {
+					// 	db.User.findOne({ where: { [key]: updatedInfo.key } }).then(foundUser => {
+
+					// 	})
+					// }
+					foundUser[key] = updatedInfo[key];
+				}
+			}
+
+			return foundUser.save();
+		})
 		.then(updatedUser => {
-			res.json({ success: true, user: updatedUser });
+			// if (updatedUser) {}
+			// Send back a user object that we create, removing vulnerable information
+			response.status = 200;
+			response.user = {
+				username : updatedUser.username,
+				email    : updatedUser.email
+			};
+
+			console.log('UPDATED USER:', response);
+			res.json(response);
 		})
 		.catch(err => {
-			res.json({ success: false, error: err });
+			if (err.parent && err.parent.errno === 1062) {
+				response.status = 1062;
+				response.error = err;
+				response.message = `A user with the ${err.errors[0]
+					.path} '${err.errors[0].value}' already exists`;
+			} else {
+				response.status = 500;
+				response.error = err;
+				response.message = 'Server error';
+			}
+			console.error(response);
+			return res.json(response);
+		});
+});
+
+//-------------------------------------------
+// UPDATE: One to change password
+//-------------------------------------------
+
+router.put('/:id/password', (req, res) => {
+	const response = {};
+	const { id } = req.params;
+	const { oldPassword, newPassword } = req.body;
+
+	db.User
+		.findByPk(id)
+		.then(foundUser => {
+			console.log('old:', oldPassword, 'new:', newPassword);
+			// if (oldPassword && newPassword) {
+			// 	if (!foundUser.comparePassword(oldPassword)) {
+			// 		response.status = 401;
+			// 		response.error = 'Unauthorized';
+			// 		response.message = 'The password you entered is incorrect';
+			// 		return res.json(response);
+			// 	}
+			// 	if (foundUser.comparePassword(newPassword)) {
+			// 		response.status = 401;
+			// 		response.error = 'Unauthorized';
+			// 		response.message =
+			// 			'Your new password cannot be the same as your previous password.';
+			// 		return res.json(response);
+			// 	}
+			// }
+			// 	foundUser.password = newPassword;
+
+			return foundUser.save();
+		})
+		.then(updatedUser => {
+			// if (updatedUser) {}
+			// Send back a user object that we create, removing vulnerable information
+			response.status = 200;
+			res.json(response);
+		})
+		.catch(err => {
+			response.status = 500;
+			response.error = err;
+			console.error(response);
+			return res.json(response);
 		});
 });
 

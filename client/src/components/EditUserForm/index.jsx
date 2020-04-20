@@ -26,18 +26,23 @@ const EditUserForm = props => {
 
 	const setUsername = username =>
 			props.setUser({ ...props.user, username }),
-		setEmail = email => props.setUser({ ...props.user, email }),
-		setOldPassword = oldPassword =>
-			props.setUser({ ...props.user, oldPassword }),
-		setNewPassword = newPassword =>
-			props.setUser({ ...props.user, newPassword });
+		setEmail = email => props.setUser({ ...props.user, email });
+
+	const listSkipped = [
+		'id',
+		'resetPasswordExpires',
+		'resetPasswordToken',
+		'createdAt',
+		'updatedAt',
+		'salt',
+		'password'
+	];
 
 	const checkForm = user => {
 		// Check to make sure the form is filled out
 		// listSkipped contains keys to ignore the values of
 		// Typically these are default MongoDB values that the
 		// user will not be able to change
-		const listSkipped = [ '_id', '__v' ];
 		for (let key in user) {
 			if (!listSkipped.includes(key)) {
 				// If even one key has a value, return true
@@ -58,7 +63,7 @@ const EditUserForm = props => {
 			const updatedUser = {};
 
 			for (let key in props.user) {
-				if (props.user[key] !== '') {
+				if (props.user[key] !== '' && !listSkipped.includes(key)) {
 					updatedUser[key] = props.user[key];
 				}
 			}
@@ -106,28 +111,6 @@ const EditUserForm = props => {
 					placeholder="raduser420@hotmail.net"
 					value={props.user.email}
 					onChange={e => setEmail(e.target.value)}
-				/>
-				<InputGroupPassword
-					name="oldPassword"
-					label="Old Password"
-					type="password"
-					placeholder="raduser420"
-					showGlyph="Show"
-					hideGlyph="Hide"
-					// No password by default, so no value prop given
-					// value={props.user.password}
-					onChange={e => setOldPassword(e.target.value)}
-				/>
-				<InputGroupPassword
-					name="newPassword"
-					label="New Password"
-					type="password"
-					placeholder="raduser420"
-					showGlyph="Show"
-					hideGlyph="Hide"
-					// No password by default, so no value prop given
-					// value={props.user.password}
-					onChange={e => setNewPassword(e.target.value)}
 				/>
 				<Button value="Save Changes" onClick={submitForm} />
 			</form>

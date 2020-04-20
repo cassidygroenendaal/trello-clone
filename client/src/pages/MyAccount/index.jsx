@@ -17,6 +17,7 @@ import './style.css';
 
 import Button from '../../components/Button';
 import EditUserForm from '../../components/EditUserForm';
+import EditPasswordForm from '../../components/EditPasswordForm';
 
 // ----------------- MyAccount Page ------------------
 
@@ -70,11 +71,16 @@ const MyAccount = props => {
 			<h3>{user._id}</h3>
 
 			{isEditing && (
-				<EditUserForm
-					user={user}
-					setUser={setUser}
-					onClick={() => setIsEditing(!isEditing)}
-				/>
+				<div>
+					<EditUserForm
+						user={user}
+						setUser={setUser}
+						onClick={() => setIsEditing(!isEditing)}
+					/>
+					<EditPasswordForm
+						onClick={() => setIsEditing(!isEditing)}
+					/>
+				</div>
 			)}
 		</div>
 	);

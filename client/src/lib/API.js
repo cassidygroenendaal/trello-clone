@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default {
 	User   : {
-		getMe         : function(authToken) {
+		getMe             : function(authToken) {
 			return axios({
 				url     : '/api/u/me',
 				method  : 'GET',
@@ -12,7 +12,7 @@ export default {
 			});
 		},
 
-		register      : function(newUser) {
+		register          : function(newUser) {
 			return axios({
 				url    : '/api/u/register',
 				method : 'POST',
@@ -20,7 +20,7 @@ export default {
 			});
 		},
 
-		login         : function(userData) {
+		login             : function(userData) {
 			return axios({
 				url    : '/api/u/login',
 				method : 'POST',
@@ -28,7 +28,7 @@ export default {
 			});
 		},
 
-		forgot        : function(email) {
+		forgot            : function(email) {
 			return axios({
 				url    : '/api/u/forgot',
 				method : 'POST',
@@ -36,14 +36,14 @@ export default {
 			});
 		},
 
-		findResetUser : function(token) {
+		findResetUser     : function(token) {
 			return axios({
 				url    : `/api/u/reset/${token}`,
 				method : 'GET'
 			});
 		},
 
-		resetPassword : function(userData) {
+		resetPassword     : function(userData) {
 			return axios({
 				url    : '/api/u/reset',
 				method : 'PUT',
@@ -51,29 +51,37 @@ export default {
 			});
 		},
 
-		getAll        : function() {
+		getAll            : function() {
 			return axios({
 				url    : '/api/u',
 				method : 'GET'
 			});
 		},
 
-		getOne        : function(id) {
+		getOne            : function(id) {
 			return axios({
 				url    : `/api/u/${id}`,
 				method : 'GET'
 			});
 		},
 
-		updateOne     : function(id, updatedUser) {
+		updateOne         : function(id, updatedInfo) {
 			return axios({
 				url    : `/api/u/${id}`,
 				method : 'PUT',
-				data   : { updatedUser }
+				data   : { updatedInfo }
 			});
 		},
 
-		deleteOne     : function(id) {
+		updateOnePassword : function(id, oldPassword, newPassword) {
+			return axios({
+				url    : `/api/u/${id}/password`,
+				method : 'PUT',
+				data   : { oldPassword, newPassword }
+			});
+		},
+
+		deleteOne         : function(id) {
 			return axios({
 				url    : `/api/u/${id}`,
 				method : 'DELETE'
