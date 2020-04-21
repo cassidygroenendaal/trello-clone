@@ -24,7 +24,7 @@ const PublicOnlyRoute = ({ component: Component, ...rest }) => {
 					<Component {...props} />
 				) : (
 					<Redirect
-						to={{ pathname: '/', state: { from: props.location } }}
+						to={{ pathname: '/my-account', state: { from: props.location } }}
 					/>
 				)}
 		/>
