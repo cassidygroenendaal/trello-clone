@@ -9,7 +9,7 @@ import React from 'react';
 // ----------------- Button ------------------
 
 const Button = (props) => {
-  return <button onClick={props.onClick}>{props.value}</button>;
+  return <button className={props.className} disabled={props.disabled} onClick={props.onClick}>{props.value}</button>;
 };
 
 export default Button;

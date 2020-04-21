@@ -12,12 +12,12 @@ import API from '../../lib/API';
 
 // ----------------- Stylesheet ------------------
 
-// import './style.css';
+import styles from './style.module.css';
 
 // ----------------- Components ------------------
 
 import InputGroup from '../../components/InputGroup';
-import InputGroupPassword from '../../components/InputGroupPassword';
+// import InputGroupPassword from '../../components/InputGroupPassword';
 import Button from '../../components/Button';
 
 // ----------------- RegisterForm ------------------
@@ -28,11 +28,14 @@ const RegisterForm = props => {
 
 	const location = useLocation();
 
-	const [ username, setUsername ] = useState(''),
+	const [ fullname, setFullname ] = useState(''),
 		[ email, setEmail ] = useState(
-			location.state.email ? location.state.email : ''
+			location.state && location.state.email
+				? location.state.email
+				: ''
 		),
-		[ password, setPassword ] = useState('');
+		[ password, setPassword ] = useState(''),
+		[ isDisabled, setIsDisabled ] = useState(true);
 
 	useEffect(() => {
 		status.reset()();
@@ -47,9 +50,28 @@ const RegisterForm = props => {
 		return true;
 	};
 
+	const handleChange = e => {
+		const { name, value } = e.target,
+			user = { email, fullname, password };
+
+		if (name === 'email') {
+			setEmail(value);
+		} else if (name === 'fullname') {
+			setFullname(value);
+		} else if (name === 'password') {
+			setPassword(value);
+		}
+
+		if (checkForm(user)) {
+			setIsDisabled(false);
+		} else {
+			setIsDisabled(true);
+		}
+	};
+
 	const submitForm = e => {
 		e.preventDefault();
-		const user = { email, username, password };
+		const user = { email, fullname, password };
 		if (checkForm(user)) {
 			API.User
 				.register(user)
@@ -76,7 +98,7 @@ const RegisterForm = props => {
 	};
 
 	return (
-		<div>
+		<div className={styles.formGroup}>
 			{status.state.code !== 200 &&
 			status.state.code !== 400 && <p>{status.state.error}</p>}
 
@@ -87,36 +109,59 @@ const RegisterForm = props => {
 				</p>
 			)}
 
-			<form>
+			<form className={styles.form}>
+				<p className={styles.heading}>Sign up for your account</p>
 				<InputGroup
+					labelClass={styles.hiddenLabel}
+					inputClass={styles.input}
 					name="email"
 					label="E-Mail"
 					type="text"
-					placeholder="raduser420@hotmail.net"
+					placeholder="Enter email"
 					value={email}
-					onChange={e => setEmail(e.target.value)}
+					onChange={handleChange}
 				/>
 				<InputGroup
-					name="username"
-					label="Username"
+					labelClass={styles.hiddenLabel}
+					inputClass={styles.input}
+					name="fullname"
+					label="Fullname"
 					type="text"
-					placeholder="raduser420"
-					value={username}
-					onChange={e => setUsername(e.target.value)}
+					placeholder="Enter full name"
+					value={fullname}
+					onChange={handleChange}
 				/>
-				<InputGroupPassword
+				<InputGroup
+					labelClass={styles.hiddenLabel}
+					inputClass={styles.input}
 					name="password"
 					label="Password"
 					type="password"
-					placeholder="raduser420"
-					showGlyph="Show"
-					hideGlyph="Hide"
+					placeholder="Create password"
 					value={password}
-					onChange={e => setPassword(e.target.value)}
+					onChange={handleChange}
 				/>
-
-				<Button value="Register" onClick={submitForm} />
+				<p className={styles.terms}>
+					By signing up, you confirm that you've read and accepted our{' '}
+					<Link className={styles.link} to="/404">
+						Terms of Service
+					</Link>{' '}
+					and{' '}
+					<Link className={styles.link} to="/404">
+						Privacy Policy
+					</Link>.
+				</p>
+				<Button
+					className={isDisabled ? styles.disabled : styles.btn}
+					disabled={isDisabled}
+					value="Sign Up"
+					onClick={submitForm}
+				/>
 			</form>
+			<hr className={styles.hr} />
+			<Link className={styles.loginLink} to="/login">
+				Already have an account? Log In
+			</Link>
 		</div>
 	);
 };

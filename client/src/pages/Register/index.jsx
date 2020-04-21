@@ -1,7 +1,7 @@
 // ----------------- Dependencies ------------------
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 // ----------------- Other Dependencies ------------------
 
@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 // ----------------- Stylesheet ------------------
 
-import './style.css';
+import styles from './style.module.css';
 
 // ----------------- Components ------------------
 
@@ -19,13 +19,8 @@ import RegisterForm from '../../components/RegisterForm';
 
 const Register = props => {
 	return (
-		<div>
-			<h1>This is the Register page!</h1>
-			<Link to="/">Home</Link>
-			<Link to="/login">Login</Link>
-			<Link to="/contact">Contact</Link>
-			<Link to="/contacts">Contacts?</Link>
-
+		<div className={styles.page}>
+			<h1 className={styles.brand}>Trello Clone</h1>
 			<RegisterForm {...props} />
 		</div>
 	);
