@@ -1,12 +1,14 @@
 // ----------------- Dependencies ------------------
 
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import { useScrollPosition } from '../../hooks/useScrollPosition';
 
 // ----------------- Other Dependencies ------------------
 
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import API from '../../lib/API';
+// import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+// import API from '../../lib/API';
 
 // ----------------- Stylesheet ------------------
 
@@ -14,34 +16,71 @@ import './style.css';
 
 // ----------------- Components ------------------
 
-import UserList from '../../components/UserList';
+import InputGroup from '../../components/InputGroup';
+// import Button from '../../components/Button';
 
 // ----------------- Landing Page ------------------
 
 const Landing = props => {
-	const currentUser = useContext(CurrentUserContext);
+	const [ email, setEmail ] = useState(''),
+		[ headerScrolled, setHeaderScrolled ] = useState('');
 
-	const logout = () => currentUser.logout()();
+	useScrollPosition(({ prevPos, currPos }) => {
+		return currPos.y < 0
+			? setHeaderScrolled('nav-header--scrolled')
+			: setHeaderScrolled('');
+	});
 
 	return (
 		<div>
 			<div>
-				{currentUser.state.isAuth && (
-					<p>Welcome, {currentUser.state.username}</p>
-				)}
-				<h1>This is the Landing page!</h1>
-				<Link to="/register">Register</Link>
-				<Link to="/login">Login</Link>
-				<Link to="/contact">Contact</Link>
-				<Link to="/contacts">Contacts?</Link>
-				{currentUser.state.isAuth && (
-					<div>
-						<button onClick={logout}>Logout</button>
-						<Link to="/my-account">My Profile</Link>
-					</div>
-				)}
+				<header className={`nav-header ${headerScrolled}`}>
+					<nav className="nav-home">
+						<Link className="nav-home__link nav-home__brand" to="/">
+							Trello Clone
+						</Link>
+						<div>
+							<Link
+								className="nav-home__link nav-home__link-btn"
+								to="/login"
+							>
+								Log In
+							</Link>
+							<Link
+								className="nav-home__link nav-home__link-btn nav-home__link-btn--inverse"
+								to="/register"
+							>
+								Sign Up
+							</Link>
+						</div>
+					</nav>
+				</header>
+				<main>
+					<section className="intro">
+						<p>
+							Trello Clone lets you work more collaboratively and get
+							more done.
+						</p>
+						<p>
+							Trello Clone’s boards, lists, and cards enable you to
+							organize and prioritize your projects in a fun,
+							flexible, and rewarding way.
+						</p>
+						<form>
+							<InputGroup
+								name="email"
+								type="email"
+								value={email}
+								placeholder="Email"
+								onChange={e => setEmail(e.target.value)}
+							/>
+							<Link to={{ pathname: '/register', state: { email } }}>
+								Sign Up - It's Free!
+							</Link>
+						</form>
+					</section>
+				</main>
 			</div>
-			<UserList />
 		</div>
 	);
 };
