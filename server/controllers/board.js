@@ -34,6 +34,21 @@ router.get('/', (req, res) => {
 });
 
 //-------------------------------------------
+// GET: All My Boards
+//-------------------------------------------
+
+router.get('/my-boards', jwtVerifier, (req, res) => {
+	db.Board
+		.findAll({ where: { UserId: req.user.id } })
+		.then(foundBoards => {
+			res.json({ status: 200, boards: foundBoards });
+		})
+		.catch(err => {
+			res.json({ status: 500, error: err });
+		});
+});
+
+//-------------------------------------------
 // GET: One
 //-------------------------------------------
 
