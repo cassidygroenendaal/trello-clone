@@ -11,11 +11,11 @@ import API from '../../lib/API';
 
 // ----------------- Stylesheet ------------------
 
-// import './style.css';
+import styles from './style.module.css';
 
 // ----------------- Components ------------------
 
-import InputGroupPassword from '../../components/InputGroupPassword';
+import InputGroup from '../../components/InputGroup';
 import Button from '../../components/Button';
 
 // ----------------- ResetForm ------------------
@@ -64,9 +64,9 @@ const ResetForm = props => {
 							currentUser.login(
 								res.data.user,
 								res.data.user.authToken
-								)();
-								props.history.push('/');
-							}, 3000)
+							)();
+							props.history.push('/');
+						}, 3000);
 					} else {
 						status.setError(res.data.message)();
 						status.setCode(res.data.status)();
@@ -78,29 +78,44 @@ const ResetForm = props => {
 	};
 
 	return (
-		<div>
+		<div className={styles.formGroup}>
 			{status.state.code !== undefined &&
 			status.state.code !== 200 && (
 				<div>
-					<h4>{status.state.error}</h4>
-					<Link to="/forgot">Send a new link</Link>
+					<p className={styles.error}>{status.state.error}</p>
+					<Link className={styles.link} to="/forgot">
+						Send a new link
+					</Link>
 				</div>
 			)}
-			<form>
-				<InputGroupPassword
-					name="password"
-					label="New Password"
-					type="password"
-					placeholder="New Password"
-					showGlyph="Show"
-					hideGlyph="Hide"
-					value={password}
-					onChange={e => setPassword(e.target.value)}
-				/>
 
-				<Button value="Reset Password" onClick={submitForm} />
-			</form>
 			{status.state.success && <p>{status.state.success}</p>}
+
+			{status.state.code === 200 && (
+				<form>
+					<InputGroup
+						labelClass={styles.hiddenLabel}
+						inputClass={styles.input}
+						name="password"
+						label="New Password"
+						type="password"
+						placeholder="Enter password"
+						value={password}
+						onChange={e => setPassword(e.target.value)}
+					/>
+
+					<Button
+						className={styles.btn}
+						value="Reset password"
+						onClick={submitForm}
+					/>
+				</form>
+			)}
+
+			<hr className={styles.hr} />
+			<Link className={styles.loginLink} to="/login">
+				Return to log in
+			</Link>
 		</div>
 	);
 };

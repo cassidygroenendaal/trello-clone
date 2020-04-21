@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 // ----------------- Stylesheet ------------------
 
-import './style.css';
+import styles from './style.module.css';
 
 // ----------------- Components ------------------
 
@@ -19,14 +19,8 @@ import ResetForm from '../../components/ResetForm';
 
 const Reset = props => {
 	return (
-		<div>
-			<h1>This is the Reset page!</h1>
-			<Link to="/">Home</Link>
-			<Link to="/login">Login</Link>
-			<Link to="/register">Register</Link>
-			<Link to="/contact">Contact</Link>
-			<Link to="/contacts">Contacts?</Link>
-
+		<div className={styles.page}>
+			<h1 className={styles.brand}>Trello Clone</h1>
 			<ResetForm {...props} />
 		</div>
 	);
