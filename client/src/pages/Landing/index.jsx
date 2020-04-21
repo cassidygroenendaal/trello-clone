@@ -7,17 +7,13 @@ import { useScrollPosition } from '../../hooks/useScrollPosition';
 
 // ----------------- Other Dependencies ------------------
 
-// import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-// import API from '../../lib/API';
-
 // ----------------- Stylesheet ------------------
 
-import './style.css';
+import styles from './style.module.css';
 
 // ----------------- Components ------------------
 
 import InputGroup from '../../components/InputGroup';
-// import Button from '../../components/Button';
 
 // ----------------- Landing Page ------------------
 
@@ -27,57 +23,65 @@ const Landing = props => {
 
 	useScrollPosition(({ prevPos, currPos }) => {
 		return currPos.y < 0
-			? setHeaderScrolled('nav-header--scrolled')
+			? setHeaderScrolled(styles.headerScrolled)
 			: setHeaderScrolled('');
 	});
 
 	return (
 		<div>
 			<div>
-				<header className={`nav-header ${headerScrolled}`}>
-					<nav className="nav-home">
-						<Link className="nav-home__link nav-home__brand" to="/">
+				<header className={`${styles.header} ${headerScrolled}`}>
+					<nav className={styles.nav}>
+						<Link className={styles.brand} to="/">
 							Trello Clone
 						</Link>
 						<div>
-							<Link
-								className="nav-home__link nav-home__link-btn"
-								to="/login"
-							>
+							<Link className={styles.linkBtn} to="/login">
 								Log In
 							</Link>
-							<Link
-								className="nav-home__link nav-home__link-btn nav-home__link-btn--inverse"
-								to="/register"
-							>
+							<Link className={styles.linkBtnInverse} to="/register">
 								Sign Up
 							</Link>
 						</div>
 					</nav>
 				</header>
 				<main>
-					<section className="intro">
-						<p>
-							Trello Clone lets you work more collaboratively and get
-							more done.
-						</p>
-						<p>
-							Trello Clone’s boards, lists, and cards enable you to
-							organize and prioritize your projects in a fun,
-							flexible, and rewarding way.
-						</p>
-						<form>
-							<InputGroup
-								name="email"
-								type="email"
-								value={email}
-								placeholder="Email"
-								onChange={e => setEmail(e.target.value)}
-							/>
-							<Link to={{ pathname: '/register', state: { email } }}>
-								Sign Up - It's Free!
-							</Link>
-						</form>
+					<section className={styles.hero}>
+						<div className={styles.row}>
+							<div className={`${styles.intro} ${styles.col6}`}>
+								<p className={styles.headline}>
+									Trello Clone lets you work more collaboratively and
+									get more done.
+								</p>
+								<p className={styles.info}>
+									Trello Clone’s boards, lists, and cards enable you
+									to organize and prioritize your projects in a fun,
+									flexible, and rewarding way.
+								</p>
+							</div>
+							<div className={`${styles.imageDiv} ${styles.col6}`}>
+								<div className={styles.heroImage} />
+								<div className={styles.heroImageShadow} />
+							</div>
+							<form className={styles.emailForm}>
+								<InputGroup
+									labelClass={styles.emailLabel}
+									inputClass={styles.input}
+									label="Email"
+									name="email"
+									type="email"
+									value={email}
+									placeholder="Email"
+									onChange={e => setEmail(e.target.value)}
+								/>
+								<Link
+									className={styles.linkBtnGreen}
+									to={{ pathname: '/register', state: { email } }}
+								>
+									Sign Up - It's Free!
+								</Link>
+							</form>
+						</div>
 					</section>
 				</main>
 			</div>
