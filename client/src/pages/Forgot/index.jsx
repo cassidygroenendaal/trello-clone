@@ -1,15 +1,12 @@
 // ----------------- Dependencies ------------------
 
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 // ----------------- Other Dependencies ------------------
 
-// import API from '../../lib/API';
-
 // ----------------- Stylesheet ------------------
 
-import './style.css';
+import styles from './style.module.css';
 
 // ----------------- Components ------------------
 
@@ -19,14 +16,8 @@ import ForgotForm from '../../components/ForgotForm';
 
 const Forgot = props => {
 	return (
-		<div>
-			<h1>This is the Forgot Password page!</h1>
-			<Link to="/">Home</Link>
-			<Link to="/login">Login</Link>
-			<Link to="/register">Register</Link>
-			<Link to="/contact">Contact</Link>
-			<Link to="/contacts">Contacts?</Link>
-
+		<div className={styles.page}>
+			<h1 className={styles.brand}>Trello Clone</h1>
 			<ForgotForm />
 		</div>
 	);
