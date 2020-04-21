@@ -1,6 +1,7 @@
 // ----------------- Dependencies ------------------
 
 import React, { useState, useContext, useEffect } from 'react';
+import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 
 // ----------------- Other Dependencies ------------------
@@ -25,8 +26,12 @@ const RegisterForm = props => {
 	const status = useContext(StatusContext),
 		currentUser = useContext(CurrentUserContext);
 
+	const location = useLocation();
+
 	const [ username, setUsername ] = useState(''),
-		[ email, setEmail ] = useState(''),
+		[ email, setEmail ] = useState(
+			location.state.email ? location.state.email : ''
+		),
 		[ password, setPassword ] = useState('');
 
 	useEffect(() => {
