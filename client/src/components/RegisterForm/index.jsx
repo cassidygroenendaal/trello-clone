@@ -109,7 +109,7 @@ const RegisterForm = props => {
 				</p>
 			)}
 
-			<form className={styles.form}>
+			<form>
 				<p className={styles.heading}>Sign up for your account</p>
 				<InputGroup
 					labelClass={styles.hiddenLabel}

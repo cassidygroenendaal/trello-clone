@@ -1,6 +1,7 @@
 // ----------------- Dependencies ------------------
 
 import React, { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 // ----------------- Other Dependencies ------------------
 
@@ -10,12 +11,11 @@ import API from '../../lib/API';
 
 // ----------------- Stylesheet ------------------
 
-// import './style.css';
+import styles from './style.module.css';
 
 // ----------------- Components ------------------
 
 import InputGroup from '../../components/InputGroup';
-import InputGroupPassword from '../../components/InputGroupPassword';
 import Button from '../../components/Button';
 
 // ----------------- LoginForm ------------------
@@ -63,7 +63,7 @@ const LoginForm = props => {
 	};
 
 	return (
-		<div>
+		<div className={styles.formGroup}>
 			{status.state.code !== 200 && (
 				<div>
 					<p>{status.state.error}</p>
@@ -71,26 +71,36 @@ const LoginForm = props => {
 			)}
 
 			<form>
+				<p className={styles.heading}>Log in to Trello Clone</p>
 				<InputGroup
-					name="username"
-					label="Username"
+					labelClass={styles.hiddenLabel}
+					inputClass={styles.input}
+					name="email"
+					label="Email"
 					type="text"
-					placeholder="raduser420"
+					placeholder="Enter email"
 					value={username}
 					onChange={e => setUsername(e.target.value)}
 				/>
-				<InputGroupPassword
+				<InputGroup
+					labelClass={styles.hiddenLabel}
+					inputClass={styles.input}
 					name="password"
 					label="Password"
 					type="password"
-					placeholder="raduser420"
-					showGlyph="Show"
-					hideGlyph="Hide"
+					placeholder="Enter password"
 					value={password}
 					onChange={e => setPassword(e.target.value)}
 				/>
-				<Button value="Login" onClick={submitForm} />
+				<Button
+					className={styles.btn}
+					value="Login"
+					onClick={submitForm}
+				/>
 			</form>
+			<hr className={styles.hr} />
+			<Link className={styles.link} to="/forgot">Can't log in?</Link>{' - '}
+			<Link className={styles.link} to="/register">Sign up for an account</Link>
 		</div>
 	);
 };
