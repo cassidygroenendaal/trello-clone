@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 // ----------------- Other Dependencies ------------------
 
-import API from '../../lib/API';
+// import API from '../../lib/API';
 
 // ----------------- Stylesheet ------------------
 
