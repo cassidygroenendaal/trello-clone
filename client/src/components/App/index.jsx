@@ -72,7 +72,7 @@ const App = () => {
 				setIsLoading(false);
 			}
 		},
-		// eslint disable next line;
+		// eslint-disable-next-line
 		[]
 	);
 
@@ -83,7 +83,7 @@ const App = () => {
 			) : (
 				<div>
 					<Switch>
-						<Route exact path="/" component={Landing} />
+						<PublicOnlyRoute exact path="/" component={Landing} />
 						<PublicOnlyRoute
 							exact
 							path="/register"
