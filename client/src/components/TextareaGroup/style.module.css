@@ -1,0 +1,19 @@
+.hidden {
+	position: absolute;
+	left: -10000px;
+	top: auto;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+.textarea {
+	font-size: 0.9em;
+	color: #4d4d4d;
+	background: #fafbfc;
+	border: 2px solid #dfe1e6;
+	border-radius: 0.2em;
+	width: 100%;
+	padding: 0.8em 0.5em;
+	margin-bottom: 1.2em;
+}
