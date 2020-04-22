@@ -20,7 +20,7 @@ import './style.css';
 import PrivateRoute from '../PrivateRoute';
 import PublicOnlyRoute from '../PublicOnlyRoute';
 
-import Footer from '../Footer';
+// import Footer from '../Footer';
 
 // ----------------- Pages ------------------
 
@@ -51,10 +51,6 @@ const App = () => {
 					.getMe(currentUser.state.authToken)
 					.then(response => {
 						if (response.data.status === 200) {
-							// status.setCode(200)();
-							// status.setSuccess(
-							// 	"You've been successfully logged in."
-							// )();
 							currentUser.setUser(response.data.user)();
 						} else {
 							status.setError(response.data.message)();
@@ -94,19 +90,15 @@ const App = () => {
 						<Route exact path="/reset/:token" component={Reset} />
 						<Route exact path="/u/:id" component={UserProfile} />
 						<Route exact path="/contact" component={Contact} />
-						<PrivateRoute
-							exact
-							path="/my-account"
-							component={MyAccount}
-						/>
 						<Route
 							exact
 							path="/cookie-policy"
 							component={CookiePolicy}
 						/>
-						<Route component={_404} />
+						<PrivateRoute path="/my-account" component={MyAccount} />
+						{/* <Route component={_404} /> */}
 					</Switch>
-					<Footer />
+					{/* <Footer /> */}
 				</div>
 			)}
 		</div>

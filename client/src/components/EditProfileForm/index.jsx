@@ -1,6 +1,6 @@
 // ----------------- Dependencies ------------------
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 // ----------------- Other Dependencies ------------------
 
@@ -20,17 +20,32 @@ import Button from '../../components/Button';
 
 // ----------------- EditUserForm ------------------
 
-const EditUserForm = props => {
+const EditProfileForm = props => {
 	const currentUser = useContext(CurrentUserContext);
 	const [ status, setStatus ] = useState({
-		code    : null,
-		error   : null,
-		success : null
-	});
+			code    : null,
+			error   : null,
+			success : null
+		}),
+		[ user, setUser ] = useState({});
+
+	useEffect(
+		() => {
+			API.User.getOne(currentUser.state.id).then(response => {
+				if (response.data.status === 200) {
+					setUser(response.data.user);
+				} else {
+					status.setError(response.data.message)();
+					status.setCode(response.data.status)();
+				}
+			});
+		},
+		[ currentUser, status ]
+	);
 
 	const setUsername = username =>
-			props.setUser({ ...props.user, username }),
-		setEmail = email => props.setUser({ ...props.user, email });
+			setUser({...user, username }),
+		setEmail = email => setUser({ ...user, email });
 
 	const listSkipped = [
 		'id',
@@ -59,16 +74,16 @@ const EditUserForm = props => {
 	const submitForm = e => {
 		e.preventDefault();
 
-		if (checkForm(props.user)) {
+		if (checkForm(user)) {
 			// Make a new user object that only contains keys
 			// that have a value - no blank strings
 			// This prevents the user from updating their info
 			// with an empty string when they didn't mean to
 			const updatedUser = {};
 
-			for (let key in props.user) {
-				if (props.user[key] !== '' && !listSkipped.includes(key)) {
-					updatedUser[key] = props.user[key];
+			for (let key in user) {
+				if (user[key] !== '' && !listSkipped.includes(key)) {
+					updatedUser[key] = user[key];
 				}
 			}
 
@@ -110,7 +125,7 @@ const EditUserForm = props => {
 					label="Username"
 					type="text"
 					placeholder="raduser420"
-					value={props.user.username}
+					value={user.username}
 					onChange={e => setUsername(e.target.value)}
 				/>
 				<InputGroup
@@ -118,7 +133,7 @@ const EditUserForm = props => {
 					label="E-Mail"
 					type="text"
 					placeholder="raduser420@hotmail.net"
-					value={props.user.email}
+					value={user.email}
 					onChange={e => setEmail(e.target.value)}
 				/>
 				<Button value="Save Changes" onClick={submitForm} />
@@ -127,4 +142,4 @@ const EditUserForm = props => {
 	);
 };
 
-export default EditUserForm;
+export default EditProfileForm;
