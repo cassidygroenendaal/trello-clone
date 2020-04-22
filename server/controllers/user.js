@@ -90,34 +90,74 @@ router.get('/:id', (req, res) => {
 router.post('/register', (req, res) => {
 	const response = {},
 		{ newUser } = req.body;
-	db.User
-		.create(newUser)
-		.then(createdUser => {
-			response.status = 200;
-			response.user = {
-				id        : createdUser.id,
-				username  : createdUser.username,
-				email     : createdUser.email,
-				isAuth    : true,
-				authToken : jwtSignature(createdUser.id)
-			};
-			console.log(response);
-			res.json(response);
-		})
-		.catch(err => {
-			if (err.parent && err.parent.errno === 1062) {
-				response.status = 1062;
+
+	const createUser = user => {
+		user.initials = user.fullname
+			.split(' ')
+			.map(name => name[0])
+			.join('');
+
+		db.User
+			.create(user)
+			.then(createdUser => {
+				response.status = 200;
+				response.user = {
+					id        : createdUser.id,
+					username  : createdUser.username,
+					email     : createdUser.email,
+					isAuth    : true,
+					authToken : jwtSignature(createdUser.email)
+				};
+				console.log(response);
+				res.json(response);
+			})
+			.catch(err => {
+				if (err.parent && err.parent.errno === 1062) {
+					response.status = 1062;
+					response.error = err;
+					response.message = `A user with the ${err.errors[0]
+						.path} '${err.errors[0].value}' already exists`;
+				} else {
+					response.status = 500;
+					response.error = err;
+					response.message = 'Server error';
+				}
+				console.log(response);
+				res.json(response);
+			});
+	};
+
+	const generateUsername = fullname => {
+		const randTotal = Math.ceil(Math.random() * 6);
+		for (let i = 0; i < randTotal; i++) {
+			fullname += Math.floor(Math.random() * 10);
+		}
+
+		return fullname;
+	};
+
+	const validateUsername = name => {
+		fullname = name.split(' ').join('').toLowerCase();
+
+		db.User
+			.findOne({ where: { username: fullname } })
+			.then(foundUser => {
+				if (!foundUser) {
+					newUser.username = fullname;
+					return createUser(newUser);
+				}
+
+				validateUsername(generateUsername(fullname));
+			})
+			.catch(err => {
+				response.message = 'There was some kind of error.';
 				response.error = err;
-				response.message = `A user with the ${err.errors[0]
-					.path} '${err.errors[0].value}' already exists`;
-			} else {
-				response.status = 500;
-				response.error = err;
-				response.message = 'Server error';
-			}
-			console.log(response);
-			res.json(response);
-		});
+				console.log(err);
+				res.json(response);
+			});
+	};
+
+	validateUsername(newUser.fullname);
 });
 
 //-------------------------------------------
@@ -149,7 +189,7 @@ router.post('/login', (req, res) => {
 			username  : foundUser.username,
 			email     : foundUser.email,
 			isAuth    : true,
-			authToken : jwtSignature(foundUser.id)
+			authToken : jwtSignature(foundUser.email)
 		};
 		console.log(response);
 		res.json(response);
@@ -336,7 +376,7 @@ This is a confirmation that the password associated with your ${updatedUser.emai
 				username  : updatedUser.username,
 				email     : updatedUser.email,
 				isAuth    : true,
-				authToken : jwtSignature(updatedUser.id)
+				authToken : jwtSignature(updatedUser.email)
 			};
 
 			console.log(response);
