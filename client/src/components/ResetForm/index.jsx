@@ -94,8 +94,6 @@ const ResetForm = props => {
 			{status.state.code === 200 && (
 				<form>
 					<InputGroup
-						labelClass={styles.hiddenLabel}
-						inputClass={styles.input}
 						name="password"
 						label="New Password"
 						type="password"
@@ -104,11 +102,7 @@ const ResetForm = props => {
 						onChange={e => setPassword(e.target.value)}
 					/>
 
-					<Button
-						className={styles.btn}
-						value="Reset password"
-						onClick={submitForm}
-					/>
+					<Button value="Reset password" onClick={submitForm} />
 				</form>
 			)}
 

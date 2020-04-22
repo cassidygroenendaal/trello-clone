@@ -14,9 +14,9 @@ import API from '../../lib/API';
 
 // ----------------- Components ------------------
 
-import InputGroup from '../../components/InputGroup';
-// import InputGroupPassword from '../../components/InputGroupPassword';
-import Button from '../../components/Button';
+import InputGroup from '../InputGroup';
+import TextareaGroup from '../TextareaGroup';
+import Button from '../Button';
 
 // ----------------- EditUserForm ------------------
 
@@ -43,8 +43,7 @@ const EditProfileForm = props => {
 		[ currentUser, status ]
 	);
 
-	const setUsername = username =>
-			setUser({...user, username }),
+	const setUsername = username => setUser({ ...user, username }),
 		setEmail = email => setUser({ ...user, email });
 
 	const listSkipped = [
@@ -58,10 +57,6 @@ const EditProfileForm = props => {
 	];
 
 	const checkForm = user => {
-		// Check to make sure the form is filled out
-		// listSkipped contains keys to ignore the values of
-		// Typically these are default MongoDB values that the
-		// user will not be able to change
 		for (let key in user) {
 			if (!listSkipped.includes(key)) {
 				// If even one key has a value, return true
@@ -75,10 +70,6 @@ const EditProfileForm = props => {
 		e.preventDefault();
 
 		if (checkForm(user)) {
-			// Make a new user object that only contains keys
-			// that have a value - no blank strings
-			// This prevents the user from updating their info
-			// with an empty string when they didn't mean to
 			const updatedUser = {};
 
 			for (let key in user) {
@@ -121,11 +112,33 @@ const EditProfileForm = props => {
 
 			<form>
 				<InputGroup
+					name="fullname"
+					label="Full Name"
+					type="text"
+					placeholder="Enter full name"
+					value={user.fullname}
+					onChange={e => setUsername(e.target.value)}
+				/>
+				<InputGroup
+					name="initials"
+					label="Initials"
+					type="text"
+					placeholder="Enter initials"
+					value={user.initials}
+					onChange={e => setUsername(e.target.value)}
+				/>
+				<InputGroup
 					name="username"
 					label="Username"
 					type="text"
 					placeholder="raduser420"
 					value={user.username}
+					onChange={e => setUsername(e.target.value)}
+				/>
+				<TextareaGroup
+					name="bio"
+					label="Bio"
+					value={user.bio}
 					onChange={e => setUsername(e.target.value)}
 				/>
 				<InputGroup
@@ -136,7 +149,7 @@ const EditProfileForm = props => {
 					value={user.email}
 					onChange={e => setEmail(e.target.value)}
 				/>
-				<Button value="Save Changes" onClick={submitForm} />
+				<Button value="Save" onClick={submitForm} />
 			</form>
 		</div>
 	);

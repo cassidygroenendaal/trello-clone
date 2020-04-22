@@ -63,8 +63,6 @@ const ForgotForm = () => {
 					<p className={styles.heading}>Can't Log in?</p>
 					<p className={styles.subheading}>We'll send a recovery link to</p>
 					<InputGroup
-						labelClass={styles.hiddenLabel}
-						inputClass={styles.input}
 						name="email"
 						label="Email"
 						type="email"
@@ -73,7 +71,6 @@ const ForgotForm = () => {
 						onChange={e => setEmail(e.target.value)}
 					/>
 					<Button
-						className={styles.btn}
 						value="Send recovery link"
 						onClick={submitForm}
 					/>

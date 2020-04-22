@@ -37,11 +37,22 @@ const RegisterForm = props => {
 		[ password, setPassword ] = useState(''),
 		[ isDisabled, setIsDisabled ] = useState(true);
 
-	useEffect(() => {
-		status.reset()();
-		status.setCode(200)();
+	useEffect(
+		() => {
+			const user = { email, fullname, password };
+
+			if (checkForm(user)) {
+				setIsDisabled(false);
+			} else {
+				setIsDisabled(true);
+			}
+
+			status.reset()();
+			status.setCode(200)();
+		},
 		// eslint-disable-next-line
-	}, []);
+		[ email, fullname, password ]
+	);
 
 	const checkForm = user => {
 		for (let key in user) {
@@ -51,8 +62,7 @@ const RegisterForm = props => {
 	};
 
 	const handleChange = e => {
-		const { name, value } = e.target,
-			user = { email, fullname, password };
+		const { name, value } = e.target;
 
 		if (name === 'email') {
 			setEmail(value);
@@ -60,12 +70,6 @@ const RegisterForm = props => {
 			setFullname(value);
 		} else if (name === 'password') {
 			setPassword(value);
-		}
-
-		if (checkForm(user)) {
-			setIsDisabled(false);
-		} else {
-			setIsDisabled(true);
 		}
 	};
 
@@ -112,8 +116,6 @@ const RegisterForm = props => {
 			<form>
 				<p className={styles.heading}>Sign up for your account</p>
 				<InputGroup
-					labelClass={styles.hiddenLabel}
-					inputClass={styles.input}
 					name="email"
 					label="E-Mail"
 					type="text"
@@ -122,8 +124,6 @@ const RegisterForm = props => {
 					onChange={handleChange}
 				/>
 				<InputGroup
-					labelClass={styles.hiddenLabel}
-					inputClass={styles.input}
 					name="fullname"
 					label="Fullname"
 					type="text"
@@ -132,8 +132,6 @@ const RegisterForm = props => {
 					onChange={handleChange}
 				/>
 				<InputGroup
-					labelClass={styles.hiddenLabel}
-					inputClass={styles.input}
 					name="password"
 					label="Password"
 					type="password"
@@ -152,7 +150,6 @@ const RegisterForm = props => {
 					</Link>.
 				</p>
 				<Button
-					className={isDisabled ? styles.disabled : styles.btn}
 					disabled={isDisabled}
 					value="Sign Up"
 					onClick={submitForm}

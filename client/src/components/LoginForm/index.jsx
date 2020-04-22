@@ -73,8 +73,6 @@ const LoginForm = props => {
 			<form>
 				<p className={styles.heading}>Log in to Trello Clone</p>
 				<InputGroup
-					labelClass={styles.hiddenLabel}
-					inputClass={styles.input}
 					name="email"
 					label="Email"
 					type="text"
@@ -83,8 +81,6 @@ const LoginForm = props => {
 					onChange={e => setEmail(e.target.value)}
 				/>
 				<InputGroup
-					labelClass={styles.hiddenLabel}
-					inputClass={styles.input}
 					name="password"
 					label="Password"
 					type="password"
@@ -92,15 +88,16 @@ const LoginForm = props => {
 					value={password}
 					onChange={e => setPassword(e.target.value)}
 				/>
-				<Button
-					className={styles.btn}
-					value="Login"
-					onClick={submitForm}
-				/>
+				<Button value="Login" onClick={submitForm} />
 			</form>
 			<hr className={styles.hr} />
-			<Link className={styles.link} to="/forgot">Can't log in?</Link>{' - '}
-			<Link className={styles.link} to="/register">Sign up for an account</Link>
+			<Link className={styles.link} to="/forgot">
+				Can't log in?
+			</Link>
+			{' - '}
+			<Link className={styles.link} to="/register">
+				Sign up for an account
+			</Link>
 		</div>
 	);
 };

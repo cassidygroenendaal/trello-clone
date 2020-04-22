@@ -1,0 +1,17 @@
+.btn {
+	font-weight: 700;
+	color: #fff;
+	background: #5aac44;
+	border-radius: 0.2em;
+	border: none;
+	width: 100%;
+  padding: 0.9em;
+  cursor: pointer;
+}
+
+.disabled {
+	composes: btn;
+	color: #8c8c8c;
+  background: #e2e4e6;
+  cursor: auto;
+}
