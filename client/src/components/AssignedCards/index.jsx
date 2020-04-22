@@ -8,7 +8,7 @@ import styles from './style.module.css';
 
 // ----------------- Components ------------------
 
-import Button from '../Button';
+import Dropdown from '../Dropdown';
 
 // ----------------- Button ------------------
 
@@ -16,19 +16,55 @@ const AssignedCards = props => {
 	const [ sortedBy, setSortedBy ] = useState('board'),
 		[ filteredBy, setFilteredBy ] = useState('all boards');
 
+	const sortCards = value => {
+		setSortedBy(value);
+	};
+
+	const filterCards = value => {
+		setFilteredBy(value);
+	};
+
+	const listSortOpts = [
+		{
+			name       : 'Sort by board',
+			value      : 'board',
+			isSelected : true
+		},
+		{
+			name       : 'Sort by due date',
+			value      : 'due date',
+			isSelected : false
+		}
+	];
+
+	const listFilterOpts = [
+		{
+			name       : 'All boards',
+			value      : 'all boards',
+			isSelected : true
+		}
+	];
+
 	return (
 		<div className={styles.container}>
 			<ul className={styles.list}>
 				<li className={styles.item}>
-					<button className={styles.btn}>
-						Sorting by <span className={styles.bold}>{sortedBy}</span>
-					</button>
+					<Dropdown
+						value={sortedBy}
+						title="Sort Cards"
+						items={listSortOpts}
+						type="select"
+						onClick={sortCards}
+					/>
 				</li>
 				<li className={styles.item}>
-					<button className={styles.btn}>
-						Showing cards from{' '}
-						<span className={styles.bold}>{filteredBy}</span>
-					</button>
+					<Dropdown
+						value={filteredBy}
+						title="Filter Cards"
+						items={listFilterOpts}
+						type="select"
+						onClick={filterCards}
+					/>
 				</li>
 			</ul>
 			<div className={styles.cards}>
