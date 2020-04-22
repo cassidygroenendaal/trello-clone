@@ -1,6 +1,7 @@
 // ----------------- Dependencies ------------------
 
 import React, { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 // ----------------- Other Dependencies ------------------
 
@@ -10,7 +11,7 @@ import API from '../../lib/API';
 
 // ----------------- Stylesheet ------------------
 
-// import './style.css';
+import styles from './style.module.css';
 
 // ----------------- Components ------------------
 
@@ -27,7 +28,7 @@ const EditProfileForm = props => {
 			error   : null,
 			success : null
 		}),
-		[ user, setUser ] = useState({});
+		[ user, setUser ] = useState(currentUser);
 
 	useEffect(
 		() => {
@@ -44,7 +45,10 @@ const EditProfileForm = props => {
 	);
 
 	const setUsername = username => setUser({ ...user, username }),
-		setEmail = email => setUser({ ...user, email });
+		setEmail = email => setUser({ ...user, email }),
+		setFullname = fullname => setUser({ ...user, fullname }),
+		setInitials = initials => setUser({ ...user, initials }),
+		setBio = bio => setUser({ ...user, bio });
 
 	const listSkipped = [
 		'id',
@@ -103,50 +107,68 @@ const EditProfileForm = props => {
 	};
 
 	return (
-		<div>
+		<div className={styles.container}>
 			{status.code !== 200 && (
 				<div>
 					<p>{status.error}</p>
 				</div>
 			)}
 
-			<form>
+			<div className={styles.image} />
+
+			<h1 className={styles.bigHeading}>
+				Manage your personal information
+			</h1>
+			<p className={styles.text}>
+				Control which information people see and Power-Ups may access.
+				To learn more, view our <Link className={styles.link} to="/404">Terms of Service</Link> or{' '}
+				<Link className={styles.link} to="/404">Privacy Policy</Link>.
+			</p>
+
+			<h2 className={styles.heading}>About</h2>
+
+			<form className={styles.form}>
 				<InputGroup
+					labelClass={styles.label}
 					name="fullname"
 					label="Full Name"
 					type="text"
 					placeholder="Enter full name"
-					value={user.fullname}
-					onChange={e => setUsername(e.target.value)}
+					value={user.fullname || ''}
+					onChange={e => setFullname(e.target.value)}
 				/>
 				<InputGroup
+					labelClass={styles.label}
 					name="initials"
 					label="Initials"
 					type="text"
 					placeholder="Enter initials"
-					value={user.initials}
-					onChange={e => setUsername(e.target.value)}
+					value={user.initials || ''}
+					onChange={e => setInitials(e.target.value)}
 				/>
 				<InputGroup
+					labelClass={styles.label}
 					name="username"
 					label="Username"
 					type="text"
 					placeholder="raduser420"
-					value={user.username}
+					value={user.username || ''}
 					onChange={e => setUsername(e.target.value)}
 				/>
 				<TextareaGroup
+					labelClass={styles.label}
 					name="bio"
 					label="Bio"
-					value={user.bio}
-					onChange={e => setUsername(e.target.value)}
+					value={user.bio || ''}
+					onChange={e => setBio(e.target.value)}
 				/>
 				<InputGroup
+					labelClass={styles.label}
 					name="email"
 					label="E-Mail"
 					type="text"
 					placeholder="raduser420@hotmail.net"
-					value={user.email}
+					value={user.email || ''}
 					onChange={e => setEmail(e.target.value)}
 				/>
 				<Button value="Save" onClick={submitForm} />
