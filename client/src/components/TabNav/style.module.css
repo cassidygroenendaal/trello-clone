@@ -1,0 +1,31 @@
+.list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	border-bottom: 1px solid #dfe1e6;
+}
+
+.item {
+	margin: 0 0.1em;
+	position: relative;
+	bottom: 0.44em;
+}
+
+.link {
+	font-size: 0.9em;
+	font-weight: 700;
+	color: #172b4d;
+	text-decoration: none;
+	padding: 0.6em 1em;
+	background: #dfe1e6;
+	border-radius: 0.2em 0.2em 0 0;
+}
+
+.active {
+	composes: link;
+	background: #fff;
+	border: 1px solid #dfe1e6;
+	border-bottom: none;
+}

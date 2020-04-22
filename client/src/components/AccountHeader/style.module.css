@@ -1,0 +1,45 @@
+.header {
+	background: #f4f5f7;
+	color: #0c3953;
+}
+
+.info {
+	height: 9.1em;
+	/* height: 13.1em; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	padding-top: 1em;
+}
+
+.avatar {
+	position: relative;
+	background: #dfe1e6;
+	border-radius: 50%;
+	height: 3.2em;
+	width: 3.2em;
+}
+
+.initials {
+	font-weight: 700;
+	font-size: 1.5em;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.fullname {
+	font-size: 1.6em;
+	font-weight: 600;
+	padding: 0 0.6em;
+}
+
+.username {
+	font-size: 0.7em;
+	color: #6f7c91;
+	position: relative;
+	top: 0.5em;
+}

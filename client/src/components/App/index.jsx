@@ -96,7 +96,7 @@ const App = () => {
 							component={CookiePolicy}
 						/>
 						<PrivateRoute path="/my-account" component={MyAccount} />
-						{/* <Route component={_404} /> */}
+						<Route component={_404} />
 					</Switch>
 					{/* <Footer /> */}
 				</div>
