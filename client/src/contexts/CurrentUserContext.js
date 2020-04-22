@@ -5,6 +5,10 @@ const CurrentUserContext = createContext();
 const initialState = {
 	email     : undefined,
 	username  : undefined,
+	fullname  : undefined,
+	bio       : undefined,
+	initials  : undefined,
+	avatar    : undefined,
 	id        : undefined,
 	isAuth    : false,
 	authToken : localStorage.getItem('token')
@@ -20,6 +24,14 @@ const reducer = (state, action) => {
 			return { ...state, email: action.payload };
 		case 'set-username':
 			return { ...state, username: action.payload };
+		case 'set-fullname':
+			return { ...state, fullname: action.payload };
+		case 'set-bio':
+			return { ...state, bio: action.payload };
+		case 'set-initials':
+			return { ...state, initials: action.payload };
+		case 'set-avatar':
+			return { ...state, avatar: action.payload };
 		case 'set-id':
 			return { ...state, id: action.payload };
 		case 'set-auth':
@@ -41,6 +53,13 @@ const CurrentUserContextProvider = props => {
 			dispatch({ type: 'set-email', payload: email }),
 		setUsername = username => () =>
 			dispatch({ type: 'set-username', payload: username }),
+		setFullname = fullname => () =>
+			dispatch({ type: 'set-fullname', payload: fullname }),
+		setBio = bio => () => dispatch({ type: 'set-bio', payload: bio }),
+		setInitials = initials => () =>
+			dispatch({ type: 'set-initials', payload: initials }),
+		setAvatar = avatar => () =>
+			dispatch({ type: 'set-avatar', payload: avatar }),
 		setId = id => () => dispatch({ type: 'set-id', payload: id }),
 		setAuth = auth => () =>
 			dispatch({ type: 'set-auth', payload: auth }),
@@ -63,6 +82,10 @@ const CurrentUserContextProvider = props => {
 		reset,
 		setUser,
 		setEmail,
+		setFullname,
+		setBio,
+		setInitials,
+		setAvatar,
 		setUsername,
 		setId,
 		setAuth,

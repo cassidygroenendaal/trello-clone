@@ -51,6 +51,10 @@ router.get('/me', jwtVerifier, (req, res) => {
 			id       : req.user.id,
 			username : req.user.username,
 			email    : req.user.email,
+			fullname : req.user.fullname,
+			bio      : req.user.bio,
+			initials : req.user.initials,
+			avatar   : req.user.avatar,
 			isAuth   : true
 		}
 	};
@@ -105,6 +109,10 @@ router.post('/register', (req, res) => {
 					id        : createdUser.id,
 					username  : createdUser.username,
 					email     : createdUser.email,
+					fullname  : createdUser.fullname,
+					bio       : createdUser.bio,
+					initials  : createdUser.initials,
+					avatar    : createdUser.avatar,
 					isAuth    : true,
 					authToken : jwtSignature(createdUser.email)
 				};
@@ -185,6 +193,10 @@ router.post('/login', (req, res) => {
 
 		response.status = 200;
 		response.user = {
+			fullname  : foundUser.fullname,
+			bio       : foundUser.bio,
+			initials  : foundUser.initials,
+			avatar    : foundUser.avatar,
 			id        : foundUser.id,
 			username  : foundUser.username,
 			email     : foundUser.email,
@@ -372,7 +384,11 @@ This is a confirmation that the password associated with your ${updatedUser.emai
 			// Send back a user object that we create, removing vulnerable information
 			response.status = 200;
 			response.user = {
-				id        : updatedUser._id,
+				fullname  : updatedUser.fullname,
+				bio       : updatedUser.bio,
+				initials  : updatedUser.initials,
+				avatar    : updatedUser.avatar,
+				id        : updatedUser.id,
 				username  : updatedUser.username,
 				email     : updatedUser.email,
 				isAuth    : true,
