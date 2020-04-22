@@ -18,7 +18,6 @@ import AccountHeader from '../../components/AccountHeader';
 
 import EditProfileForm from '../../components/EditProfileForm';
 import AssignedCards from '../../components/AssignedCards';
-import SettingsForm from '../../components/SettingsForm';
 
 // ----------------- Pages ------------------
 
@@ -44,11 +43,6 @@ const MyAccount = props => {
 						exact
 						path={`${path}/cards`}
 						component={AssignedCards}
-					/>
-					<PrivateRoute
-						exact
-						path={`${path}/settings`}
-						component={SettingsForm}
 					/>
 					<Route component={_404} />
 				</Switch>

@@ -30,10 +30,6 @@ const AccountHeader = props => {
 		{
 			name : 'Cards',
 			to   : `${url}/cards`
-		},
-		{
-			name : 'Settings',
-			to   : `${url}/settings`
 		}
 	];
 
