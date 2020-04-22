@@ -37,7 +37,7 @@ const strategy = new JwtStrategy(jwtOpts, function(jwtPayload, next) {
 	// 	timeToExp = exp - now;
 
 	db.User
-		.findByPk(sub)
+		.findOne({ where: { email: sub } })
 		.then(foundUser => {
 			// if (timeToExp < 60 * 60) {
 			// 	console.log("There's less than an hour left!");

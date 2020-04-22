@@ -126,9 +126,9 @@ router.post('/register', (req, res) => {
 
 router.post('/login', (req, res) => {
 	const response = {},
-		{ username, password } = req.body;
+		{ email, password } = req.body;
 
-	db.User.findOne({ where: { username } }).then(foundUser => {
+	db.User.findOne({ where: { email } }).then(foundUser => {
 		if (!foundUser) {
 			response.status = 404;
 			response.error = 'Not found';
@@ -139,7 +139,7 @@ router.post('/login', (req, res) => {
 		if (!foundUser.comparePassword(password)) {
 			response.status = 401;
 			response.error = 'Unauthorized';
-			response.message = "The username and password don't match";
+			response.message = "The email and password don't match";
 			return res.json(response);
 		}
 

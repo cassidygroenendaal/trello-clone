@@ -24,7 +24,7 @@ const LoginForm = props => {
 	const currentUser = useContext(CurrentUserContext),
 		status = useContext(StatusContext);
 
-	const [ username, setUsername ] = useState(''),
+	const [ email, setEmail ] = useState(''),
 		[ password, setPassword ] = useState('');
 
 	useEffect(() => {
@@ -35,8 +35,8 @@ const LoginForm = props => {
 
 	const submitForm = e => {
 		e.preventDefault();
-		if (username !== '' && password !== '') {
-			const user = { username, password };
+		if (email !== '' && password !== '') {
+			const user = { email, password };
 
 			API.User
 				.login(user)
@@ -79,8 +79,8 @@ const LoginForm = props => {
 					label="Email"
 					type="text"
 					placeholder="Enter email"
-					value={username}
-					onChange={e => setUsername(e.target.value)}
+					value={email}
+					onChange={e => setEmail(e.target.value)}
 				/>
 				<InputGroup
 					labelClass={styles.hiddenLabel}
