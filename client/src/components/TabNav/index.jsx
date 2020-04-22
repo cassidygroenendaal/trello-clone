@@ -16,7 +16,7 @@ const TabNav = props => {
 		<nav>
 			<ul className={styles.list}>
 				{props.tabs.map(({ name, to }) => (
-					<li className={styles.item}>
+					<li key={to} className={styles.item}>
 						<NavLink
 							className={styles.link}
 							activeClassName={styles.active}

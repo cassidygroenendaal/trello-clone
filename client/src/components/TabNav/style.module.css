@@ -21,11 +21,11 @@
 	padding: 0.6em 1em;
 	background: #dfe1e6;
 	border-radius: 0.2em 0.2em 0 0;
+	border: 1px solid #dfe1e6;
+	border-bottom: none;
 }
 
 .active {
 	composes: link;
 	background: #fff;
-	border: 1px solid #dfe1e6;
-	border-bottom: none;
 }
