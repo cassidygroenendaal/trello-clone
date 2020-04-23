@@ -7,7 +7,7 @@ module.exports = {
 			[
 				{
 					title      : 'Board 1',
-					starred    : false,
+					isStarred  : false,
 					visibility : 'public',
 					background : '#0079bf',
 					UserId     : 1,
@@ -16,7 +16,7 @@ module.exports = {
 				},
 				{
 					title      : 'Board 2',
-					starred    : false,
+					isStarred  : false,
 					visibility : 'public',
 					background : '#d29034',
 					UserId     : 1,
@@ -25,7 +25,7 @@ module.exports = {
 				},
 				{
 					title      : 'Board 3',
-					starred    : true,
+					isStarred  : true,
 					visibility : 'public',
 					background : '#519839',
 					UserId     : 1,
@@ -34,7 +34,7 @@ module.exports = {
 				},
 				{
 					title      : 'Board 1',
-					starred    : true,
+					isStarred  : true,
 					visibility : 'public',
 					background : '#b04632',
 					UserId     : 2,
@@ -43,7 +43,7 @@ module.exports = {
 				},
 				{
 					title      : 'Board 2',
-					starred    : false,
+					isStarred  : false,
 					visibility : 'public',
 					background : '#89609e',
 					UserId     : 2,

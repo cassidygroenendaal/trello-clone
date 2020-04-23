@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull    : false,
 				defaultValue : '#0079bf'
 			},
-			starred    : {
+			isStarred    : {
 				type         : DataTypes.BOOLEAN,
 				allowNull    : false,
 				defaultValue : false

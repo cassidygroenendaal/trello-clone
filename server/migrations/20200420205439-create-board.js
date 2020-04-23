@@ -22,7 +22,7 @@ module.exports = {
 				type         : Sequelize.STRING,
 				defaultValue : '#0079bf'
 			},
-			starred    : {
+			isStarred  : {
 				allowNull    : false,
 				type         : Sequelize.BOOLEAN,
 				defaultValue : false
