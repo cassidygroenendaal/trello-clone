@@ -15,10 +15,9 @@ import styles from './style.module.css';
 
 // ----------------- Components ------------------
 
-// import InputGroup from '../InputGroup';
-// import TextareaGroup from '../TextareaGroup';
-// import Button from '../Button';
 import BoardThumb from '../BoardThumb';
+import CreateBoardModal from '../CreateBoardModal';
+import ThumbButton from '../ThumbButton';
 
 // ----------------- EditUserForm ------------------
 
@@ -31,10 +30,15 @@ const BoardThumbGroup = props => {
 					<div key={board.id} className={styles.col4}>
 						<BoardThumb
 							board={board}
-							starBoard={(e) => props.starBoard(e, board.id)}
+							starBoard={e => props.starBoard(e, board.id)}
 						/>
 					</div>
 				))}
+				{props.includeCreate ? (
+					<CreateBoardModal className={styles.col4}>
+						<ThumbButton />
+					</CreateBoardModal>
+				) : null}
 			</div>
 		</div>
 	);

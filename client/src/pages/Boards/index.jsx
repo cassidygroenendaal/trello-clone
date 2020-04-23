@@ -76,6 +76,7 @@ const Boards = props => {
 								// boards={boards.filter(({ starred }) => starred)} <== where TeamId === null
 								boards={boards}
 								starBoard={handleStar}
+								includeCreate={true}
 							/>
 						</div>
 					) : null}

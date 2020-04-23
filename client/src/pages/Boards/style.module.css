@@ -14,7 +14,7 @@
 /* -------------------------------------------------------------- */
 
 .aside {
-	background: lightcoral;
+	/* background: lightcoral; */
 	display: none;
 }
 
@@ -23,7 +23,7 @@
 /* -------------------------------------------------------------- */
 
 .main {
-	background: lightblue;
+	/* background: lightblue; */
 	width: 100%;
 }
 
@@ -31,9 +31,9 @@
 /* Media Queries                                                  */
 /* -------------------------------------------------------------- */
 
-/* @media screen and (min-width: 600px) {
+@media screen and (min-width: 600px) {
 	.aside {
 		display: block;
-		min-width: 17em;
+		min-width: 16em;
 	}
-} */
+}
