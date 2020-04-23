@@ -14,8 +14,8 @@ import { useRouteMatch } from 'react-router';
 
 import PrivateRoute from '../../components/PrivateRoute';
 
+import Navbar from '../../components/Navbar';
 import AccountHeader from '../../components/AccountHeader';
-
 import EditProfileForm from '../../components/EditProfileForm';
 import AssignedCards from '../../components/AssignedCards';
 
@@ -26,11 +26,11 @@ import { _404 } from '../index';
 // ----------------- MyAccount Page ------------------
 
 const MyAccount = props => {
-
 	const { path } = useRouteMatch();
 
 	return (
 		<div>
+			<Navbar />
 			<AccountHeader />
 			<main>
 				<Switch>

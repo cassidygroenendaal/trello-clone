@@ -1,0 +1,42 @@
+.nav {
+	background: #026aa7;
+	display: flex;
+	justify-content: space-between;
+	position: fixed;
+	width: 100%;
+	padding: 0.2em;
+	z-index: 10;
+}
+
+.column {
+	display: flex;
+}
+
+.btn {
+	display: block;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1em;
+	background: #4e97c2;
+	color: #fff;
+	text-decoration: none;
+	border: none;
+	border-radius: 0.2em;
+	margin: 0;
+	margin: 0.1em;
+	padding: 0.4em 0.7em;
+	cursor: pointer;
+}
+
+.search {
+	background: #4e97c2;
+	border: none;
+}
+
+.brand {
+	color: #80b4d3;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
