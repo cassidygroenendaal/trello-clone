@@ -24,6 +24,59 @@
 	margin: 3.5em auto;
 }
 
+.boardContainer {
+	padding: 0.8em;
+	margin-bottom: 0.5em;
+	border-radius: 0.2em;
+}
+
+.input {
+	width: 100%;
+	border: none;
+	background: none;
+	color: #fff;
+	font-size: 1em;
+	font-weight: 700;
+	padding: 0.4em;
+	border-radius: 0.2em;
+}
+
+.input::placeholder {
+	color: rgba(255, 255, 255, 0.5);
+	font-weight: 700;
+}
+
+.input:hover {
+	background: rgba(255, 255, 255, 0.1);
+}
+
+.input:active,
+.input:focus {
+	background: rgba(255, 255, 255, 0.3);
+}
+
+.radioGroup {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 0.5em;
+}
+
+.radioLabel {
+	display: block;
+	width: 3em;
+	height: 3em;
+	border-radius: 0.2em;
+	cursor: pointer;
+}
+
+.radioInput {
+	display: none;
+}
+
+.radioInput:checked + .radioLabel {
+	border: 3px solid #fff;
+}
+
 /* ============================================================== */
 /* Media Queries                                                  */
 /* -------------------------------------------------------------- */

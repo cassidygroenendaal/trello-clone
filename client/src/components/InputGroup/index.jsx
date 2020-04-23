@@ -11,21 +11,35 @@ import styles from './style.module.css';
 const InputGroup = props => {
 	return (
 		<div>
-			<label
-				className={props.labelClass || styles.hidden}
-				htmlFor={props.name}
-			>
-				{props.label}
-			</label>
+			{props.type !== 'radio' && (
+				<label
+					className={props.labelClass || styles.hidden}
+					htmlFor={props.id || props.name}
+					style={props.labelStyle}
+				>
+					{props.label}
+				</label>
+			)}
 			<input
 				className={props.inputClass || styles.input}
 				type={props.type}
-				id={props.name}
+				id={props.id || props.name}
 				name={props.name}
 				value={props.value}
 				placeholder={props.placeholder}
+				checked={props.checked}
 				onChange={props.onChange}
 			/>
+
+			{props.type === 'radio' && (
+				<label
+					className={props.labelClass || styles.hidden}
+					htmlFor={props.id || props.name}
+					style={props.labelStyle}
+				>
+					{props.label}
+				</label>
+			)}
 		</div>
 	);
 };

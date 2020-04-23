@@ -1,14 +1,19 @@
 // ----------------- Dependencies ------------------
 
-import React, { useState, useRef } from 'react';
+import React, {
+	useState,
+	useRef,
+	useEffect,
+	useContext
+} from 'react';
 // import { Link } from 'react-router-dom';
 
 import useOutsideClick from '../../hooks/useOutsideClick';
 
 // ----------------- Other Dependencies ------------------
 
-// import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-// import { StatusContext } from '../../contexts/StatusContext';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { StatusContext } from '../../contexts/StatusContext';
 // import API from '../../lib/API';
 
 // ----------------- Stylesheet ------------------
@@ -23,52 +28,86 @@ import Button from '../../components/Button';
 // ----------------- LoginForm ------------------
 
 const CreateBoardModal = props => {
-	// const currentUser = useContext(CurrentUserContext),
-	// 	status = useContext(StatusContext);
+	const currentUser = useContext(CurrentUserContext),
+		status = useContext(StatusContext);
 
 	const [ isOpen, setIsOpen ] = useState(true),
 		[ isDisabled, setIsDisabled ] = useState(true),
-		[ board, setBoard ] = useState({});
+		[ title, setTitle ] = useState(''),
+		[ background, setBackground ] = useState('#0079bf');
 
 	const ref = useRef();
 
-	useOutsideClick(ref, () => {
+	const closeModal = () => {
 		setIsOpen(false);
-	});
+		setTitle('');
+		setBackground('#0079bf');
+	};
 
-	// useEffect(() => {
-	// 	status.reset()();
-	// 	status.setCode(200)();
-	// 	// eslint-disable-next-line
-	// }, []);
+	useOutsideClick(ref, closeModal);
+
+	useEffect(
+		() => {
+			const board = { title, background };
+
+			if (checkForm(board)) {
+				setIsDisabled(false);
+			} else {
+				setIsDisabled(true);
+			}
+
+			status.reset()();
+			status.setCode(200)();
+			// eslint-disable-next-line
+		},
+		[ title, background ]
+	);
+
+	const listColorOpts = [
+		'#0079bf',
+		'#d29034',
+		'#519839',
+		'#b04632',
+		'#89609e',
+		'#cd5a91'
+	];
+
+	const checkForm = board => {
+		for (let key in board) {
+			if (!board[key]) return false;
+		}
+		return true;
+	};
 
 	const submitForm = e => {
-	// 	e.preventDefault();
-	// 	if (email !== '' && password !== '') {
-	// 		const user = { email, password };
+		e.preventDefault();
 
-	// 		API.User
-	// 			.login(user)
-	// 			.then(response => {
-	// 				console.log(response.data);
-	// 				if (response.data.status === 200) {
-	// 					status.setCode(200)();
-	// 					status.setSuccess(
-	// 						"You've been successfully logged in."
-	// 					)();
-	// 					currentUser.login(
-	// 						response.data.user,
-	// 						response.data.user.authToken
-	// 					)();
-	// 					props.history.push('/');
-	// 				} else {
-	// 					status.setError(response.data.message)();
-	// 					status.setCode(response.data.status)();
-	// 					currentUser.reset()();
-	// 				}
-	// 			})
-	// 			.catch(err => console.log(err));
-	// 	}
+		const board = { title, background };
+
+		if (checkForm(board)) {
+			console.log(board);
+		}
+		// 		API.User
+		// 			.login(user)
+		// 			.then(response => {
+		// 				console.log(response.data);
+		// 				if (response.data.status === 200) {
+		// 					status.setCode(200)();
+		// 					status.setSuccess(
+		// 						"You've been successfully logged in."
+		// 					)();
+		// 					currentUser.login(
+		// 						response.data.user,
+		// 						response.data.user.authToken
+		// 					)();
+		// 					props.history.push('/');
+		// 				} else {
+		// 					status.setError(response.data.message)();
+		// 					status.setCode(response.data.status)();
+		// 					currentUser.reset()();
+		// 				}
+		// 			})
+		// 			.catch(err => console.log(err));
 	};
 
 	const modalClick = e => {
@@ -84,13 +123,43 @@ const CreateBoardModal = props => {
 			{/* End Modal Toggle Button */}
 			{/* Modal */}
 			{isOpen ? (
-				<div
-					onClick={() => setIsOpen(false)}
-					className={styles.modalContainer}
-				>
+				<div onClick={closeModal} className={styles.modalContainer}>
 					<div className={styles.modal} onClick={modalClick}>
 						<form>
-							<Button disabled={isDisabled} value="Create Board" />
+							<div
+								className={styles.boardContainer}
+								style={{ backgroundColor: background }}
+							>
+								<InputGroup
+									label="Title"
+									inputClass={styles.input}
+									name="title"
+									value={title}
+									placeholder="Add board title"
+									onChange={e => setTitle(e.target.value)}
+								/>
+							</div>
+							<div className={styles.radioGroup}>
+								{listColorOpts.map(color => (
+									<InputGroup
+										key={color}
+										id={color}
+										labelClass={styles.radioLabel}
+										labelStyle={{ backgroundColor: color }}
+										inputClass={styles.radioInput}
+										type="radio"
+										name="background"
+										value={color}
+										checked={background === color}
+										onChange={e => setBackground(e.target.value)}
+									/>
+								))}
+							</div>
+							<Button
+								disabled={isDisabled}
+								value="Create Board"
+								onClick={submitForm}
+							/>
 						</form>
 					</div>
 				</div>
