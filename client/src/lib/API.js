@@ -65,65 +65,104 @@ export default {
 			});
 		},
 
-		updateOne         : function(id, updatedInfo) {
+		updateOne         : function(authToken, id, updatedInfo) {
 			return axios({
-				url    : `/api/u/${id}`,
-				method : 'PUT',
-				data   : { updatedInfo }
+				url     : `/api/u/${id}`,
+				method  : 'PUT',
+				data    : { updatedInfo },
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
 			});
 		},
 
-		updateOnePassword : function(id, oldPassword, newPassword) {
+		updateOnePassword : function(
+			authToken,
+			id,
+			oldPassword,
+			newPassword
+		) {
 			return axios({
-				url    : `/api/u/${id}/password`,
-				method : 'PUT',
-				data   : { oldPassword, newPassword }
+				url     : `/api/u/${id}/password`,
+				method  : 'PUT',
+				data    : { oldPassword, newPassword },
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
 			});
 		},
 
-		deleteOne         : function(id) {
+		deleteOne         : function(authToken, id) {
 			return axios({
-				url    : `/api/u/${id}`,
-				method : 'DELETE'
+				url     : `/api/u/${id}`,
+				method  : 'DELETE',
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
 			});
 		}
 	},
 
 	Board : {
-		getAll    : function() {
+		getAll    : function(authToken) {
 			return axios({
-				url    : '/api/b',
-				method : 'GET'
+				url     : '/api/b',
+				method  : 'GET',
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
 			});
 		},
 
-		getOne    : function(id) {
+		getMy     : function(authToken) {
 			return axios({
-				url    : `/api/b/${id}`,
-				method : 'GET'
+				url     : '/api/b/my-boards',
+				method  : 'GET',
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
 			});
 		},
 
-		createOne : function(newBoard) {
+		getOne    : function(authToken, id) {
 			return axios({
-				url    : '/api/b',
-				method : 'POST',
-				data   : { newBoard }
+				url     : `/api/b/${id}`,
+				method  : 'GET',
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
 			});
 		},
 
-		updateOne : function(id, updatedBoard) {
+		createOne : function(authToken, newBoard) {
 			return axios({
-				url    : `/api/b/${id}`,
-				method : 'PUT',
-				data   : { updatedBoard }
+				url     : '/api/b',
+				method  : 'POST',
+				data    : { newBoard },
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
 			});
 		},
 
-		deleteOne : function(id) {
+		updateOne : function(authToken, id, updatedInfo) {
 			return axios({
-				url    : `/api/b/${id}`,
-				method : 'DELETE'
+				url     : `/api/b/${id}`,
+				method  : 'PUT',
+				data    : { updatedInfo },
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
+			});
+		},
+
+		deleteOne : function(authToken, id) {
+			return axios({
+				url     : `/api/b/${id}`,
+				method  : 'DELETE',
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
 			});
 		}
 	}

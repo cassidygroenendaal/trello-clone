@@ -1,0 +1,51 @@
+.container {
+	position: relative;
+	display: block;
+	text-decoration: none;
+	height: 7em;
+	width: 100%;
+}
+
+.BG {
+	border-radius: 0.2em;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+
+.colorBG {
+	composes: BG;
+}
+
+.colorBG {
+	composes: BG;
+	object-fit: contain;
+}
+
+.content {
+	position: relative;
+  padding: 0.5em;
+  height: 100%;
+}
+
+.title {
+	margin: 0;
+	color: #fff;
+}
+
+.star {
+  background: none;
+  border: none;
+  cursor: pointer;
+	position: absolute;
+	bottom: -0.05em;
+  right: 0.5em;
+  padding: 0 0.3em;
+  color: #fff;
+  font-size: 2em;
+}
+
+.starred {
+  composes: star;
+  color: gold;
+}

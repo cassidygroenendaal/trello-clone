@@ -90,12 +90,16 @@ router.post('/', jwtVerifier, (req, res) => {
 
 router.put('/:id', (req, res) => {
 	const { id } = req.params;
-	const { updatedBoard } = req.body;
+	const { updatedInfo } = req.body;
 
 	db.Board
 		.findByPk(id)
 		.then(foundBoard => {
-			// Make changes
+			for (let key in updatedInfo) {
+				if (foundBoard[key] !== updatedInfo[key]) {
+					foundBoard[key] = updatedInfo[key];
+				}
+			}
 			return foundBoard.save();
 		})
 		.then(updatedBoard => {

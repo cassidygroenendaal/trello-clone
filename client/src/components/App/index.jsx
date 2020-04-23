@@ -25,6 +25,7 @@ import PublicOnlyRoute from '../PublicOnlyRoute';
 // ----------------- Pages ------------------
 
 import {
+	Boards,
 	Landing,
 	Register,
 	Login,
@@ -95,6 +96,7 @@ const App = () => {
 							path="/cookie-policy"
 							component={CookiePolicy}
 						/>
+						<PrivateRoute exact path="/b" component={Boards} />
 						<PrivateRoute path="/my-account" component={MyAccount} />
 						<Route component={_404} />
 					</Switch>
