@@ -124,7 +124,7 @@ const BoardThumb = props => {
 				<h2 className={styles.title}>{props.board.title}</h2>
 				<button onClick={props.starBoard}
 					className={
-						props.board.starred ? styles.starred : styles.star
+						props.board.isStarred ? styles.isStarred : styles.star
 					}
 				>
 					*

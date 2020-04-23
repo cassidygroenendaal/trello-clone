@@ -24,8 +24,8 @@
 
 .content {
 	position: relative;
-  padding: 0.5em;
-  height: 100%;
+	padding: 0.5em;
+	height: 100%;
 }
 
 .title {
@@ -34,18 +34,18 @@
 }
 
 .star {
-  background: none;
-  border: none;
-  cursor: pointer;
+	background: none;
+	border: none;
+	cursor: pointer;
 	position: absolute;
 	bottom: -0.05em;
-  right: 0.5em;
-  padding: 0 0.3em;
-  color: #fff;
-  font-size: 2em;
+	right: 0.5em;
+	padding: 0 0.3em;
+	color: #fff;
+	font-size: 2em;
 }
 
-.starred {
-  composes: star;
-  color: gold;
+.isStarred {
+	composes: star;
+	color: gold;
 }

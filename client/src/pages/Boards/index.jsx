@@ -44,7 +44,7 @@ const Boards = props => {
 	const handleStar = (e, id) => {
 		e.preventDefault();
 		const board = boards.find(item => item.id === id);
-		board.starred = !board.starred;
+		board.isStarred = !board.isStarred;
 		API.Board
 			.updateOne(currentUser.getToken()(), id, board)
 			.then(res => {
@@ -68,7 +68,7 @@ const Boards = props => {
 						<div>
 							<BoardThumbGroup
 								title="Starred Boards"
-								boards={boards.filter(({ starred }) => starred)}
+								boards={boards.filter(({ isStarred }) => isStarred)}
 								starBoard={handleStar}
 							/>
 							<BoardThumbGroup
