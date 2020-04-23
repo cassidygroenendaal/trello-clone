@@ -29,17 +29,21 @@ const Boards = props => {
 
 	useEffect(
 		() => {
-			API.Board
-				.getMy(currentUser.getToken()())
-				.then(res => {
-					setBoards(res.data.boards);
-				})
-				.catch(err => {
-					console.log(err);
-				});
+			getBoards();
 		},
 		[ currentUser ]
 	);
+
+	const getBoards = () => {
+		API.Board
+			.getMy(currentUser.getToken()())
+			.then(res => {
+				setBoards(res.data.boards);
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
 
 	const handleStar = (e, id) => {
 		e.preventDefault();
@@ -48,10 +52,7 @@ const Boards = props => {
 		API.Board
 			.updateOne(currentUser.getToken()(), id, board)
 			.then(res => {
-				return API.Board.getMy(currentUser.getToken()());
-			})
-			.then(res => {
-				setBoards(res.data.boards);
+				getBoards();
 			})
 			.catch(err => {
 				console.log(err);
@@ -77,6 +78,7 @@ const Boards = props => {
 								boards={boards}
 								starBoard={handleStar}
 								includeCreate={true}
+								afterCreate={getBoards}
 							/>
 						</div>
 					) : null}

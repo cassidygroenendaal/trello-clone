@@ -24,6 +24,7 @@ import styles from './style.module.css';
 
 import InputGroup from '../../components/InputGroup';
 import Button from '../../components/Button';
+import API from '../../lib/API';
 
 // ----------------- LoginForm ------------------
 
@@ -31,7 +32,7 @@ const CreateBoardModal = props => {
 	const currentUser = useContext(CurrentUserContext),
 		status = useContext(StatusContext);
 
-	const [ isOpen, setIsOpen ] = useState(true),
+	const [ isOpen, setIsOpen ] = useState(false),
 		[ isDisabled, setIsDisabled ] = useState(true),
 		[ title, setTitle ] = useState(''),
 		[ background, setBackground ] = useState('#0079bf');
@@ -86,6 +87,17 @@ const CreateBoardModal = props => {
 
 		if (checkForm(board)) {
 			console.log(board);
+
+			API.Board
+				.createOne(currentUser.getToken()(), board)
+				.then(res => {
+					console.log(res.data);
+					closeModal();
+					props.afterCreate();
+				})
+				.catch(err => {
+					console.log(err);
+				});
 		}
 		// 		API.User
 		// 			.login(user)

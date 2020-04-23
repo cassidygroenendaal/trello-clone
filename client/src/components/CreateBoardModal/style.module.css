@@ -20,7 +20,7 @@
 }
 
 .modal {
-	width: 40%;
+	max-width: 22em;
 	margin: 3.5em auto;
 }
 

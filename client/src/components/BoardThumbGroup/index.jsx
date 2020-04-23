@@ -35,7 +35,10 @@ const BoardThumbGroup = props => {
 					</div>
 				))}
 				{props.includeCreate ? (
-					<CreateBoardModal className={styles.col4}>
+					<CreateBoardModal
+						className={styles.col4}
+						afterCreate={props.afterCreate}
+					>
 						<ThumbButton />
 					</CreateBoardModal>
 				) : null}
