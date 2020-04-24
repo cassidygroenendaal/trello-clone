@@ -1,9 +1,12 @@
 // ----------------- Dependencies ------------------
 
 import React, { useState, useEffect, useContext } from 'react';
+import { useParams } from 'react-router';
 // import { Link } from 'react-router-dom';
 
 // import { useScrollPosition } from '../../hooks/useScrollPosition';
+
+import useDebounce from '../../hooks/useDebounce';
 
 // ----------------- Other Dependencies ------------------
 
@@ -18,74 +21,64 @@ import styles from './style.module.css';
 
 // import InputGroup from '../../components/InputGroup';
 import Navbar from '../../components/Navbar';
-import BoardThumbGroup from '../../components/BoardThumbGroup';
+import BoardHeader from '../../components/BoardHeader';
 
-// ----------------- Landing Page ------------------
+// ----------------- Board Page ------------------
 
-const Boards = props => {
-	// const currentUser = useContext(CurrentUserContext);
+const Board = props => {
+	const currentUser = useContext(CurrentUserContext);
+	let { id } = useParams();
 
-	// const [ boards, setBoards ] = useState([]);
+	const [ board, setBoard ] = useState({}),
+		[ isLoading, setIsLoading ] = useState(true);
 
-	// useEffect(
-	// 	() => {
-	// 		getBoards();
-	// 	},
-	// 	[ currentUser ]
-	// );
+	const debouncedBoard = useDebounce(board, 500);
 
-	// const getBoards = () => {
-	// 	API.Board
-	// 		.getMy(currentUser.getToken()())
-	// 		.then(res => {
-	// 			setBoards(res.data.boards);
-	// 		})
-	// 		.catch(err => {
-	// 			console.log(err);
-	// 		});
-	// };
-
-	// const handleStar = (e, id) => {
-	// 	e.preventDefault();
-	// 	const board = boards.find(item => item.id === id);
-	// 	board.isStarred = !board.isStarred;
-	// 	API.Board
-	// 		.updateOne(currentUser.getToken()(), id, board)
-	// 		.then(res => {
-	// 			getBoards();
-	// 		})
-	// 		.catch(err => {
-	// 			console.log(err);
-	// 		});
-	// };
+	useEffect(
+		() => {
+			if (debouncedBoard.title) {
+				API.Board
+					.updateOne(currentUser.getToken()(), id, debouncedBoard)
+					.then(res => {})
+					.catch(err => console.log(err));
+			} else {
+				API.Board
+					.getOne(currentUser.getToken()(), id)
+					.then(res => {
+						setBoard(res.data.board);
+						setIsLoading(false);
+					})
+					.catch(err => console.log(err));
+			}
+		},
+		[ debouncedBoard, currentUser, id ]
+	);
 
 	return (
-		<div>
-			<Navbar background="none" />
-			{/* <div className={styles.container}>
-				<aside className={styles.aside}>Side nav here</aside>
-				<main className={styles.main}>
-					{boards.length > 0 ? (
-						<div>
-							<BoardThumbGroup
-								title="Starred Boards"
-								boards={boards.filter(({ isStarred }) => isStarred)}
-								starBoard={handleStar}
-							/>
-							<BoardThumbGroup
-								title="Personal Boards"
-								// boards={boards.filter(({ starred }) => starred)} <== where TeamId === null
-								boards={boards}
-								starBoard={handleStar}
-								includeCreate={true}
-								afterCreate={getBoards}
-							/>
-						</div>
-					) : null}
-				</main>
-			</div> */}
+		<div className={styles.page}>
+			{isLoading ? (
+				<div>Getting board....</div>
+			) : (
+				<div>
+					{board.background[0] === '#' ? (
+						<div
+							className={styles.colorBG}
+							style={{ backgroundColor: board.background }}
+						/>
+					) : (
+						<img
+							className={styles.imageBG}
+							alt="background"
+							src={board.background}
+						/>
+					)}
+
+					<Navbar background="none" />
+					<BoardHeader board={board} updateBoard={setBoard} />
+				</div>
+			)}
 		</div>
 	);
 };
 
-export default Boards;
+export default Board;

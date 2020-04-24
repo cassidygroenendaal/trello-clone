@@ -2,6 +2,27 @@
 /* Page                                                           */
 /* -------------------------------------------------------------- */
 
+.page {
+	position: relative;
+	min-height: 100vh;
+}
+
+.BG {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	z-index: -10;
+}
+
+.colorBG {
+	composes: BG;
+}
+
+.imageBG {
+	composes: BG;
+	object-fit: cover;
+}
+
 .container {
 	padding-top: 4em;
 	display: flex;

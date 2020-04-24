@@ -90,7 +90,7 @@ const RegisterForm = props => {
 							response.data.user,
 							response.data.user.authToken
 						)();
-						props.history.push('/');
+						props.history.push('/b');
 					} else {
 						status.setError(response.data.message)();
 						status.setCode(response.data.status)();
