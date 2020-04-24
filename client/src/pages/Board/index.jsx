@@ -23,47 +23,46 @@ import BoardThumbGroup from '../../components/BoardThumbGroup';
 // ----------------- Landing Page ------------------
 
 const Boards = props => {
-	const currentUser = useContext(CurrentUserContext);
+	// const currentUser = useContext(CurrentUserContext);
 
-	const [ boards, setBoards ] = useState([]);
+	// const [ boards, setBoards ] = useState([]);
 
-	useEffect(
-		() => {
-			getBoards();
-		},
-		// eslint-disable-next-line
-		[ currentUser ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		getBoards();
+	// 	},
+	// 	[ currentUser ]
+	// );
 
-	const getBoards = () => {
-		API.Board
-			.getMy(currentUser.getToken()())
-			.then(res => {
-				setBoards(res.data.boards);
-			})
-			.catch(err => {
-				console.log(err);
-			});
-	};
+	// const getBoards = () => {
+	// 	API.Board
+	// 		.getMy(currentUser.getToken()())
+	// 		.then(res => {
+	// 			setBoards(res.data.boards);
+	// 		})
+	// 		.catch(err => {
+	// 			console.log(err);
+	// 		});
+	// };
 
-	const handleStar = (e, id) => {
-		e.preventDefault();
-		const board = boards.find(item => item.id === id);
-		board.isStarred = !board.isStarred;
-		API.Board
-			.updateOne(currentUser.getToken()(), id, board)
-			.then(res => {
-				getBoards();
-			})
-			.catch(err => {
-				console.log(err);
-			});
-	};
+	// const handleStar = (e, id) => {
+	// 	e.preventDefault();
+	// 	const board = boards.find(item => item.id === id);
+	// 	board.isStarred = !board.isStarred;
+	// 	API.Board
+	// 		.updateOne(currentUser.getToken()(), id, board)
+	// 		.then(res => {
+	// 			getBoards();
+	// 		})
+	// 		.catch(err => {
+	// 			console.log(err);
+	// 		});
+	// };
 
 	return (
 		<div>
-			<Navbar />
-			<div className={styles.container}>
+			<Navbar background="none" />
+			{/* <div className={styles.container}>
 				<aside className={styles.aside}>Side nav here</aside>
 				<main className={styles.main}>
 					{boards.length > 0 ? (
@@ -84,7 +83,7 @@ const Boards = props => {
 						</div>
 					) : null}
 				</main>
-			</div>
+			</div> */}
 		</div>
 	);
 };
