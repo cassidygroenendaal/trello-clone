@@ -1,0 +1,123 @@
+.container {
+	color: #42526e;
+	font-weight: 600;
+	background: #f4f5f7;
+	border: 1px solid #e8e9ed;
+	position: absolute;
+	box-shadow: 0px 3px 15px -5px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow: 0px 3px 15px -8px rgba(0, 0, 0, 0.4);
+	-webkit-box-shadow: 0px 3px 15px -8px rgba(0, 0, 0, 0.4);
+	width: 20em;
+	top: 0em;
+	height: 100vh;
+	transition: left 0.5s ease-in-out, right 0.5s ease-in-out;
+	-o-transition: left 0.5s ease-in-out, right 0.5s ease-in-out;
+	-moz-transition: left 0.5s ease-in-out, right 0.5s ease-in-out;
+	-webkit-transition: left 0.5s ease-in-out, right 0.5s ease-in-out;
+	overflow: hidden;
+	padding: 0.6em;
+}
+
+.showLeft {
+	composes: container;
+	left: 0;
+	/* transition: all 500ms ease-in-out; */
+}
+
+.showRight {
+	composes: container;
+	right: 0;
+	/* transition: all 500ms ease-in-out; */
+}
+
+.hideLeft {
+	composes: container;
+	right: 100%;
+	/* transition: all 500ms ease-in-out; */
+}
+
+.hideRight {
+	composes: container;
+	left: 100%;
+	/* transition: all 500ms ease-in-out; */
+}
+
+.title {
+	margin: 0;
+}
+
+.hr {
+	border: none;
+	border-top: 1px solid #cccccc;
+}
+
+.list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.btn {
+	color: #42526e;
+	font-weight: 600;
+	background: none;
+	border: none;
+	border-radius: 0.2em;
+	width: 100%;
+	padding: 0.8em;
+	display: flex;
+	justify-content: space-between;
+	cursor: pointer;
+	text-decoration: none;
+	font-size: 0.8em;
+}
+
+.btn:hover,
+.btn:focus,
+.btn:active {
+	background: #e4e4e6;
+}
+
+.btnMain {
+	color: #5e6c84;
+	text-decoration: underline;
+	width: 100%;
+	border: none;
+	background: none;
+	cursor: pointer;
+	text-align: left;
+	transition: background 40ms ease-in;
+	padding: 0.7em;
+	outline: none;
+}
+
+.btnMain:hover,
+.btnMain:active {
+	background: #e7e8eb;
+}
+
+.bold {
+	font-weight: 700;
+}
+
+
+.topBtn {
+	color: #42526e;
+	font-weight: 600;
+	cursor: pointer;
+	background: none;
+	border: none;
+	position: absolute;
+	top: 0.1em;
+	padding: 1em;
+}
+
+.closeBtn {
+	composes: topBtn;
+	right: 0;
+}
+
+.backBtn {
+	composes: topBtn;
+	left: 0;
+}

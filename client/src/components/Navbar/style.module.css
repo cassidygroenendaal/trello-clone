@@ -1,6 +1,6 @@
 .nav {
 	/* background: #026aa7; */
-	
+
 	display: flex;
 	justify-content: space-between;
 	position: fixed;
@@ -17,7 +17,7 @@
 	display: block;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 1em;
-	background: #ffffff73;
+	background: #ffffff54;
 	color: #fff;
 	text-decoration: none;
 	border: none;
@@ -28,13 +28,19 @@
 	cursor: pointer;
 }
 
+.btn:hover,
+.btn:focus,
+.btn:active {
+	background: #ffffff7e;
+}
+
 .search {
-	background: #ffffff73;
+	background: #ffffff54;
 	border: none;
 }
 
 .brand {
-	color: #ffffff73;
+	color: #ffffff54;
 	margin: 0;
 	position: absolute;
 	top: 50%;

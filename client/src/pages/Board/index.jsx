@@ -19,9 +19,9 @@ import styles from './style.module.css';
 
 // ----------------- Components ------------------
 
-// import InputGroup from '../../components/InputGroup';
 import Navbar from '../../components/Navbar';
 import BoardHeader from '../../components/BoardHeader';
+import InputGroup from '../../components/InputGroup';
 
 // ----------------- Board Page ------------------
 
@@ -54,6 +54,69 @@ const Board = props => {
 		[ debouncedBoard, currentUser, id ]
 	);
 
+	const listColorOpts = [
+		'#0079bf',
+		'#d29034',
+		'#519839',
+		'#b04632',
+		'#89609e',
+		'#cd5a91',
+		'#4bbf6b',
+		'#00aecc',
+		'#838c91'
+	];
+
+	const sideMenu = {
+		title : 'Menu',
+		main  : [
+			{
+				title     : 'About This Board',
+				component : (
+					<div>
+						<button>Hi, I'm the About component!</button>
+					</div>
+				)
+			},
+			{
+				title     : 'Change Background',
+				component : (
+					<div className={styles.radioGroup}>
+						{listColorOpts.map(color => {
+							return <InputGroup 
+							key={color}
+							id={color}
+							labelClass={styles.radioLabel}
+							labelStyle={{ backgroundColor: color }}
+							inputClass={styles.radioInput}
+							type="radio"
+							name="background"
+							value={color}
+							checked={board.background === color}
+							onChange={e => setBoard({...board, background: e.target.value})}
+							/>
+						})}
+					</div>
+				)
+			},
+			{
+				title     : 'Settings',
+				component : (
+					<div>
+						<button>Hi, I'm the Settings component!</button>
+					</div>
+				)
+			},
+			{
+				title     : 'Labels',
+				component : (
+					<div>
+						<button>Hi, I'm the Labels component!</button>
+					</div>
+				)
+			}
+		]
+	};
+
 	return (
 		<div className={styles.page}>
 			{isLoading ? (
@@ -73,8 +136,12 @@ const Board = props => {
 						/>
 					)}
 
-					<Navbar background="none" />
-					<BoardHeader board={board} updateBoard={setBoard} />
+					<Navbar background="#00000027" />
+					<BoardHeader
+						board={board}
+						updateBoard={setBoard}
+						sideMenu={sideMenu}
+					/>
 				</div>
 			)}
 		</div>

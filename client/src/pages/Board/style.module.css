@@ -49,6 +49,37 @@
 }
 
 /* ============================================================== */
+/* Menu Components                                                */
+/* -------------------------------------------------------------- */
+/* Background Color Component                                     */
+/* -------------------------------------------------------------- */
+
+
+.radioGroup {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	margin-bottom: 0.5em;
+}
+
+.radioLabel {
+	display: block;
+	height: 5em;
+	width: 8.9em;
+	margin: 0.2em;
+	border-radius: 0.4em;
+	cursor: pointer;
+}
+
+.radioInput {
+	display: none;
+}
+
+.radioInput:checked + .radioLabel {
+	border: 3px solid #fff;
+}
+
+/* ============================================================== */
 /* Media Queries                                                  */
 /* -------------------------------------------------------------- */
 
