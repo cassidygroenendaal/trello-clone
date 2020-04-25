@@ -51,9 +51,57 @@
 /* ============================================================== */
 /* Menu Components                                                */
 /* -------------------------------------------------------------- */
-/* Background Color Component                                     */
+/* About This Board Component                                     */
 /* -------------------------------------------------------------- */
 
+.title {
+	text-align: left;
+}
+
+.row {
+	display: flex;
+}
+
+.textarea {
+	border: none;
+	min-width: 100%;
+	max-width: 100%;
+	min-height: 6em;
+	height: 6em;
+	max-height: 20em;
+	color: #6d798f;
+	background: #eaecf0;
+	padding: 0.8em;
+	border-radius: 0.4em;
+}
+
+.textarea::placeholder {
+	color: #6d798f;
+}
+
+.textarea:focus,
+.textarea:active {
+	padding: 0.8em;
+}
+
+.textarea:hover {
+	background: #e1e2e6;
+	padding: 0.8em;
+}
+
+.textareaEmpty {
+	composes: textarea;
+}
+
+.textareaFull {
+	composes: textarea;
+	background: none;
+	padding: 0;
+}
+
+/* ============================================================== */
+/* Background Color Component                                     */
+/* -------------------------------------------------------------- */
 
 .radioGroup {
 	display: flex;

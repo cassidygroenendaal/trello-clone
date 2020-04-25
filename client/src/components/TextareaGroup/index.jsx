@@ -21,6 +21,7 @@ const TextareaGroup = props => {
 				className={props.inputClass || styles.textarea}
 				id={props.name}
 				name={props.name}
+				placeholder={props.placeholder}
 				value={props.value}
 				onChange={props.onChange}
 			/>

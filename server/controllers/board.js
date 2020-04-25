@@ -52,11 +52,11 @@ router.get('/my-boards', jwtVerifier, (req, res) => {
 // GET: One
 //-------------------------------------------
 
-router.get('/:id', (req, res) => {
+router.get('/:id', jwtVerifier, (req, res) => {
 	const { id } = req.params;
 
 	db.Board
-		.findByPk(id)
+		.findByPk(id, { include: [db.User] })
 		.then(foundBoard => {
 			res.json({ status: 200, board: foundBoard });
 		})

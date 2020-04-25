@@ -2,9 +2,7 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router';
-// import { Link } from 'react-router-dom';
-
-// import { useScrollPosition } from '../../hooks/useScrollPosition';
+import { Link } from 'react-router-dom';
 
 import useDebounce from '../../hooks/useDebounce';
 
@@ -22,6 +20,7 @@ import styles from './style.module.css';
 import Navbar from '../../components/Navbar';
 import BoardHeader from '../../components/BoardHeader';
 import InputGroup from '../../components/InputGroup';
+import TextareaGroup from '../../components/TextareaGroup';
 
 // ----------------- Board Page ------------------
 
@@ -73,7 +72,51 @@ const Board = props => {
 				title     : 'About This Board',
 				component : (
 					<div>
-						<button>Hi, I'm the About component!</button>
+						{isLoading ? (
+							<div>Getting board....</div>
+						) : (
+							<div>
+								<div>
+									<h3 className={styles.title}>Made By</h3>
+									<div className={styles.row}>
+										{board.User.avatar ? (
+											<img src={board.User.avatar} alt="profile" />
+										) : (
+											<div>
+												<p>{board.User.initials}</p>
+											</div>
+										)}
+										<div>
+											<p>{board.User.fullname}</p>
+											<p>@{board.User.username}</p>
+										</div>
+									</div>
+
+									{board.User.id === currentUser.state.id && (
+										<Link to="/my-account">Edit Profile Info</Link>
+									)}
+								</div>
+								<div>
+									<h3 className={styles.title}>Description</h3>
+									<TextareaGroup
+										inputClass={
+											board.description ? (
+												styles.textareaFull
+											) : (
+												styles.textareaEmpty
+											)
+										}
+										placeholder="It's your board's time to shine! Let people know what this board is used for and what they can expect to see."
+										value={board.description || ''}
+										onChange={e =>
+											setBoard({
+												...board,
+												description : e.target.value || null
+											})}
+									/>
+								</div>
+							</div>
+						)}
 					</div>
 				)
 			},
@@ -81,20 +124,30 @@ const Board = props => {
 				title     : 'Change Background',
 				component : (
 					<div className={styles.radioGroup}>
-						{listColorOpts.map(color => {
-							return <InputGroup 
-							key={color}
-							id={color}
-							labelClass={styles.radioLabel}
-							labelStyle={{ backgroundColor: color }}
-							inputClass={styles.radioInput}
-							type="radio"
-							name="background"
-							value={color}
-							checked={board.background === color}
-							onChange={e => setBoard({...board, background: e.target.value})}
-							/>
-						})}
+						{isLoading ? (
+							<div>Getting info....</div>
+						) : (
+							listColorOpts.map(color => {
+								return (
+									<InputGroup
+										key={color}
+										id={color}
+										labelClass={styles.radioLabel}
+										labelStyle={{ backgroundColor: color }}
+										inputClass={styles.radioInput}
+										type="radio"
+										name="background"
+										value={color}
+										checked={board.background === color}
+										onChange={e =>
+											setBoard({
+												...board,
+												background : e.target.value
+											})}
+									/>
+								);
+							})
+						)}
 					</div>
 				)
 			},

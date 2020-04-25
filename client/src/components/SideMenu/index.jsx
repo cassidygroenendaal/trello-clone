@@ -12,8 +12,9 @@ import styles from './style.module.css';
 // ----------------- Dropdown ------------------
 
 const SideMenu = props => {
-	const [ isOpen, setIsOpen ] = useState(false),
-		[ active, setActive ] = useState(props.menu.title);
+	const [ isOpen, setIsOpen ] = useState(true),
+		// [ active, setActive ] = useState(props.menu.title);
+		[ active, setActive ] = useState('About This Board');
 
 	return (
 		<div>
