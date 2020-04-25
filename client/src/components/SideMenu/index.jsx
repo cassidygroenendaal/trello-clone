@@ -12,7 +12,7 @@ import styles from './style.module.css';
 // ----------------- Dropdown ------------------
 
 const SideMenu = props => {
-	const [ isOpen, setIsOpen ] = useState(true),
+	const [ isOpen, setIsOpen ] = useState(false),
 		[ active, setActive ] = useState(props.menu.title),
 		[ submenu, setSubmenu ] = useState('');
 
