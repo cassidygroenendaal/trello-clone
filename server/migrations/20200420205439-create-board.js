@@ -27,7 +27,7 @@ module.exports = {
 				type         : Sequelize.BOOLEAN,
 				defaultValue : false
 			},
-			description : DataTypes.TEXT,
+			description : Sequelize.TEXT,
 			UserId     : {
 				allowNull : false,
 				type      : Sequelize.INTEGER
