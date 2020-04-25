@@ -21,6 +21,7 @@ import Navbar from '../../components/Navbar';
 import BoardHeader from '../../components/BoardHeader';
 import InputGroup from '../../components/InputGroup';
 import TextareaGroup from '../../components/TextareaGroup';
+import ProfileImage from '../../components/ProfileImage';
 
 // ----------------- Board Page ------------------
 
@@ -79,22 +80,20 @@ const Board = props => {
 								<div>
 									<h3 className={styles.title}>Made By</h3>
 									<div className={styles.row}>
-										{board.User.avatar ? (
-											<img src={board.User.avatar} alt="profile" />
-										) : (
-											<div>
-												<p>{board.User.initials}</p>
-											</div>
-										)}
+										<ProfileImage
+											avatar={board.User.avatar}
+											initials={board.User.initials}
+										/>
 										<div>
 											<p>{board.User.fullname}</p>
 											<p>@{board.User.username}</p>
+											{board.User.id === currentUser.state.id && (
+												<Link to="/my-account">
+													Edit Profile Info
+												</Link>
+											)}
 										</div>
 									</div>
-
-									{board.User.id === currentUser.state.id && (
-										<Link to="/my-account">Edit Profile Info</Link>
-									)}
 								</div>
 								<div>
 									<h3 className={styles.title}>Description</h3>
@@ -151,22 +150,14 @@ const Board = props => {
 					</div>
 				)
 			},
-			{
-				title     : 'Settings',
-				component : (
-					<div>
-						<button>Hi, I'm the Settings component!</button>
-					</div>
-				)
-			},
-			{
-				title     : 'Labels',
-				component : (
-					<div>
-						<button>Hi, I'm the Labels component!</button>
-					</div>
-				)
-			}
+			// {
+			// 	title     : 'Labels',
+			// 	component : (
+			// 		<div>
+			// 			<button>Hi, I'm the Labels component!</button>
+			// 		</div>
+			// 	)
+			// }
 		]
 	};
 

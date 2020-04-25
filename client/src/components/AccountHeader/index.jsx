@@ -14,6 +14,7 @@ import styles from './style.module.css';
 // ----------------- Components ------------------
 
 import TabNav from '../../components/TabNav';
+import ProfileImage from '../ProfileImage';
 
 // ----------------- AccountHeader ------------------
 
@@ -36,19 +37,10 @@ const AccountHeader = props => {
 	return (
 		<header className={styles.header}>
 			<div className={styles.info}>
-				{currentUser.state.avatar ? (
-					<img
-						className={styles.avatar}
-						src={currentUser.state.avatar}
-						alt="avatar"
-					/>
-				) : (
-					<div className={styles.avatar}>
-						<div className={styles.initials}>
-							{currentUser.state.initials}
-						</div>
-					</div>
-				)}
+				<ProfileImage
+					avatar={currentUser.state.avatar}
+					initials={currentUser.state.initials}
+				/>
 				<div className={styles.fullname}>
 					{currentUser.state.fullname}
 				</div>

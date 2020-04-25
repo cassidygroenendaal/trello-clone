@@ -13,8 +13,13 @@ import styles from './style.module.css';
 
 const SideMenu = props => {
 	const [ isOpen, setIsOpen ] = useState(true),
-		// [ active, setActive ] = useState(props.menu.title);
-		[ active, setActive ] = useState('About This Board');
+		[ active, setActive ] = useState(props.menu.title),
+		[ submenu, setSubmenu ] = useState('');
+
+	const selectSubmenu = activeSubmenu => {
+		setActive(activeSubmenu);
+		setSubmenu(activeSubmenu);
+	};
 
 	return (
 		<div>
@@ -29,14 +34,18 @@ const SideMenu = props => {
 					? isOpen ? styles.showRight : styles.hideRight
 					: isOpen ? styles.showLeft : styles.hideLeft}`}
 			>
-				{active !== props.menu.title && (
-					<button
-						className={styles.backBtn}
-						onClick={() => setActive(props.menu.title)}
-					>
-						&lt;
-					</button>
-				)}
+				<button
+					className={
+						active === props.menu.title ? (
+							styles.backBtnHide
+						) : (
+							styles.backBtnShow
+						)
+					}
+					onClick={() => setActive(props.menu.title)}
+				>
+					&lt;
+				</button>
 				<p className={styles.title}>{active}</p>
 				<button
 					onClick={() => setIsOpen(false)}
@@ -45,13 +54,21 @@ const SideMenu = props => {
 					X
 				</button>
 				<hr className={styles.hr} />
-				{active === props.menu.title ? (
+				<div
+					className={
+						active === props.menu.title ? (
+							styles.mainMenuShow
+						) : (
+							styles.mainMenuHide
+						)
+					}
+				>
 					<ul className={styles.list}>
 						{props.menu.main.map(item => (
 							<li key={item.title}>
 								<button
 									onClick={() => {
-										setActive(item.title);
+										selectSubmenu(item.title);
 									}}
 									className={styles.btn}
 								>
@@ -60,10 +77,20 @@ const SideMenu = props => {
 							</li>
 						))}
 					</ul>
-				) : (
-					props.menu.main.find(({ title }) => title === active)
-						.component
-				)}
+				</div>
+				<div
+					className={
+						active !== props.menu.title ? (
+							styles.subMenuShow
+						) : (
+							styles.subMenuHide
+						)
+					}
+				>
+					{submenu &&
+						props.menu.main.find(({ title }) => title === submenu)
+							.component}
+				</div>
 			</div>
 		</div>
 	);
