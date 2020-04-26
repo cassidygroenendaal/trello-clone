@@ -10,5 +10,6 @@ const api = require('express').Router();
 
 api.use('/u', require('./user'));
 api.use('/b', require('./board'));
+api.use('/l', require('./list'));
 
 module.exports = api;

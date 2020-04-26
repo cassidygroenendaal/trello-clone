@@ -39,7 +39,10 @@ const Navbar = props => {
 	];
 
 	return (
-		<nav className={styles.nav}>
+		<nav
+			className={styles.nav}
+			style={{ background: props.background || '#026aa7' }}
+		>
 			{/* <MenuDropdown
 				// value={}
 				title="Filter Cards"

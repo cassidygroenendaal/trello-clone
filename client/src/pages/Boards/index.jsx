@@ -31,6 +31,7 @@ const Boards = props => {
 		() => {
 			getBoards();
 		},
+		// eslint-disable-next-line
 		[ currentUser ]
 	);
 

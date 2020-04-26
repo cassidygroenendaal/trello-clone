@@ -11,6 +11,7 @@ module.exports = {
 					visibility : 'public',
 					background : '#0079bf',
 					UserId     : 1,
+					description : 'Here is a test board..... Not too sure what else to put here.',
 					createdAt  : new Date(),
 					updatedAt  : new Date()
 				},
@@ -46,6 +47,7 @@ module.exports = {
 					isStarred  : false,
 					visibility : 'public',
 					background : '#89609e',
+					description : 'YO WHATS UP THIS IS A BOARD!',
 					UserId     : 2,
 					createdAt  : new Date(),
 					updatedAt  : new Date()

@@ -59,8 +59,8 @@ const CreateBoardModal = props => {
 
 			status.reset()();
 			status.setCode(200)();
-			// eslint-disable-next-line
 		},
+		// eslint-disable-next-line
 		[ title, background ]
 	);
 
@@ -99,27 +99,6 @@ const CreateBoardModal = props => {
 					console.log(err);
 				});
 		}
-		// 		API.User
-		// 			.login(user)
-		// 			.then(response => {
-		// 				console.log(response.data);
-		// 				if (response.data.status === 200) {
-		// 					status.setCode(200)();
-		// 					status.setSuccess(
-		// 						"You've been successfully logged in."
-		// 					)();
-		// 					currentUser.login(
-		// 						response.data.user,
-		// 						response.data.user.authToken
-		// 					)();
-		// 					props.history.push('/');
-		// 				} else {
-		// 					status.setError(response.data.message)();
-		// 					status.setCode(response.data.status)();
-		// 					currentUser.reset()();
-		// 				}
-		// 			})
-		// 			.catch(err => console.log(err));
 	};
 
 	const modalClick = e => {

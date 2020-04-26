@@ -1,4 +1,5 @@
 import Boards from './Boards';
+import Board from './Board';
 import Landing from './Landing';
 import Register from './Register';
 import Login from './Login';
@@ -12,6 +13,7 @@ import _404 from './_404';
 
 export {
 	Boards,
+	Board,
 	Landing,
 	Register,
 	Login,

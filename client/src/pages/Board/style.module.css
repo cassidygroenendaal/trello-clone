@@ -1,0 +1,139 @@
+/* ============================================================== */
+/* Page                                                           */
+/* -------------------------------------------------------------- */
+
+.page {
+	position: relative;
+	min-height: 100vh;
+}
+
+.BG {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	z-index: -10;
+}
+
+.colorBG {
+	composes: BG;
+}
+
+.imageBG {
+	composes: BG;
+	object-fit: cover;
+}
+
+.container {
+	padding-top: 4em;
+	display: flex;
+	max-width: 70em;
+	margin: 0 auto;
+}
+
+/* ============================================================== */
+/* Aside                                                          */
+/* -------------------------------------------------------------- */
+
+.aside {
+	/* background: lightcoral; */
+	display: none;
+}
+
+/* ============================================================== */
+/* Main                                                           */
+/* -------------------------------------------------------------- */
+
+.main {
+	/* background: lightblue; */
+	width: 100%;
+}
+
+/* ============================================================== */
+/* Menu Components                                                */
+/* -------------------------------------------------------------- */
+/* About This Board Component                                     */
+/* -------------------------------------------------------------- */
+
+.title {
+	text-align: left;
+}
+
+.row {
+	display: flex;
+}
+
+.textarea {
+	border: none;
+	min-width: 100%;
+	max-width: 100%;
+	min-height: 6em;
+	height: 6em;
+	max-height: 20em;
+	color: #6d798f;
+	background: #eaecf0;
+	padding: 0.8em;
+	border-radius: 0.4em;
+}
+
+.textarea::placeholder {
+	color: #6d798f;
+}
+
+.textarea:focus,
+.textarea:active {
+	padding: 0.8em;
+}
+
+.textarea:hover {
+	background: #e1e2e6;
+	padding: 0.8em;
+}
+
+.textareaEmpty {
+	composes: textarea;
+}
+
+.textareaFull {
+	composes: textarea;
+	background: none;
+	padding: 0;
+}
+
+/* ============================================================== */
+/* Background Color Component                                     */
+/* -------------------------------------------------------------- */
+
+.radioGroup {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	margin-bottom: 0.5em;
+}
+
+.radioLabel {
+	display: block;
+	height: 5em;
+	width: 8.9em;
+	margin: 0.2em;
+	border-radius: 0.4em;
+	cursor: pointer;
+}
+
+.radioInput {
+	display: none;
+}
+
+.radioInput:checked + .radioLabel {
+	border: 3px solid #fff;
+}
+
+/* ============================================================== */
+/* Media Queries                                                  */
+/* -------------------------------------------------------------- */
+
+@media screen and (min-width: 600px) {
+	.aside {
+		display: block;
+		min-width: 16em;
+	}
+}

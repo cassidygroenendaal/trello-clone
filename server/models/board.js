@@ -3,25 +3,26 @@ module.exports = (sequelize, DataTypes) => {
 	const Board = sequelize.define(
 		'Board',
 		{
-			title      : {
+			title       : {
 				type      : DataTypes.STRING,
 				allowNull : false
 			},
-			visibility : {
+			visibility  : {
 				type         : DataTypes.STRING,
 				allowNull    : false,
 				defaultValue : 'public'
 			},
-			background : {
+			background  : {
 				type         : DataTypes.STRING,
 				allowNull    : false,
 				defaultValue : '#0079bf'
 			},
-			isStarred    : {
+			isStarred   : {
 				type         : DataTypes.BOOLEAN,
 				allowNull    : false,
 				defaultValue : false
-			}
+			},
+			description : DataTypes.TEXT
 		},
 		{}
 	);
@@ -34,6 +35,8 @@ module.exports = (sequelize, DataTypes) => {
 		Board.belongsTo(models.User, {
 			foreignKey : { allowNull: false }
 		});
+
+		Board.hasMany(models.List, { onDelete: 'cascade' });
 	};
 
 	return Board;

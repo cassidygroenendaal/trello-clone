@@ -1,43 +1,31 @@
 'use strict';
 module.exports = {
 	up   : (queryInterface, Sequelize) => {
-		return queryInterface.createTable('Boards', {
-			id         : {
+		return queryInterface.createTable('Lists', {
+			id        : {
 				allowNull     : false,
 				autoIncrement : true,
 				primaryKey    : true,
 				type          : Sequelize.INTEGER
 			},
-			title      : {
+			title     : {
 				allowNull : false,
 				type      : Sequelize.STRING
 			},
-			visibility : {
-				allowNull    : false,
-				type         : Sequelize.STRING,
-				defaultValue : 'public'
-			},
-			background : {
-				allowNull    : false,
-				type         : Sequelize.STRING,
-				defaultValue : '#0079bf'
-			},
-			isStarred  : {
-				allowNull    : false,
-				type         : Sequelize.BOOLEAN,
-				defaultValue : false
-			},
-			description : Sequelize.TEXT,
-			UserId     : {
+			position  : {
 				allowNull : false,
 				type      : Sequelize.INTEGER
 			},
-			createdAt  : {
+			BoardId   : {
+				allowNull : false,
+				type      : Sequelize.INTEGER
+			},
+			createdAt : {
 				allowNull    : false,
 				type         : Sequelize.DATE,
 				defaultValue : Sequelize.NOW
 			},
-			updatedAt  : {
+			updatedAt : {
 				allowNull    : false,
 				type         : Sequelize.DATE,
 				defaultValue : Sequelize.NOW
@@ -45,6 +33,6 @@ module.exports = {
 		});
 	},
 	down : (queryInterface, Sequelize) => {
-		return queryInterface.dropTable('Boards');
+		return queryInterface.dropTable('Lists');
 	}
 };
