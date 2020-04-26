@@ -22,7 +22,7 @@ const db = require('../models');
 // GET: All
 //-------------------------------------------
 
-router.get('/', (req, res) => {
+router.get('/', jwtVerifier, (req, res) => {
 	db.List
 		.findAll()
 		.then(foundLists => {
