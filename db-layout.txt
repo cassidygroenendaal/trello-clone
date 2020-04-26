@@ -22,7 +22,8 @@ board
 - title: string
 - visibility: private or public, or team if on a team
 - background: string, preset image url or hex code
-- starred: bool, false by default
+- isStarred: bool, false by default
+- description: text, optional
 - UserId: ID of the creator of the board
 - TeamId: ID of a team the board belongs to
 
@@ -35,7 +36,7 @@ card
 - title: string
 - description: text, optional
 - dueDate: date, optional
-- status: bool, false by default, optional (only if dueDate exists)
+- isComplete: bool, false by default, optional (only if dueDate exists)
 - coverImage: string, optional, select or upload an image url
 - position: INT, where in the list this card sits
 - BoardId: What board this card belongs to
@@ -50,7 +51,7 @@ item
 - ChecklistId: What checklist this item belongs to
 - position: INT, where in the checklist this item sits
 - dueDate: date, optional
-- status: bool, false by default
+- isComplete: bool, false by default
 
 label
 - name: string
