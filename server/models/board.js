@@ -35,6 +35,8 @@ module.exports = (sequelize, DataTypes) => {
 		Board.belongsTo(models.User, {
 			foreignKey : { allowNull: false }
 		});
+
+		Board.hasMany(models.List, { onDelete: 'cascade' });
 	};
 
 	return Board;
