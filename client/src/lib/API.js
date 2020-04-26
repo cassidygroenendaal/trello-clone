@@ -165,5 +165,69 @@ export default {
 				}
 			});
 		}
+	},
+
+	List : {
+		getAll    : function(authToken) {
+			return axios({
+				url     : '/api/l',
+				method  : 'GET',
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
+			});
+		},
+
+		getAllInBoard     : function(authToken, boardId) {
+			return axios({
+				url     : `/api/l/b/${boardId}`,
+				method  : 'GET',
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
+			});
+		},
+
+		getOne    : function(authToken, listId) {
+			return axios({
+				url     : `/api/l/${listId}`,
+				method  : 'GET',
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
+			});
+		},
+
+		createOne : function(authToken, newList) {
+			return axios({
+				url     : '/api/l',
+				method  : 'POST',
+				data    : { newList },
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
+			});
+		},
+
+		updateOne : function(authToken, id, updatedInfo) {
+			return axios({
+				url     : `/api/l/${id}`,
+				method  : 'PUT',
+				data    : { updatedInfo },
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
+			});
+		},
+
+		deleteOne : function(authToken, id) {
+			return axios({
+				url     : `/api/l/${id}`,
+				method  : 'DELETE',
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
+			});
+		}
 	}
 };
