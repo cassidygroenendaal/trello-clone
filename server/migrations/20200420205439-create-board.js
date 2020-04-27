@@ -2,42 +2,47 @@
 module.exports = {
 	up   : (queryInterface, Sequelize) => {
 		return queryInterface.createTable('Boards', {
-			id         : {
+			id          : {
 				allowNull     : false,
 				autoIncrement : true,
 				primaryKey    : true,
 				type          : Sequelize.INTEGER
 			},
-			title      : {
+			title       : {
 				allowNull : false,
 				type      : Sequelize.STRING
 			},
-			visibility : {
+			visibility  : {
 				allowNull    : false,
 				type         : Sequelize.STRING,
 				defaultValue : 'public'
 			},
-			background : {
+			background  : {
 				allowNull    : false,
 				type         : Sequelize.STRING,
 				defaultValue : '#0079bf'
 			},
-			isStarred  : {
+			isStarred   : {
+				allowNull    : false,
+				type         : Sequelize.BOOLEAN,
+				defaultValue : false
+			},
+			isArchived  : {
 				allowNull    : false,
 				type         : Sequelize.BOOLEAN,
 				defaultValue : false
 			},
 			description : Sequelize.TEXT,
-			UserId     : {
+			UserId      : {
 				allowNull : false,
 				type      : Sequelize.INTEGER
 			},
-			createdAt  : {
+			createdAt   : {
 				allowNull    : false,
 				type         : Sequelize.DATE,
 				defaultValue : Sequelize.NOW
 			},
-			updatedAt  : {
+			updatedAt   : {
 				allowNull    : false,
 				type         : Sequelize.DATE,
 				defaultValue : Sequelize.NOW
