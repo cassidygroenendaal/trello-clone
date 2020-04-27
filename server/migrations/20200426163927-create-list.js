@@ -2,30 +2,35 @@
 module.exports = {
 	up   : (queryInterface, Sequelize) => {
 		return queryInterface.createTable('Lists', {
-			id        : {
+			id         : {
 				allowNull     : false,
 				autoIncrement : true,
 				primaryKey    : true,
 				type          : Sequelize.INTEGER
 			},
-			title     : {
+			title      : {
 				allowNull : false,
 				type      : Sequelize.STRING
 			},
-			position  : {
+			position   : {
 				allowNull : false,
 				type      : Sequelize.INTEGER
 			},
-			BoardId   : {
+			isArchived : {
+				allowNull    : false,
+				type         : Sequelize.BOOLEAN,
+				defaultValue : false
+			},
+			BoardId    : {
 				allowNull : false,
 				type      : Sequelize.INTEGER
 			},
-			createdAt : {
+			createdAt  : {
 				allowNull    : false,
 				type         : Sequelize.DATE,
 				defaultValue : Sequelize.NOW
 			},
-			updatedAt : {
+			updatedAt  : {
 				allowNull    : false,
 				type         : Sequelize.DATE,
 				defaultValue : Sequelize.NOW

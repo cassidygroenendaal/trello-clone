@@ -3,13 +3,18 @@ module.exports = (sequelize, DataTypes) => {
 	const List = sequelize.define(
 		'List',
 		{
-			title    : {
+			title      : {
 				type      : DataTypes.STRING,
 				allowNull : false
 			},
-			position : {
+			position   : {
 				type      : DataTypes.INTEGER,
 				allowNull : false
+			},
+			isArchived : {
+				type         : DataTypes.BOOLEAN,
+				allowNull    : false,
+				defaultValue : false
 			}
 		},
 		{}
