@@ -38,8 +38,12 @@ const ListsWrapper = props => {
 		() => {
 			if (listsToUpdate.length > 0) {
 				console.log('Updating many!');
-				API.List.updateMany(currentUser.getToken()(), listsToUpdate);
-				setListsToUpdate([]);
+				API.List
+					.updateMany(currentUser.getToken()(), listsToUpdate)
+					.then(res => {
+						setListsToUpdate([]);
+					})
+					.catch(err => console.log(err));
 			} else if (debouncedList.title) {
 				console.log('Update firing!', debouncedList);
 				API.List
