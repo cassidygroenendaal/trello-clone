@@ -26,6 +26,7 @@ const ListsWrapper = props => {
 	const currentUser = useContext(CurrentUserContext);
 
 	const [ lists, setLists ] = useState([]),
+		[ archivedLists, setArchivedLists ] = useState([]),
 		[ listToUpdate, setListToUpdate ] = useState({}),
 		[ isLoading, setIsLoading ] = useState(true);
 
@@ -34,7 +35,6 @@ const ListsWrapper = props => {
 	useEffect(
 		() => {
 			if (debouncedList.title) {
-				// if (debouncedList.title) {
 				console.log('Update firing!', debouncedList);
 				API.List
 					.updateOne(
@@ -44,13 +44,21 @@ const ListsWrapper = props => {
 					)
 					.then(res => {})
 					.catch(err => console.log(err));
-				// }
 			} else {
 				console.log('Initial GET');
 				API.List
 					.getAllInBoard(currentUser.getToken()(), props.boardId)
 					.then(res => {
-						setLists(res.data.lists);
+						const goodLists = res.data.lists.filter(
+							list => list.isArchived === false
+						);
+
+						const badLists = res.data.lists.filter(
+							list => list.isArchived === true
+						);
+
+						setLists(goodLists);
+						setArchivedLists(badLists);
 						setIsLoading(false);
 					})
 					.catch(err => console.log(err));
