@@ -1,0 +1,130 @@
+.wrapper {
+	min-width: 17em;
+	position: relative;
+}
+
+.addList {
+	font-size: 0.9em;
+	text-align: left;
+	color: #fff;
+	background: rgba(255, 255, 255, 0.3);
+	border: none;
+	margin: 0.2em;
+	border-radius: 0.2em;
+	padding: 0.8em 0.7em;
+	width: 100%;
+	cursor: pointer;
+}
+
+.addList:hover,
+.addList:focus {
+	background: rgba(255, 255, 255, 0.4);
+}
+
+.addList:active {
+	background: rgba(255, 255, 255, 0.55);
+}
+
+.container {
+	position: absolute;
+	top: 0;
+	opacity: 1;
+	/* visibility: visible; */
+	left: -1px;
+	background: #ebecf0;
+	margin: 0.2em;
+	border-radius: 0.2em;
+	padding: 0.4em;
+	margin-bottom: 0.9em;
+	width: 100%;
+	/* height: initial; */
+	transition: opacity 100ms ease-out 100ms, max-height 100ms ease-out 100ms;
+}
+
+.hide {
+	composes: container;
+	opacity: 0;
+	/* visibility: hidden; */
+	max-height: 0;
+	/* transition: opacity 210ms ease-in 100ms, max-height 200ms ease-in 100ms; */
+	transition: opacity 210ms ease-in, max-height 200ms ease-in;
+}
+
+.input {
+	border-radius: 0.2em;
+	border: none;
+	padding: 0.5em 0.8em;
+	color: #314361;
+	width: 100%;
+	font-size: 0.8em;
+	font-weight: 700;
+	background: none;
+	cursor: pointer;
+	margin-bottom: 0.5em;
+}
+
+.input:hover {
+	background: #d8d8dd;
+}
+
+.input:focus,
+.input:active {
+	background: #fff;
+}
+
+.addCard {
+	background: none;
+	border: none;
+	width: 100%;
+	text-align: left;
+	cursor: pointer;
+	font-size: 0.9em;
+	color: #9ba2b0;
+	border-radius: 0.2em;
+	padding: 0.4em 0.7em;
+}
+
+.addCard:hover,
+.addCard:focus {
+	background: #d8d8dd;
+	color: #314361;
+}
+
+.addCard:active {
+	background: #cacacf;
+	color: #314361;
+}
+
+.btnGroup {
+	display: flex;
+	margin-bottom: 0.5em;
+	opacity: 1;
+	transition: opacity 200ms ease-out;
+}
+
+.btnGroupHide {
+	composes: btnGroup;
+	opacity: 0;
+	transition: opacity 100ms ease-in;
+}
+
+.closeBtn {
+	border-radius: 0.2em;
+	background: none;
+	border: none;
+	color: #9ba2b0;
+	cursor: pointer;
+	padding: 0 1em;
+	margin: 0 0.5em;
+}
+
+.closeBtn:hover,
+.closeBtn:focus {
+	background: #d8d8dd;
+	color: #314361;
+}
+
+.closeBtn:active {
+	background: none;
+	color: #314361;
+}

@@ -13,11 +13,12 @@ import API from '../../lib/API';
 
 // ----------------- Stylesheet ------------------
 
-// import styles from './style.module.css';
+import styles from './style.module.css';
 
 // ----------------- Components ------------------
 
 import List from '../List';
+import NewListForm from '../NewListForm';
 
 // ----------------- ListsWrapper ------------------
 
@@ -32,7 +33,9 @@ const ListsWrapper = props => {
 
 	useEffect(
 		() => {
-			if (debouncedList.id) {
+			if (debouncedList.title) {
+				// if (debouncedList.title) {
+				console.log('Update firing!', debouncedList);
 				API.List
 					.updateOne(
 						currentUser.getToken()(),
@@ -41,7 +44,7 @@ const ListsWrapper = props => {
 					)
 					.then(res => {})
 					.catch(err => console.log(err));
-				console.log('Update firing!', debouncedList);
+				// }
 			} else {
 				console.log('Initial GET');
 				API.List
@@ -69,8 +72,17 @@ const ListsWrapper = props => {
 		setListToUpdate(listsCopy[foundIndex]);
 	};
 
+	const addList = newList => {
+		API.List
+			.createOne(currentUser.getToken()(), newList)
+			.then(res => {
+				setLists([ ...lists, res.data.list ]);
+			})
+			.catch(err => console.log(err));
+	};
+
 	return (
-		<div>
+		<div className={styles.container}>
 			{!isLoading &&
 				lists.map(list => (
 					<List
@@ -79,6 +91,12 @@ const ListsWrapper = props => {
 						updateLists={updateLists}
 					/>
 				))}
+
+			<NewListForm
+				boardId={props.boardId}
+				listsLength={lists.length}
+				onAddList={addList}
+			/>
 		</div>
 	);
 };

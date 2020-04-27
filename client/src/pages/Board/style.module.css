@@ -51,6 +51,8 @@
 .listWrapper {
 	position: relative;
 	top: 6em;
+	overflow-x: auto;
+	height: calc(100vh - 6em);
 }
 
 /* ============================================================== */

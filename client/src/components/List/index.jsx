@@ -1,14 +1,12 @@
 // ----------------- Dependencies ------------------
 
 import React from 'react';
-// import { useParams } from 'react-router';
-// import { Link } from 'react-router-dom';
 
 // ----------------- Other Dependencies ------------------
 
 // ----------------- Stylesheet ------------------
 
-// import styles from './style.module.css';
+import styles from './style.module.css';
 
 // ----------------- Components ------------------
 
@@ -18,8 +16,9 @@ import InputGroup from '../../components/InputGroup';
 
 const List = props => {
 	return (
-		<div>
+		<div className={styles.container}>
 			<InputGroup
+				inputClass={styles.input}
 				label="Title"
 				type="text"
 				name="title"
@@ -31,6 +30,7 @@ const List = props => {
 					});
 				}}
 			/>
+			<button className={styles.addCard}>+ Add a card</button>
 		</div>
 	);
 };
