@@ -7,7 +7,7 @@ module.exports = {
 			[
 				{
 					title      : 'List 1',
-					position   : 1,
+					position   : 0,
 					isArchived : false,
 					BoardId    : 1,
 					createdAt  : new Date(),
@@ -23,7 +23,7 @@ module.exports = {
 				},
 				{
 					title      : 'List 1',
-					position   : 1,
+					position   : 0,
 					isArchived : false,
 					BoardId    : 2,
 					createdAt  : new Date(),
@@ -31,7 +31,7 @@ module.exports = {
 				},
 				{
 					title      : 'List 2',
-					position   : 2,
+					position   : 1,
 					isArchived : false,
 					BoardId    : 2,
 					createdAt  : new Date(),
@@ -47,7 +47,7 @@ module.exports = {
 				},
 				{
 					title      : 'List 4',
-					position   : 4,
+					position   : 2,
 					isArchived : false,
 					BoardId    : 2,
 					createdAt  : new Date(),
@@ -55,7 +55,7 @@ module.exports = {
 				},
 				{
 					title      : 'List 1',
-					position   : 1,
+					position   : 0,
 					isArchived : false,
 					BoardId    : 3,
 					createdAt  : new Date(),
@@ -63,7 +63,7 @@ module.exports = {
 				},
 				{
 					title      : 'List 1',
-					position   : 1,
+					position   : 0,
 					isArchived : false,
 					BoardId    : 4,
 					createdAt  : new Date(),
@@ -71,7 +71,7 @@ module.exports = {
 				},
 				{
 					title      : 'List 1',
-					position   : 1,
+					position   : 0,
 					isArchived : false,
 					BoardId    : 5,
 					createdAt  : new Date(),
@@ -79,7 +79,7 @@ module.exports = {
 				},
 				{
 					title      : 'List 2',
-					position   : 2,
+					position   : 1,
 					isArchived : false,
 					BoardId    : 5,
 					createdAt  : new Date(),
