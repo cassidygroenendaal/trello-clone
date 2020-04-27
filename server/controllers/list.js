@@ -90,6 +90,34 @@ router.post('/', jwtVerifier, (req, res) => {
 });
 
 //-------------------------------------------
+// UPDATE: Many
+//-------------------------------------------
+
+router.put('/', jwtVerifier, (req, res) => {
+	const { updatedInfo } = req.body;
+
+	updatedInfo.forEach((list, i) => {
+		db.List
+			.findByPk(list.id)
+			.then(foundList => {
+				for (let key in list) {
+					if (foundList[key] !== list[key]) {
+						foundList[key] = list[key];
+					}
+				}
+				return foundList.save();
+			})
+			.then(updatedLists => {
+				if (i + 1 === updatedInfo.length)
+					return res.json({ status: 200, list: updatedList });
+			})
+			.catch(err => {
+				res.json({ status: 500, error: err });
+			});
+	});
+});
+
+//-------------------------------------------
 // UPDATE: One
 //-------------------------------------------
 

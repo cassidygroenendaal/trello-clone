@@ -17,11 +17,13 @@ import styles from './style.module.css';
 
 // ----------------- Components ------------------
 
-import Navbar from '../../components/Navbar';
-import BoardHeader from '../../components/BoardHeader';
 import InputGroup from '../../components/InputGroup';
 import TextareaGroup from '../../components/TextareaGroup';
 import ProfileImage from '../../components/ProfileImage';
+
+import Navbar from '../../components/Navbar';
+import BoardHeader from '../../components/BoardHeader';
+import ListWrapper from '../../components/ListsWrapper';
 
 // ----------------- Board Page ------------------
 
@@ -32,7 +34,7 @@ const Board = props => {
 	const [ board, setBoard ] = useState({}),
 		[ isLoading, setIsLoading ] = useState(true);
 
-	const debouncedBoard = useDebounce(board, 500);
+	const debouncedBoard = useDebounce(board, 1000);
 
 	useEffect(
 		() => {
@@ -149,7 +151,7 @@ const Board = props => {
 						)}
 					</div>
 				)
-			},
+			}
 			// {
 			// 	title     : 'Labels',
 			// 	component : (
@@ -186,6 +188,9 @@ const Board = props => {
 						updateBoard={setBoard}
 						sideMenu={sideMenu}
 					/>
+					<div className={styles.listWrapper}>
+						<ListWrapper boardId={board.id} />
+					</div>
 				</div>
 			)}
 		</div>

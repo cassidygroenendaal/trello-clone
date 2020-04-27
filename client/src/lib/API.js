@@ -167,8 +167,8 @@ export default {
 		}
 	},
 
-	List : {
-		getAll    : function(authToken) {
+	List  : {
+		getAll        : function(authToken) {
 			return axios({
 				url     : '/api/l',
 				method  : 'GET',
@@ -178,7 +178,7 @@ export default {
 			});
 		},
 
-		getAllInBoard     : function(authToken, boardId) {
+		getAllInBoard : function(authToken, boardId) {
 			return axios({
 				url     : `/api/l/b/${boardId}`,
 				method  : 'GET',
@@ -188,7 +188,7 @@ export default {
 			});
 		},
 
-		getOne    : function(authToken, listId) {
+		getOne        : function(authToken, listId) {
 			return axios({
 				url     : `/api/l/${listId}`,
 				method  : 'GET',
@@ -198,7 +198,7 @@ export default {
 			});
 		},
 
-		createOne : function(authToken, newList) {
+		createOne     : function(authToken, newList) {
 			return axios({
 				url     : '/api/l',
 				method  : 'POST',
@@ -209,7 +209,18 @@ export default {
 			});
 		},
 
-		updateOne : function(authToken, id, updatedInfo) {
+		updateMany    : function(authToken, updatedInfo) {
+			return axios({
+				url     : `/api/l/`,
+				method  : 'PUT',
+				data    : { updatedInfo },
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
+			});
+		},
+
+		updateOne     : function(authToken, id, updatedInfo) {
 			return axios({
 				url     : `/api/l/${id}`,
 				method  : 'PUT',
@@ -220,7 +231,7 @@ export default {
 			});
 		},
 
-		deleteOne : function(authToken, id) {
+		deleteOne     : function(authToken, id) {
 			return axios({
 				url     : `/api/l/${id}`,
 				method  : 'DELETE',
