@@ -25,7 +25,8 @@ import NewListForm from '../NewListForm';
 const ListsWrapper = props => {
 	const currentUser = useContext(CurrentUserContext);
 
-	const [ lists, setLists ] = useState([]),
+	const [ allLists, setAllLists ] = useState([]),
+		[ lists, setLists ] = useState([]),
 		[ archivedLists, setArchivedLists ] = useState([]),
 		[ listToUpdate, setListToUpdate ] = useState({}),
 		[ isLoading, setIsLoading ] = useState(true);
@@ -49,16 +50,8 @@ const ListsWrapper = props => {
 				API.List
 					.getAllInBoard(currentUser.getToken()(), props.boardId)
 					.then(res => {
-						const goodLists = res.data.lists.filter(
-							list => list.isArchived === false
-						);
-
-						const badLists = res.data.lists.filter(
-							list => list.isArchived === true
-						);
-
-						setLists(goodLists);
-						setArchivedLists(badLists);
+						setAllLists(res.data.lists);
+						filterLists(res.data.lists);
 						setIsLoading(false);
 					})
 					.catch(err => console.log(err));
@@ -67,8 +60,21 @@ const ListsWrapper = props => {
 		[ debouncedList, currentUser, props.boardId ]
 	);
 
+	const filterLists = listArray => {
+		const goodLists = listArray.filter(
+			list => list.isArchived === false
+		);
+
+		const badLists = listArray.filter(
+			list => list.isArchived === true
+		);
+
+		setLists(goodLists);
+		setArchivedLists(badLists);
+	};
+
 	const updateLists = (listId, info) => {
-		let listsCopy = [ ...lists ];
+		let listsCopy = [ ...allLists ];
 
 		const foundIndex = listsCopy.findIndex(
 			list => list.id === listId
@@ -76,7 +82,8 @@ const ListsWrapper = props => {
 
 		listsCopy[foundIndex] = { ...listsCopy[foundIndex], ...info };
 
-		setLists(listsCopy);
+		setAllLists(listsCopy);
+		filterLists(listsCopy);
 		setListToUpdate(listsCopy[foundIndex]);
 	};
 
@@ -84,7 +91,8 @@ const ListsWrapper = props => {
 		API.List
 			.createOne(currentUser.getToken()(), newList)
 			.then(res => {
-				setLists([ ...lists, res.data.list ]);
+				setAllLists([ ...allLists, res.data.list ]);
+				filterLists([ ...allLists, res.data.list ]);
 			})
 			.catch(err => console.log(err));
 	};

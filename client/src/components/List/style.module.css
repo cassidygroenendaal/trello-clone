@@ -7,12 +7,19 @@
 	min-width: 17em;
 }
 
+.header {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+
 .input {
 	border-radius: 0.2em;
 	border: none;
 	padding: 0.5em 0.8em;
 	color: #314361;
-	width: 100%;
+	/* width: 100%; */
+	width: 17.6em;
 	font-size: 0.8em;
 	font-weight: 700;
 	background: none;
@@ -28,25 +35,36 @@
 	background: #fff;
 }
 
-.addCard {
+.btn {
 	background: none;
 	border: none;
+	cursor: pointer;
+	color: #9ba2b0;
+
+	border-radius: 0.2em;
+	padding: 0.4em 0.7em;
+}
+
+.btn:hover,
+.btn:focus {
+	background: #d8d8dd;
+	color: #314361;
+}
+
+.btn:active {
+	background: #cacacf;
+	color: #314361;
+}
+
+.btnMenu {
+	composes: btn;
+	color: #314361;
+	font-weight: 700;
+}
+
+.addCard {
+	composes: btn;
 	width: 100%;
 	text-align: left;
-	cursor: pointer;
 	font-size: 0.9em;
-  color: #9ba2b0;
-  border-radius: 0.2em;
-  padding: 0.4em 0.7em;
-}
-
-.addCard:hover,
-.addCard:focus {
-  background: #d8d8dd;
-  color: #314361;
-}
-
-.addCard:active {
-  background: #cacacf;
-  color: #314361;
 }
