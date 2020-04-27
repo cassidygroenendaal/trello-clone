@@ -15,7 +15,7 @@ module.exports = {
 				},
 				{
 					title      : 'List 2',
-					position   : 2,
+					position   : -1,
 					isArchived : true,
 					BoardId    : 1,
 					createdAt  : new Date(),
@@ -39,7 +39,7 @@ module.exports = {
 				},
 				{
 					title      : 'List 3',
-					position   : 3,
+					position   : -1,
 					isArchived : true,
 					BoardId    : 2,
 					createdAt  : new Date(),

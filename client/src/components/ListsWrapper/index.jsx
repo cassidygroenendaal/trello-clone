@@ -29,13 +29,18 @@ const ListsWrapper = props => {
 		[ lists, setLists ] = useState([]),
 		[ archivedLists, setArchivedLists ] = useState([]),
 		[ listToUpdate, setListToUpdate ] = useState({}),
+		[ listsToUpdate, setListsToUpdate ] = useState([]),
 		[ isLoading, setIsLoading ] = useState(true);
 
 	const debouncedList = useDebounce(listToUpdate, 1000);
 
 	useEffect(
 		() => {
-			if (debouncedList.title) {
+			if (listsToUpdate.length > 0) {
+				console.log('Updating many!');
+				API.List.updateMany(currentUser.getToken()(), listsToUpdate);
+				setListsToUpdate([]);
+			} else if (debouncedList.title) {
 				console.log('Update firing!', debouncedList);
 				API.List
 					.updateOne(
@@ -51,21 +56,25 @@ const ListsWrapper = props => {
 					.getAllInBoard(currentUser.getToken()(), props.boardId)
 					.then(res => {
 						setAllLists(res.data.lists);
-						filterLists(res.data.lists);
+						filterAndSortLists(res.data.lists);
 						setIsLoading(false);
 					})
 					.catch(err => console.log(err));
 			}
 		},
-		[ debouncedList, currentUser, props.boardId ]
+		[ debouncedList, listsToUpdate, currentUser, props.boardId ]
 	);
 
-	const filterLists = listArray => {
-		const goodLists = listArray.filter(
+	const filterAndSortLists = listArray => {
+		const listCopy = listArray.sort(
+			(a, b) => a.position - b.position
+		);
+
+		const goodLists = listCopy.filter(
 			list => list.isArchived === false
 		);
 
-		const badLists = listArray.filter(
+		const badLists = listCopy.filter(
 			list => list.isArchived === true
 		);
 
@@ -80,11 +89,23 @@ const ListsWrapper = props => {
 			list => list.id === listId
 		);
 
-		listsCopy[foundIndex] = { ...listsCopy[foundIndex], ...info };
+		if (info.hasOwnProperty('isArchived')) {
+			listsCopy[foundIndex] = {
+				...listsCopy[foundIndex],
+				...info,
+				position : -1
+			};
 
-		setAllLists(listsCopy);
-		filterLists(listsCopy);
-		setListToUpdate(listsCopy[foundIndex]);
+			const updatedLists = updateListPositions(listsCopy);
+			setAllLists(updatedLists);
+			filterAndSortLists(updatedLists);
+			setListsToUpdate(updatedLists);
+		} else {
+			listsCopy[foundIndex] = { ...listsCopy[foundIndex], ...info };
+			setAllLists(listsCopy);
+			filterAndSortLists(listsCopy);
+			setListToUpdate(listsCopy[foundIndex]);
+		}
 	};
 
 	const addList = newList => {
@@ -92,9 +113,38 @@ const ListsWrapper = props => {
 			.createOne(currentUser.getToken()(), newList)
 			.then(res => {
 				setAllLists([ ...allLists, res.data.list ]);
-				filterLists([ ...allLists, res.data.list ]);
+				filterAndSortLists([ ...allLists, res.data.list ]);
 			})
 			.catch(err => console.log(err));
+	};
+
+	const updateListPositions = listArray => {
+		const listsCopy = listArray.sort(
+				(a, b) => a.position - b.position
+			),
+			listsCopyArchived = listsCopy.filter(
+				list => list.isArchived === true
+			);
+
+		const changedLists = [],
+			sortedLists = [];
+
+		// loop through sorted array of !isArchived lists
+		listsCopy.forEach((list, i) => {
+			if (
+				list.position !== -1 &&
+				list.position !== i - listsCopyArchived.length
+			) {
+				list.position = i - listsCopyArchived.length;
+				changedLists.push(list);
+			}
+			sortedLists.push(list);
+		});
+
+		console.log(changedLists);
+		console.log(sortedLists);
+
+		return sortedLists;
 	};
 
 	return (
