@@ -34,7 +34,7 @@ const List = props => {
 	const addList = () => {
 		const newList = {
 			BoardId  : props.boardId,
-			position : props.listsLength + 1,
+			position : props.listsLength,
 			title    : listTitle
 		};
 
