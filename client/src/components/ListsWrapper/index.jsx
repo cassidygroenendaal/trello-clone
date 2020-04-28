@@ -108,37 +108,49 @@ const ListsWrapper = props => {
 		);
 
 		// If we are archiving/un-archiving a list,
-		// positions may need to be updated as well
+		// positions will need to be updated as well
 		if (info.hasOwnProperty('isArchived')) {
-			// if (info.isArchived) {
-			// 	// If isArchived is being set to true,
-			// 	// all other lists must be repositioned
-			// } else {
-			// 	// If isArchived is being set to false,
-			// 	// only the current list must be repositioned
-			// }
-			listsCopy[foundIndex] = {
-				...listsCopy[foundIndex],
-				...info,
-				position : -1
-			};
+			if (info.isArchived) {
+				// If isArchived is being set to true,
+				// all other lists must be repositioned
+				listsCopy[foundIndex] = {
+					...listsCopy[foundIndex],
+					...info,
+					position : -1
+				};
 
-			// Update list positions
-			const updatedLists = updateListPositions(listsCopy);
-			setAllLists(updatedLists.repositionedLists);
-			filterAndSortLists(updatedLists.repositionedLists);
+				// Update list positions
+				const updatedLists = updateListPositions(listsCopy);
+				setAllLists(updatedLists.repositionedLists);
+				filterAndSortLists(updatedLists.repositionedLists);
 
-			// Set setListsToUpdate with the array of repositioned lists
-			// and with the list that had it's isArchived property modified
-			// This is necessary because archived lists will not be repositioned
-			setListsToUpdate([
-				listsCopy[foundIndex],
-				...updatedLists.changedLists
-			]);
+				// Set setListsToUpdate with the array of repositioned lists
+				// and with the list that had it's isArchived property modified
+				// This is necessary because archived lists will not be repositioned
+				setListsToUpdate([
+					listsCopy[foundIndex],
+					...updatedLists.changedLists
+				]);
+			} else {
+				// If isArchived is being set to false,
+				// only the current list must be repositioned
+				listsCopy[foundIndex] = {
+					...listsCopy[foundIndex],
+					...info,
+					position : lists.length
+				};
+
+				// We are updating only 1 list,
+				// so we can update the single list like normal
+				setAllLists(listsCopy);
+				filterAndSortLists(listsCopy);
+				setListToUpdate(listsCopy[foundIndex]);
+			}
 		} else {
 			// If we are updating any other property,
 			// we can update the single list like normal
 			listsCopy[foundIndex] = { ...listsCopy[foundIndex], ...info };
+
 			setAllLists(listsCopy);
 			filterAndSortLists(listsCopy);
 			setListToUpdate(listsCopy[foundIndex]);
