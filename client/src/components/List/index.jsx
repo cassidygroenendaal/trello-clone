@@ -1,6 +1,6 @@
 // ----------------- Dependencies ------------------
 
-import React from 'react';
+import React, { useState, useRef } from 'react';
 
 // ----------------- Other Dependencies ------------------
 
@@ -16,6 +16,10 @@ import FunctionMenu from '../FunctionMenu';
 // ----------------- List ------------------
 
 const List = props => {
+	const [ isDragging, setIsDragging ] = useState(false);
+
+	const ref = useRef(null);
+
 	const archiveList = () => {
 		props.updateLists(props.list.id, { isArchived: true });
 	};
@@ -28,8 +32,26 @@ const List = props => {
 		}
 	];
 
+	const handleDragStart = e => {
+		// console.log(ref.current);
+		// console.log(e.target)
+		setIsDragging(true);
+		e.dataTransfer.setDragImage(e.target, 140, 20);
+		props.onDragStart(e, props.list.id);
+	};
+
+	const handleDragEnd = () => {
+		setIsDragging(false);
+	};
+
 	return (
-		<div className={styles.container}>
+		<div
+			ref={ref}
+			className={isDragging ? styles.isDragging : styles.container}
+			draggable
+			onDragStart={handleDragStart}
+			onDragEnd={handleDragEnd}
+		>
 			<div className={styles.header}>
 				<InputGroup
 					inputClass={styles.input}

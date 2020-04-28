@@ -1,7 +1,10 @@
 .container {
-  display: inline-flex;
-  flex-direction: row;
-  padding: 0 0.2em;
-  align-items: flex-start;
-  min-width: 100%;
+	display: flex;
+	padding: 0 0.2em;
+	height: 100%;
+}
+
+.inner {
+  display: flex;
+  height: 100%;
 }

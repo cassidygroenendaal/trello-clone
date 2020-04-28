@@ -5,6 +5,12 @@
 	padding: 0.4em;
 	margin-bottom: 0.9em;
 	min-width: 17em;
+	height: fit-content;
+}
+
+.isDragging {
+	composes: container;
+	border: 1px solid red;
 }
 
 .header {
