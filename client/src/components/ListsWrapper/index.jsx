@@ -32,18 +32,23 @@ const ListsWrapper = props => {
 		[ listToUpdate, setListToUpdate ] = useState({}),
 		[ listsToUpdate, setListsToUpdate ] = useState([]),
 		[ isLoading, setIsLoading ] = useState(true);
+	// [ isUpdating, setIsUpdating ] = useState(false);
 
 	const debouncedList = useDebounce(listToUpdate, 1000);
 	const debouncedLists = useDebounce(listsToUpdate, 500);
 
 	useEffect(
 		() => {
+			// if (!isUpdating) {
 			if (debouncedLists.length > 0) {
+				// setIsUpdating(true);
 				console.log('Updating many!', debouncedLists);
 				API.List
 					.updateMany(currentUser.getToken()(), debouncedLists)
+					// .then(res => setIsUpdating(false))
 					.catch(err => console.log(err));
 			} else if (debouncedList.title) {
+				// setIsUpdating(true);
 				console.log('Updating one!', debouncedList);
 				API.List
 					.updateOne(
@@ -51,6 +56,7 @@ const ListsWrapper = props => {
 						debouncedList.id,
 						debouncedList
 					)
+					// .then(res => setIsUpdating(false))
 					.catch(err => console.log(err));
 			} else {
 				console.log('Initial GET');
@@ -64,8 +70,15 @@ const ListsWrapper = props => {
 					})
 					.catch(err => console.log(err));
 			}
+			// }
 		},
-		[ debouncedList, debouncedLists, currentUser, props.boardId ]
+		[
+			// isUpdating,
+			debouncedList,
+			debouncedLists,
+			currentUser,
+			props.boardId
+		]
 	);
 
 	const filterAndSortLists = listArray => {
@@ -86,33 +99,45 @@ const ListsWrapper = props => {
 	};
 
 	const updateLists = (listId, info) => {
+		// Create a copy of allLists so we can freely edit them
 		let listsCopy = [ ...allLists ];
 
+		// Grab the index of the list we want to edit
 		const foundIndex = listsCopy.findIndex(
 			list => list.id === listId
 		);
 
-		console.log(listsCopy[foundIndex]);
-
+		// If we are archiving/un-archiving a list,
+		// positions may need to be updated as well
 		if (info.hasOwnProperty('isArchived')) {
-			console.log("Has property 'isArchived'");
-
+			// if (info.isArchived) {
+			// 	// If isArchived is being set to true,
+			// 	// all other lists must be repositioned
+			// } else {
+			// 	// If isArchived is being set to false,
+			// 	// only the current list must be repositioned
+			// }
 			listsCopy[foundIndex] = {
 				...listsCopy[foundIndex],
 				...info,
 				position : -1
 			};
 
-			console.log(listsCopy[foundIndex]);
-			setListToUpdate(listsCopy[foundIndex]);
-
+			// Update list positions
 			const updatedLists = updateListPositions(listsCopy);
 			setAllLists(updatedLists.repositionedLists);
 			filterAndSortLists(updatedLists.repositionedLists);
-			setListsToUpdate(updatedLists.changedLists);
-		} else {
-			console.log("Does not have property 'isArchived'");
 
+			// Set setListsToUpdate with the array of repositioned lists
+			// and with the list that had it's isArchived property modified
+			// This is necessary because archived lists will not be repositioned
+			setListsToUpdate([
+				listsCopy[foundIndex],
+				...updatedLists.changedLists
+			]);
+		} else {
+			// If we are updating any other property,
+			// we can update the single list like normal
 			listsCopy[foundIndex] = { ...listsCopy[foundIndex], ...info };
 			setAllLists(listsCopy);
 			filterAndSortLists(listsCopy);
@@ -146,7 +171,7 @@ const ListsWrapper = props => {
 		// loop through array of !isArchived lists
 		listsCopyGood.forEach((list, i) => {
 			// Only update the position if the position is wrong
-			if (list.position !== -1 && list.position !== i) {
+			if (list.position !== i) {
 				list.position = i;
 				changedLists.push(list);
 			}
