@@ -38,7 +38,14 @@ const ListsWrapper = props => {
 
 	useEffect(
 		() => {
-			if (debouncedLists.length > 0) {
+			if (
+				props.listIdToUnarchive &&
+				allLists.find(list => list.id === props.listIdToUnarchive)
+					.isArchived
+			) {
+				console.log('Unarchiving list...');
+				updateLists(props.listIdToUnarchive, { isArchived: false });
+			} else if (debouncedLists.length > 0) {
 				console.log('Updating many!', debouncedLists);
 				API.List
 					.updateMany(currentUser.getToken()(), debouncedLists)
@@ -66,7 +73,13 @@ const ListsWrapper = props => {
 			}
 		},
 		// eslint-disable-next-line
-		[ debouncedList, debouncedLists, currentUser, props.boardId ]
+		[
+			debouncedList,
+			debouncedLists,
+			currentUser,
+			props.boardId,
+			props.listIdToUnarchive
+		]
 	);
 
 	const filterAndSortLists = listArray => {
@@ -84,7 +97,7 @@ const ListsWrapper = props => {
 
 		setLists(goodLists);
 		setArchivedLists(badLists);
-		props.x(badLists);
+		props.sendArchive(badLists);
 	};
 
 	const updateLists = (listId, info) => {
@@ -121,6 +134,8 @@ const ListsWrapper = props => {
 					...updatedLists.changedLists
 				]);
 			} else {
+				console.log('ARCHIVE === FALSE');
+
 				// If isArchived is being set to false,
 				// only the current list must be repositioned
 				listsCopy[foundIndex] = {
@@ -131,9 +146,11 @@ const ListsWrapper = props => {
 
 				// We are updating only 1 list,
 				// so we can update the single list like normal
+				const temp = listsCopy[foundIndex];
 				setAllLists(listsCopy);
+				console.log(listsCopy[foundIndex]);
 				filterAndSortLists(listsCopy);
-				setListToUpdate(listsCopy[foundIndex]);
+				setListToUpdate(temp);
 			}
 		} else if (info.hasOwnProperty('position')) {
 			console.log('Updating position...');

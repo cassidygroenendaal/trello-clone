@@ -61,7 +61,10 @@ const ArchivedItems = props => {
 							className={styles.archivedItem}
 						>
 							<p className={styles.archivedText}>{list.title}</p>
-							<button className={styles.archivedBtn}>
+							<button
+								className={styles.archivedBtn}
+								onClick={() => props.onUnarchiveList(list.id)}
+							>
 								Send to Board
 							</button>
 						</li>

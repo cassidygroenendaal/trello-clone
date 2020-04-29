@@ -34,7 +34,8 @@ const Board = props => {
 
 	const [ board, setBoard ] = useState({}),
 		[ isLoading, setIsLoading ] = useState(true),
-		[ archivedLists, setArchivedLists ] = useState([]);
+		[ archivedLists, setArchivedLists ] = useState([]),
+		[ listIdToUnarchive, setListIdToUnarchive ] = useState(null);
 
 	const debouncedBoard = useDebounce(board, 1000);
 
@@ -58,8 +59,12 @@ const Board = props => {
 		[ debouncedBoard, currentUser, id ]
 	);
 
-	const x = archivedListArray => {
+	const getArchive = archivedListArray => {
 		setArchivedLists(archivedListArray);
+	};
+
+	const handleUnarchiveList = listId => {
+		setListIdToUnarchive(listId);
 	};
 
 	const listColorOpts = [
@@ -160,7 +165,12 @@ const Board = props => {
 			},
 			{
 				title     : 'Archive',
-				component : <ArchivedItems archivedLists={archivedLists} />
+				component : (
+					<ArchivedItems
+						archivedLists={archivedLists}
+						onUnarchiveList={handleUnarchiveList}
+					/>
+				)
 			}
 			// {
 			// 	title     : 'Labels',
@@ -199,7 +209,12 @@ const Board = props => {
 						sideMenu={sideMenu}
 					/>
 					<div className={styles.listWrapper}>
-						<ListWrapper boardId={board.id} x={x} />
+						<ListWrapper
+							boardId={board.id}
+							sendArchive={getArchive}
+							listIdToUnarchive={listIdToUnarchive}
+							setListIdToUnarchive={setListIdToUnarchive}
+						/>
 					</div>
 				</div>
 			)}
