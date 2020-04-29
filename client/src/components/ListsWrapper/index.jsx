@@ -28,27 +28,26 @@ const ListsWrapper = props => {
 	const [ allLists, setAllLists ] = useState([]),
 		[ lists, setLists ] = useState([]),
 		[ archivedLists, setArchivedLists ] = useState([]),
-		[ draggedList, setDraggedList ] = useState({}),
+		[ draggedListId, setDraggedListId ] = useState(null),
+		[ temp, setTemp ] = useState([]),
+		// [ draggedList, setDraggedList ] = useState({}),
+		// [ newDraggedListIndex, setNewDraggedListIndex ] = useState(null),
+		// [ mouseX, setMouseX ] = useState(null),
 		[ listToUpdate, setListToUpdate ] = useState({}),
 		[ listsToUpdate, setListsToUpdate ] = useState([]),
 		[ isLoading, setIsLoading ] = useState(true);
-	// [ isUpdating, setIsUpdating ] = useState(false);
 
-	const debouncedList = useDebounce(listToUpdate, 1000);
+	const debouncedList = useDebounce(listToUpdate, 500);
 	const debouncedLists = useDebounce(listsToUpdate, 500);
 
 	useEffect(
 		() => {
-			// if (!isUpdating) {
 			if (debouncedLists.length > 0) {
-				// setIsUpdating(true);
 				console.log('Updating many!', debouncedLists);
 				API.List
 					.updateMany(currentUser.getToken()(), debouncedLists)
-					// .then(res => setIsUpdating(false))
 					.catch(err => console.log(err));
 			} else if (debouncedList.title) {
-				// setIsUpdating(true);
 				console.log('Updating one!', debouncedList);
 				API.List
 					.updateOne(
@@ -56,29 +55,21 @@ const ListsWrapper = props => {
 						debouncedList.id,
 						debouncedList
 					)
-					// .then(res => setIsUpdating(false))
 					.catch(err => console.log(err));
 			} else {
 				console.log('Initial GET');
 				API.List
 					.getAllInBoard(currentUser.getToken()(), props.boardId)
 					.then(res => {
-						console.log(res.data.lists);
+						// console.log(res.data.lists);
 						setAllLists(res.data.lists);
 						filterAndSortLists(res.data.lists);
 						setIsLoading(false);
 					})
 					.catch(err => console.log(err));
 			}
-			// }
 		},
-		[
-			// isUpdating,
-			debouncedList,
-			debouncedLists,
-			currentUser,
-			props.boardId
-		]
+		[ debouncedList, debouncedLists, currentUser, props.boardId ]
 	);
 
 	const filterAndSortLists = listArray => {
@@ -146,6 +137,15 @@ const ListsWrapper = props => {
 				filterAndSortLists(listsCopy);
 				setListToUpdate(listsCopy[foundIndex]);
 			}
+		} else if (info.hasOwnProperty('position')) {
+			console.log('Updating position...');
+			listsCopy[foundIndex] = { ...listsCopy[foundIndex], ...info };
+
+			// Update list positions
+			const updatedLists = updateListPositions(listsCopy);
+			setAllLists(updatedLists.repositionedLists);
+			filterAndSortLists(updatedLists.repositionedLists);
+			setListsToUpdate(updatedLists.changedLists);
 		} else {
 			// If we are updating any other property,
 			// we can update the single list like normal
@@ -196,54 +196,60 @@ const ListsWrapper = props => {
 		return { repositionedLists, changedLists };
 	};
 
-	const handleDragOver = e => {
-		e.preventDefault();
+	const handleDragStart = (e, listId) => {
+		setDraggedListId(listId);
 	};
 
-	const handleDragStart = (e, listId) => {
-		console.log('Drag start!');
-		// Make a copy of the allLists array so we can edit it
-		const allListsCopy = [ ...allLists ];
-		// console.log(allListsCopy);
+	const handleDragOver = (e, listId, mouseX) => {
+		e.preventDefault();
+		if (listId === draggedListId) return;
+		// console.log('dragging over List!');
+
+		// Make a copy of the lists array so we can edit it
+		const listsCopy = [ ...lists ];
 
 		// Get the index of the list we are dragging
-		const draggedListIndex = allListsCopy.findIndex(
-			list => list.id === listId
+		const draggedListIndex = listsCopy.findIndex(
+			list => list.id === draggedListId
 		);
 
 		// Remove the list from the array and set it in draggedList
-		const listCopy = allListsCopy.splice(draggedListIndex, 1);
-		// console.log(allListsCopy);
-		setAllLists(allListsCopy);
-		setDraggedList(...listCopy);
+		const draggedList = listsCopy.splice(draggedListIndex, 1);
+		// const draggedList = listsCopy[draggedListIndex];
+
+		// Get the index of the list we just dragged over
+		const draggedOverListIndex = listsCopy.findIndex(
+			list => list.id === listId
+		);
+
+
+		if (mouseX <= 138) {
+			// Place draggedList 1 index BEFORE the draggedOverList
+			listsCopy.splice(draggedOverListIndex, 0, ...draggedList);
+		} else {
+			// Place draggedList 1 index AFTER the draggedOverList;
+			listsCopy.splice(draggedOverListIndex + 1, 0, ...draggedList);
+		}
+
+		setLists(listsCopy);
 	};
 
 	const handleDrop = e => {
-		console.log('dropped!');
+		// console.log('dropped!');
 
-		// Make a copy of the allLists array so we can edit it
-		const allListsCopy = [ ...allLists ];
-
-		// For now, insert draggedList onto the end of the array
-		allListsCopy.splice(allListsCopy.length, 0, draggedList);
-		// Later, inset draggedList wherever the user dropped it
-		// allListsCopy.splice(VARIABLE_INDEX, 0, draggedList);
+		// Make a copy of the allLists array by combining
+		// archivedLists and lists so we can edit it
+		const allListsCopy = [ ...archivedLists, ...lists ];
 
 		const updatedLists = updateListPositions(allListsCopy);
 		setAllLists(updatedLists.repositionedLists);
 		filterAndSortLists(updatedLists.repositionedLists);
 		setListsToUpdate(updatedLists.changedLists);
-
-		setDraggedList({});
 	};
 
 	return (
 		<div className={styles.container}>
-			<div
-				className={styles.inner}
-				onDragOver={handleDragOver}
-				onDrop={handleDrop}
-			>
+			<div className={styles.inner} onDrop={handleDrop}>
 				{!isLoading &&
 					lists.map(list => (
 						<List
@@ -251,6 +257,7 @@ const ListsWrapper = props => {
 							list={list}
 							updateLists={updateLists}
 							onDragStart={handleDragStart}
+							onDragOver={handleDragOver}
 						/>
 					))}
 			</div>

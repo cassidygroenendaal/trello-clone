@@ -33,11 +33,18 @@ const List = props => {
 	];
 
 	const handleDragStart = e => {
+		// console.log(ref);
 		// console.log(ref.current);
+		// console.log(e)
 		// console.log(e.target)
 		setIsDragging(true);
-		e.dataTransfer.setDragImage(e.target, 140, 20);
+		e.dataTransfer.setDragImage(ref.current, 140, 20);
 		props.onDragStart(e, props.list.id);
+	};
+
+	const handleDragOver = e => {
+		let mouseX = e.clientX - e.target.offsetLeft;
+		props.onDragOver(e, props.list.id, mouseX);
 	};
 
 	const handleDragEnd = () => {
@@ -46,35 +53,41 @@ const List = props => {
 
 	return (
 		<div
-			ref={ref}
-			className={isDragging ? styles.isDragging : styles.container}
 			draggable
 			onDragStart={handleDragStart}
 			onDragEnd={handleDragEnd}
+			onDragOver={handleDragOver}
 		>
-			<div className={styles.header}>
-				<InputGroup
-					inputClass={styles.input}
-					label="Title"
-					type="text"
-					name="title"
-					id={`list-${props.list.title}-${props.list.id}`}
-					value={props.list.title}
-					onChange={e => {
-						props.updateLists(props.list.id, {
-							[e.target.name]: e.target.value
-						});
-					}}
-				/>
-				<FunctionMenu
-					btnClass={styles.btnMenu}
-					title="List Actions"
-					items={listMenuOpts}
-				>
-					...
-				</FunctionMenu>
+			<div
+				ref={ref}
+				className={isDragging ? styles.isDragging : styles.container}
+			>
+				<div className={isDragging ? styles.isDraggingInner : ''}>
+					<div className={styles.header}>
+						<InputGroup
+							inputClass={styles.input}
+							label="Title"
+							type="text"
+							name="title"
+							id={`list-${props.list.title}-${props.list.id}`}
+							value={props.list.title}
+							onChange={e => {
+								props.updateLists(props.list.id, {
+									[e.target.name]: e.target.value
+								});
+							}}
+						/>
+						<FunctionMenu
+							btnClass={styles.btnMenu}
+							title="List Actions"
+							items={listMenuOpts}
+						>
+							...
+						</FunctionMenu>
+					</div>
+					<button className={styles.addCard}>+ Add a card</button>
+				</div>
 			</div>
-			<button className={styles.addCard}>+ Add a card</button>
 		</div>
 	);
 };
