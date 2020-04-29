@@ -1,8 +1,48 @@
+.handle {
+	background: #d6d7db;
+	height: 1.5em;
+	width: 100%;
+	top: 0;
+	left: 0;
+	cursor: move;
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.handleIcon,
+.handleIcon::before,
+	.handleIcon::after {
+	margin-left: 0.9em;
+	height: 0.1em;
+	width: 1em;
+	background: #b2b6be;
+	border-radius: 0.2em;
+}
+
+.handleIcon::before {
+	content: '';
+	display: block;
+	margin: 0;
+	transform: translateY(-0.25em);
+}
+
+.handleIcon::after {
+	content: '';
+	display: block;
+	margin: 0;
+	transform: translateY(0.15em);
+}
+
 .container {
 	background: #ebecf0;
+	position: relative;
+	overflow: hidden;
 	margin: 0.2em;
 	border-radius: 0.2em;
 	padding: 0.4em;
+	padding-top: 1.8em;
 	margin-bottom: 0.9em;
 	min-width: 17em;
 }

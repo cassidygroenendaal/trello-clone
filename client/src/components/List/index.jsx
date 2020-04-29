@@ -63,6 +63,9 @@ const List = props => {
 				className={isDragging ? styles.isDragging : styles.container}
 			>
 				<div className={isDragging ? styles.isDraggingInner : ''}>
+					<div className={styles.handle}>
+						<div className={styles.handleIcon} />
+					</div>
 					<div className={styles.header}>
 						<InputGroup
 							inputClass={styles.input}
