@@ -1,7 +1,7 @@
 # SERN Trello Clone
 
 ![Status](https://img.shields.io/badge/STATUS-IN--PROGRESS-yellow)
-![Version 0.2.5](https://img.shields.io/badge/VERSION-0.2.5-brightgreen)
+![Version 0.2.6](https://img.shields.io/badge/VERSION-0.2.6-brightgreen)
 
 ![DB MySQL & Sequelize](https://img.shields.io/badge/DB-MySQL_&&_SEQUELIZE-blue)
 ![AUTH Passport-JWT](https://img.shields.io/badge/USER_AUTH-PASSPORT_JWT-green)
@@ -31,12 +31,11 @@ A project to try and recreate most of Trello's functionality without third-party
   - `0.0.3` | Edit a lists title while on a board's page
   - `0.0.4` | Archive lists while on a board's page
   - `0.0.5` | Reorder lists (dragging & dropping) while on a board's page
+  - `0.0.6` | Unarchive lists while on a board's page
 
 ------------
 
 ### Future Plans
-- `0.2.0` | Lists
-  - `0.0.6` | Unarchive lists while on a board's page
 
 - `0.3.0` | Cards
   - `0.0.1` | Create cards that belong to a specific list
