@@ -29,10 +29,6 @@ const ListsWrapper = props => {
 		[ lists, setLists ] = useState([]),
 		[ archivedLists, setArchivedLists ] = useState([]),
 		[ draggedListId, setDraggedListId ] = useState(null),
-		[ temp, setTemp ] = useState([]),
-		// [ draggedList, setDraggedList ] = useState({}),
-		// [ newDraggedListIndex, setNewDraggedListIndex ] = useState(null),
-		// [ mouseX, setMouseX ] = useState(null),
 		[ listToUpdate, setListToUpdate ] = useState({}),
 		[ listsToUpdate, setListsToUpdate ] = useState([]),
 		[ isLoading, setIsLoading ] = useState(true);
@@ -69,6 +65,7 @@ const ListsWrapper = props => {
 					.catch(err => console.log(err));
 			}
 		},
+		// eslint-disable-next-line
 		[ debouncedList, debouncedLists, currentUser, props.boardId ]
 	);
 
@@ -87,6 +84,7 @@ const ListsWrapper = props => {
 
 		setLists(goodLists);
 		setArchivedLists(badLists);
+		props.x(badLists);
 	};
 
 	const updateLists = (listId, info) => {
@@ -221,7 +219,6 @@ const ListsWrapper = props => {
 		const draggedOverListIndex = listsCopy.findIndex(
 			list => list.id === listId
 		);
-
 
 		if (mouseX <= 138) {
 			// Place draggedList 1 index BEFORE the draggedOverList

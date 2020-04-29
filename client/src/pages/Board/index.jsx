@@ -20,6 +20,7 @@ import styles from './style.module.css';
 import InputGroup from '../../components/InputGroup';
 import TextareaGroup from '../../components/TextareaGroup';
 import ProfileImage from '../../components/ProfileImage';
+import ArchivedItems from '../../components/ArchivedItems';
 
 import Navbar from '../../components/Navbar';
 import BoardHeader from '../../components/BoardHeader';
@@ -32,7 +33,8 @@ const Board = props => {
 	let { id } = useParams();
 
 	const [ board, setBoard ] = useState({}),
-		[ isLoading, setIsLoading ] = useState(true);
+		[ isLoading, setIsLoading ] = useState(true),
+		[ archivedLists, setArchivedLists ] = useState([]);
 
 	const debouncedBoard = useDebounce(board, 1000);
 
@@ -55,6 +57,10 @@ const Board = props => {
 		},
 		[ debouncedBoard, currentUser, id ]
 	);
+
+	const x = archivedListArray => {
+		setArchivedLists(archivedListArray);
+	};
 
 	const listColorOpts = [
 		'#0079bf',
@@ -151,6 +157,10 @@ const Board = props => {
 						)}
 					</div>
 				)
+			},
+			{
+				title     : 'Archive',
+				component : <ArchivedItems archivedLists={archivedLists} />
 			}
 			// {
 			// 	title     : 'Labels',
@@ -189,7 +199,7 @@ const Board = props => {
 						sideMenu={sideMenu}
 					/>
 					<div className={styles.listWrapper}>
-						<ListWrapper boardId={board.id} />
+						<ListWrapper boardId={board.id} x={x} />
 					</div>
 				</div>
 			)}

@@ -13,8 +13,10 @@ import styles from './style.module.css';
 
 const SideMenu = props => {
 	const [ isOpen, setIsOpen ] = useState(true),
-		[ active, setActive ] = useState(props.menu.title),
-		[ submenu, setSubmenu ] = useState('');
+		// [ active, setActive ] = useState(props.menu.title),
+		[ active, setActive ] = useState('Archive'),
+		// [ submenu, setSubmenu ] = useState('');
+		[ submenu, setSubmenu ] = useState('Archive');
 
 	const selectSubmenu = activeSubmenu => {
 		setActive(activeSubmenu);

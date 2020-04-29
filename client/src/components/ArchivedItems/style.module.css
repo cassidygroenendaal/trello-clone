@@ -1,0 +1,40 @@
+/* ============================================================== */
+/* Archived Lists/Cards Component                                 */
+/* -------------------------------------------------------------- */
+
+.archivedList {
+	padding: 0;
+	margin-top: -0.6em;
+	list-style: none;
+}
+
+.archivedItem {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid #d5d9e0;
+	padding: 0.5em 0;
+}
+
+.archivedText {
+	margin: 0;
+	color: #637187;
+	font-weight: 400;
+	font-size: 0.8em;
+	padding: 0 0.6em;
+}
+
+.archivedBtn {
+	border: none;
+	background: #eaecf0;
+	padding: 0.6em 1em;
+	display: block;
+	color: #626f87;
+	cursor: pointer;
+	border-radius: 0.2em;
+}
+
+.archivedBtn:focus,
+.archivedBtn:hover {
+	background: #d9dbdf;
+}
