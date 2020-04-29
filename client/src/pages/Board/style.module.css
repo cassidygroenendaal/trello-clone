@@ -120,7 +120,8 @@
 .radioLabel {
 	display: block;
 	height: 5em;
-	width: 8.3em;
+	/* width: 8.3em; */
+	width: 8.9em;
 	margin: 0.2em;
 	border-radius: 0.4em;
 	cursor: pointer;
