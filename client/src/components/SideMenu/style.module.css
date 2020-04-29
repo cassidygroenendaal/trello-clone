@@ -12,7 +12,7 @@
 	-moz-box-shadow: 0px 3px 15px -8px rgba(0, 0, 0, 0.4);
 	-webkit-box-shadow: 0px 3px 15px -8px rgba(0, 0, 0, 0.4);
 	width: 20em;
-	top: 0em;
+	top: 0;
 	height: 100vh;
 	overflow: hidden;
 	padding: 0.6em;
@@ -178,7 +178,6 @@
 
 .subMenu {
 	position: relative;
-	top: -4.5em;
 }
 
 .subMenuHide {

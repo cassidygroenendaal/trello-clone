@@ -12,7 +12,7 @@ import styles from './style.module.css';
 // ----------------- Dropdown ------------------
 
 const SideMenu = props => {
-	const [ isOpen, setIsOpen ] = useState(false),
+	const [ isOpen, setIsOpen ] = useState(true),
 		[ active, setActive ] = useState(props.menu.title),
 		[ submenu, setSubmenu ] = useState('');
 
@@ -86,6 +86,7 @@ const SideMenu = props => {
 							styles.subMenuHide
 						)
 					}
+					style={{top: `-${props.menu.main.length * 2.25}em`}}
 				>
 					{submenu &&
 						props.menu.main.find(({ title }) => title === submenu)
