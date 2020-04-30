@@ -42,6 +42,8 @@ module.exports = (sequelize, DataTypes) => {
 		});
 
 		Board.hasMany(models.List, { onDelete: 'cascade' });
+
+		Board.hasMany(models.Card, { onDelete: 'cascade' });
 	};
 
 	return Board;

@@ -1,17 +1,18 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-	const List = sequelize.define(
-		'List',
+	const Card = sequelize.define(
+		'Card',
 		{
-			title      : {
+			title       : {
 				type      : DataTypes.STRING,
 				allowNull : false
 			},
-			position   : {
+			description : DataTypes.STRING,
+			position    : {
 				type      : DataTypes.INTEGER,
 				allowNull : false
 			},
-			isArchived : {
+			isArchived  : {
 				type         : DataTypes.BOOLEAN,
 				allowNull    : false,
 				defaultValue : false
@@ -24,13 +25,15 @@ module.exports = (sequelize, DataTypes) => {
 	// Associations
 	//-------------------------------------------
 
-	List.associate = function(models) {
-		List.belongsTo(models.Board, {
-			foreignKey : { allowNull: false }
-		});
+	Card.associate = function(models) {
+		Card.belongsTo(models.Board, {
+      foreignKey: {allowNull: false}
+    })
 
-		List.hasMany(models.Card, { onDelete: 'cascade' });
+    Card.belongsTo(models.List, {
+      foreignKey: {allowNull: false}
+    })
 	};
 
-	return List;
+	return Card;
 };

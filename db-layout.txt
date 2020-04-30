@@ -39,6 +39,7 @@ card
 - isComplete: bool, false by default, optional (only if dueDate exists)
 - coverImage: string, optional, select or upload an image url
 - position: INT, where in the list this card sits
+- ListId: What list this card belongs to
 - BoardId: What board this card belongs to
 ---- CLIENT SIDE, NOT DB SIDE:
 - status: string, null by default, optional ('DUE SOON' if due date is within 24 hours, 'OVERDUE' if due date is passed, 'COMPLETE' if isComplete === true)
