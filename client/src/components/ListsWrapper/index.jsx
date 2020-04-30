@@ -60,7 +60,7 @@ const ListsWrapper = props => {
 					)
 					.catch(err => console.log(err));
 			} else {
-				console.log('Initial GET');
+				console.log('LISTS: INITIAL GET');
 				API.List
 					.getAllInBoard(currentUser.getToken()(), props.boardId)
 					.then(res => {
@@ -82,18 +82,14 @@ const ListsWrapper = props => {
 		]
 	);
 
-	const filterAndSortLists = listArray => {
-		const listCopy = listArray.sort(
+	const filterAndSortLists = listsArray => {
+		const listsCopy = listsArray.sort(
 			(a, b) => a.position - b.position
 		);
 
-		const goodLists = listCopy.filter(
-			list => list.isArchived === false
-		);
+		const goodLists = listsCopy.filter(list => !list.isArchived);
 
-		const badLists = listCopy.filter(
-			list => list.isArchived === true
-		);
+		const badLists = listsCopy.filter(list => list.isArchived);
 
 		setLists(goodLists);
 		setArchivedLists(badLists);

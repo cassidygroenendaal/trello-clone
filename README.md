@@ -1,7 +1,7 @@
 # SERN Trello Clone
 
 ![Status](https://img.shields.io/badge/STATUS-IN--PROGRESS-yellow)
-![Version 0.2.6](https://img.shields.io/badge/VERSION-0.2.6-brightgreen)
+![Version 0.3.1](https://img.shields.io/badge/VERSION-0.3.1-brightgreen)
 
 ![DB MySQL & Sequelize](https://img.shields.io/badge/DB-MySQL_&&_SEQUELIZE-blue)
 ![AUTH Passport-JWT](https://img.shields.io/badge/USER_AUTH-PASSPORT_JWT-green)
@@ -33,19 +33,22 @@ A project to try and recreate most of Trello's functionality without third-party
   - `0.0.5` | Reorder lists (dragging & dropping) while on a board's page
   - `0.0.6` | Unarchive lists while on a board's page
 
+- `0.3.0` | Cards
+  - `0.0.1` | Display cards that belong to a specific list
+
 ------------
 
 ### Future Plans
 
 - `0.3.0` | Cards
-  - `0.0.1` | Create cards that belong to a specific list
-  - `0.0.2` | Reorder or move cards (dragging and dropping) while on a board's page
-  - `0.0.3` | View card details in modal
-  - `0.0.4` | Edit card details (title & description) in modal
-  - `0.0.5` | Add a due date/complete option to cards
-  - `0.0.6` | Allow users to add a cover image to cards (urls only)
-  - `0.0.7` | Archive cards while in the card details modal
-  - `0.0.8` | Unarchive cards while on a board's page
+  - `0.0.2` | Create cards that belong to a specific list
+  - `0.0.3` | Reorder or move cards (dragging and dropping) while on a board's page
+  - `0.0.4` | View card details in modal
+  - `0.0.5` | Edit card details (title & description) in modal
+  - `0.0.6` | Add a due date/complete option to cards
+  - `0.0.7` | Allow users to add a cover image to cards (urls only)
+  - `0.0.8` | Archive cards while in the card details modal
+  - `0.0.9` | Unarchive cards while on a board's page
 
 - `0.4.0` | Labels
   - `0.0.1` | Create labels associated with specific boards while on a board's page

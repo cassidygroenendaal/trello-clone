@@ -55,6 +55,27 @@ router.get('/b/:boardId', jwtVerifier, (req, res) => {
 });
 
 //-------------------------------------------
+// GET: All of A Given List's Cards
+//-------------------------------------------
+
+router.get('/l/:listId', jwtVerifier, (req, res) => {
+	const listId = parseInt(req.params.listId);
+
+	db.Card
+		.findAll({ where: { ListId: listId } })
+		.then(foundCards => {
+			const sortedCards = foundCards.sort(
+				(a, b) => a.position - b.position
+			);
+			res.json({ status: 200, cards: sortedCards });
+		})
+		.catch(err => {
+			console.log(err);
+			res.json({ status: 500, error: err });
+		});
+});
+
+//-------------------------------------------
 // GET: One
 //-------------------------------------------
 

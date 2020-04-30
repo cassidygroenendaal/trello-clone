@@ -240,5 +240,89 @@ export default {
 				}
 			});
 		}
+	},
+	Card  : {
+		getAll        : function(authToken) {
+			return axios({
+				url     : '/api/c',
+				method  : 'GET',
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
+			});
+		},
+
+		getAllInBoard : function(authToken, boardId) {
+			return axios({
+				url     : `/api/c/b/${boardId}`,
+				method  : 'GET',
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
+			});
+		},
+
+		getAllInList  : function(authToken, listId) {
+			return axios({
+				url     : `/api/c/l/${listId}`,
+				method  : 'GET',
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
+			});
+		},
+
+		getOne        : function(authToken, cardId) {
+			return axios({
+				url     : `/api/c/${cardId}`,
+				method  : 'GET',
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
+			});
+		},
+
+		createOne     : function(authToken, newCard) {
+			return axios({
+				url     : '/api/c',
+				method  : 'POST',
+				data    : { newCard },
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
+			});
+		},
+
+		updateMany    : function(authToken, updatedInfo) {
+			return axios({
+				url     : `/api/c/`,
+				method  : 'PUT',
+				data    : { updatedInfo },
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
+			});
+		},
+
+		updateOne     : function(authToken, id, updatedInfo) {
+			return axios({
+				url     : `/api/c/${id}`,
+				method  : 'PUT',
+				data    : { updatedInfo },
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
+			});
+		},
+
+		deleteOne     : function(authToken, id) {
+			return axios({
+				url     : `/api/c/${id}`,
+				method  : 'DELETE',
+				headers : {
+					Authorization : `Bearer ${authToken}`
+				}
+			});
+		}
 	}
 };

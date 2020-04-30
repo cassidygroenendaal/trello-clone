@@ -12,6 +12,7 @@ import styles from './style.module.css';
 
 import InputGroup from '../InputGroup';
 import FunctionMenu from '../FunctionMenu';
+import CardsWrapper from '../CardsWrapper';
 
 // ----------------- List ------------------
 
@@ -88,6 +89,7 @@ const List = props => {
 							...
 						</FunctionMenu>
 					</div>
+					<CardsWrapper listId={props.list.id} />
 					<button className={styles.addCard}>+ Add a card</button>
 				</div>
 			</div>
