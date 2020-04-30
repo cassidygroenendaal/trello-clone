@@ -1,7 +1,7 @@
 # SERN Trello Clone
 
 ![Status](https://img.shields.io/badge/STATUS-IN--PROGRESS-yellow)
-![Version 0.3.1](https://img.shields.io/badge/VERSION-0.3.1-brightgreen)
+![Version 0.3.2](https://img.shields.io/badge/VERSION-0.3.2-brightgreen)
 
 ![DB MySQL & Sequelize](https://img.shields.io/badge/DB-MySQL_&&_SEQUELIZE-blue)
 ![AUTH Passport-JWT](https://img.shields.io/badge/USER_AUTH-PASSPORT_JWT-green)
@@ -35,13 +35,13 @@ A project to try and recreate most of Trello's functionality without third-party
 
 - `0.3.0` | Cards
   - `0.0.1` | Display cards that belong to a specific list
+  - `0.0.2` | Create cards that belong to a specific list
 
 ------------
 
 ### Future Plans
 
 - `0.3.0` | Cards
-  - `0.0.2` | Create cards that belong to a specific list
   - `0.0.3` | Reorder or move cards (dragging and dropping) while on a board's page
   - `0.0.4` | View card details in modal
   - `0.0.5` | Edit card details (title & description) in modal
