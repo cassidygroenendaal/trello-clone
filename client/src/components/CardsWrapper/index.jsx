@@ -13,11 +13,12 @@ import API from '../../lib/API';
 
 // ----------------- Stylesheet ------------------
 
-// import styles from './style.module.css';
+import styles from './style.module.css';
 
 // ----------------- Components ------------------
 
 import Card from '../Card';
+import NewCardForm from '../NewCardForm';
 
 // ----------------- CardsWrapper ------------------
 
@@ -37,12 +38,12 @@ const CardsWrapper = props => {
 				.then(res => {
 					// console.log(res.data.cards);
 					setAllCards(res.data.cards);
-					filterAndSortCards(res.data.cards)
+					filterAndSortCards(res.data.cards);
 					setIsLoading(false);
 				})
 				.catch(err => console.log(err));
 		},
-		[currentUser, props.listId ]
+		[ currentUser, props.listId ]
 	);
 
 	const filterAndSortCards = cardsArray => {
@@ -57,12 +58,28 @@ const CardsWrapper = props => {
 		setArchivedCards(badCards);
 	};
 
+	const addCard = newCard => {
+		API.Card
+			.createOne(currentUser.getToken()(), newCard)
+			.then(res => {
+				setAllCards([ ...allCards, res.data.card ]);
+				filterAndSortCards([ ...allCards, res.data.card ]);
+			})
+			.catch(err => console.log(err));
+	};
+
 	return (
 		<div>
 			{!isLoading &&
 				cards.map(card => (
 					<Card key={`card-${card.id}`} card={card} />
 				))}
+			<NewCardForm
+				boardId={props.boardId}
+				listId={props.listId}
+				cardsLength={cards.length}
+				onAddCard={addCard}
+			/>
 		</div>
 	);
 };
