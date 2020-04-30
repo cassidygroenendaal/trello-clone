@@ -22,7 +22,7 @@ const List = props => {
 	const ref = useRef(null);
 
 	const archiveList = () => {
-		props.updateLists(props.list.id, { isArchived: true });
+		props.onUpdateLists(props.list.id, { isArchived: true });
 	};
 
 	const listMenuOpts = [

@@ -45,6 +45,15 @@ const ListsWrapper = props => {
 			) {
 				console.log('Unarchiving list...');
 				updateLists(props.listIdToUnarchive, { isArchived: false });
+
+				// NEEDS FIX
+				// Currently, archives and archives lists fine.... but if you try to archive a list
+				// that was previously unarchived, props.listIdToUnarchive remembers that you just
+				// unarchived that one, so it will unarchive it again
+				
+				// BUT using props.setListIdToUnarchive(null) causes the opposite problem:
+				// useEffect will run again, see that !props.listToUnarchive, and run the initial GET
+				// before the unarchived list has finished updating in the DB
 			} else if (debouncedLists.length > 0) {
 				console.log('Updating many!', debouncedLists);
 				API.List
@@ -109,6 +118,7 @@ const ListsWrapper = props => {
 		// positions will need to be updated as well
 		if (info.hasOwnProperty('isArchived')) {
 			if (info.isArchived) {
+				console.log('ARCHIVE === TRUE');
 				// If isArchived is being set to true,
 				// all other lists must be repositioned
 				listsCopy[foundIndex] = {
@@ -266,7 +276,7 @@ const ListsWrapper = props => {
 							key={`list-${list.id}`}
 							list={list}
 							boardId={props.boardId}
-							updateLists={updateLists}
+							onUpdateLists={updateLists}
 							onDragStart={handleDragStart}
 							onDragOver={handleDragOver}
 						/>
