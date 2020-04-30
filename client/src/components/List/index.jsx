@@ -89,8 +89,10 @@ const List = props => {
 							...
 						</FunctionMenu>
 					</div>
-					<CardsWrapper listId={props.list.id} />
-					<button className={styles.addCard}>+ Add a card</button>
+					<CardsWrapper
+						boardId={props.boardId}
+						listId={props.list.id}
+					/>
 				</div>
 			</div>
 		</div>

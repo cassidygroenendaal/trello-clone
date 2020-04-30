@@ -265,6 +265,7 @@ const ListsWrapper = props => {
 						<List
 							key={`list-${list.id}`}
 							list={list}
+							boardId={props.boardId}
 							updateLists={updateLists}
 							onDragStart={handleDragStart}
 							onDragOver={handleDragOver}
