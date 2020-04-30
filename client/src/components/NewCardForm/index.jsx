@@ -71,7 +71,7 @@ const NewCardForm = props => {
 					inputClass={styles.input}
 					label="Title"
 					type="text"
-					name="new-card-title"
+					name={`new-card-title-${props.listId}`}
 					value={cardTitle}
 					ref={input}
 					placeholder="Enter a title for this card..."
